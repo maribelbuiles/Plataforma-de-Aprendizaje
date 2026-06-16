@@ -1,45 +1,60 @@
 import streamlit as st
 
-# Configuración de la página
-st.set_page_config(page_title="Plataforma de Abastecimiento Kikes", page_icon="📦")
+# Configuración de página
+st.set_page_config(page_title="Cadena de Abastecimiento Kikes", page_icon="📦")
 
-# Estilos CSS con colores corporativos verdes
+# --- ESTILOS CSS CREATIVOS Y CORPORATIVOS ---
 st.markdown("""
     <style>
-        .stApp { background-color: #f9fbf9; }
-        .header-supply {
-            background-color: #008a3e; /* Color verde corporativo */
-            padding: 20px;
-            border-radius: 10px;
+        /* Fondo suave */
+        .stApp { background-color: #f4fcf4; }
+        
+        /* Encabezado dinámico */
+        .header-box {
+            background: linear-gradient(135deg, #008a3e 0%, #006a2e 100%);
+            padding: 30px;
+            border-radius: 20px;
             color: white;
             text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
+        
+        /* Botones estilo Kikes */
         .stButton>button {
             width: 100%;
-            border-radius: 5px;
+            border-radius: 50px;
             background-color: #008a3e;
             color: white;
             font-weight: bold;
             border: none;
+            transition: 0.3s;
         }
-        .stButton>button:hover { background-color: #006a2e; }
+        .stButton>button:hover { background-color: #005a26; transform: scale(1.02); }
     </style>
 """, unsafe_allow_html=True)
 
-# --- SISTEMA DE INGRESO ---
+# --- LÓGICA DE INGRESO ---
 if 'cedula' not in st.session_state:
     st.session_state['cedula'] = None
 
 if st.session_state['cedula'] is None:
-    # Encabezado con logo
-    st.markdown("<div class='header-supply'><h1>Logística Kikes</h1><p>Cadena de Abastecimiento</p></div>", unsafe_allow_html=True)
+    # Mostrar Logo
+    try:
+        col_img1, col_img2, col_img3 = st.columns([1, 1, 1])
+        with col_img2:
+            st.image("logo.png", use_container_width=True)
+    except:
+        st.warning("Asegúrate de que el logo se llame 'logo.png'")
+
+    st.markdown("<div class='header-box'><h1>Plataforma de Cadena de Abastecimiento</h1></div>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.markdown("<br><h3>Acceso al Personal</h3>", unsafe_allow_html=True)
         with st.form("login_form"):
+            st.subheader("Acceso al Personal")
             cedula_input = st.text_input("Número de Cédula del Empleado:")
-            submit = st.form_submit_button("Ingresar al Sistema")
+            submit = st.form_submit_button("Ingresar al Flujo Logístico")
             
             if submit:
                 if cedula_input.strip().isdigit():
@@ -48,7 +63,7 @@ if st.session_state['cedula'] is None:
                 else:
                     st.error("Por favor, ingrese un número de cédula válido.")
 else:
-    # --- MENÚ DE NAVEGACIÓN ---
+    # --- MENÚ NAVEGACIÓN ---
     st.sidebar.markdown(f"### 👤 Empleado: {st.session_state['cedula']}")
     st.sidebar.markdown("---")
     modulo = st.sidebar.radio("Navegación de Cadena:", [
@@ -61,7 +76,7 @@ else:
         st.session_state['cedula'] = None
         st.rerun()
 
-    # --- CONTENIDO ---
+    # --- CONTENIDO DE MÓDULOS ---
     if modulo == "Equipo de Canastas Aptas":
         st.header("✅ Equipo de Canastas Aptas")
         st.write("Gestionando la disponibilidad de activos en la cadena (GL-P-02).")
