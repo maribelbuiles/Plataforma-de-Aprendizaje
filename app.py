@@ -68,13 +68,14 @@ if st.session_state['cedula'] is None:
     elif os.path.exists("logo.png.png"):
         logo_path = "logo.png.png"
 
-    # Muestra el logo centrado si existe
+    # Muestra el logo centrado y más pequeño utilizando columnas ajustadas
     if logo_path:
-        col_img1, col_img2, col_img3 = st.columns([1, 1, 1])
+        col_img1, col_img2, col_img3 = st.columns([2, 1, 2])
         with col_img2:
-            st.image(logo_path, use_container_width=True)
+            st.image(logo_path, width=130)
             
-    st.markdown("<div class='main-banner'><h1>Plataforma de Cadena de Abastecimiento</h1><p>Módulos de Capacitación Técnica Operativa</p></div>", unsafe_allow_html=True)
+    # Banner principal con el subtítulo removido según tu solicitud
+    st.markdown("<div class='main-banner'><h1>Plataforma de Cadena de Abastecimiento</h1></div>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns([1, 1.8, 1])
     with col2:
