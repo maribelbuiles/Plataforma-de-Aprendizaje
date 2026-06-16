@@ -1,493 +1,209 @@
 import streamlit as st
 
-# ==================================================
-# CONFIGURACIÓN GENERAL
-# ==================================================
+# Configuración inicial de la página
 st.set_page_config(
-    page_title="Plataforma de Cadena de Abastecimiento",
-    page_icon="🚛",
+    page_title="Plataforma de Aprendizaje - Gestión de Canastas", 
+    page_icon="🎓", 
     layout="wide"
 )
 
-# ==================================================
-# ESTILOS
-# ==================================================
-st.markdown("""
-<style>
+# --- SISTEMA DE INGRESO POR CÉDULA (SESSIÓN STATE) ---
+if 'cedula' not in st.session_state:
+    st.session_state['cedula'] = None
 
-.main{
-    background-color:#f5f7fa;
-}
-
-.titulo{
-    text-align:center;
-    color:#1B5E20;
-    font-size:40px;
-    font-weight:bold;
-}
-
-.subtitulo{
-    color:#2E7D32;
-    font-size:28px;
-    font-weight:bold;
-}
-
-.card{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0px 2px 6px rgba(0,0,0,0.15);
-    margin-bottom:15px;
-}
-
-.resaltado{
-    background:#E8F5E9;
-    padding:15px;
-    border-radius:10px;
-    border-left:5px solid #2E7D32;
-}
-
-.evaluacion{
-    background:#FFF8E1;
-    padding:15px;
-    border-radius:10px;
-    border-left:5px solid #FFB300;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-# ==================================================
-# ENCABEZADO
-# ==================================================
-st.markdown(
-    '<p class="titulo">🚛 Plataforma de Cadena de Abastecimiento</p>',
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    """
-    <div class="card">
-    Bienvenido a la plataforma de capacitación logística.
-    Seleccione un módulo en el menú lateral para iniciar el proceso de formación.
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-# ==================================================
-# SIDEBAR
-# ==================================================
-st.sidebar.image(
-    "https://cdn-icons-png.flaticon.com/512/3082/3082037.png",
-    width=120
-)
-
-st.sidebar.title("Módulos")
-
-modulo = st.sidebar.radio(
-    "Seleccione una opción",
-    [
-        "🏆 Equipo de Canastas Aptas",
-        "⚠️ Equipo de Canastas No Aptas",
-        "🧼 Lavado y Desinfección",
-        "🎓 Evaluación Final"
-    ]
-)
-
-# ==================================================
-# MODULO 1
-# ==================================================
-if modulo == "🏆 Equipo de Canastas Aptas":
-
-    st.markdown(
-        '<p class="subtitulo">Equipo de Canastas Aptas</p>',
-        unsafe_allow_html=True
-    )
-
-    tema = st.selectbox(
-        "Seleccione un tema",
+if st.session_state['cedula'] is None:
+    # Pantalla de Login
+    st.markdown("<h1 style='text-align: center;'>🎓 Plataforma de Aprendizaje</h1>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: gray;'>Incubadora Santander S.A.</h3>", unsafe_allow_html=True)
+    st.write("---")
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.subheader("Ingreso al Sistema")
+        with st.form("login_form"):
+            cedula_input = st.text_input("Número de Cédula del Operario:", placeholder="Ej: 1098680700")
+            boton_ingresar = st.form_submit_button("Ingresar a la Capacitación")
+            
+            if boton_ingresar:
+                if cedula_input.strip().isdigit() and len(cedula_input.strip()) >= 6:
+                    st.session_state['cedula'] = cedula_input.strip()
+                    st.rerun()
+                else:
+                    st.error("Por favor, ingrese un número de cédula válido (solo números, mínimo 6 dígitos).")
+else:
+    # --- MENÚ LATERAL Y NAVEGACIÓN ---
+    st.sidebar.image("https://cdn-icons-png.flaticon.com/512/3135/3135715.png", width=80)
+    st.sidebar.title(f"👤 Operario: {st.session_state['cedula']}")
+    
+    st.sidebar.write("---")
+    st.sidebar.header("Módulos del Curso")
+    modulo = st.sidebar.radio(
+        "Seleccione el tema a estudiar:",
         [
-            "Partes de la Canasta",
-            "Partes del Separador",
-            "Partes de la Estiba",
-            "Partes del Gancho",
-            "Apilado Correcto",
-            "Anidado Correcto",
-            "Capacidad de Canastas",
-            "Sentido de la Bandeja",
-            "Armado de Estiba",
-            "Almacenamiento",
-            "Transporte"
+            "Módulo 1: Equipo de Canastas Aptas",
+            "Módulo 2: Equipo de Canastas No Aptas y Dañadas",
+            "Módulo 3: Lavado y Desinfección de Canastas",
+            "📝 Evaluación Final"
         ]
     )
-
-    if tema == "Partes de la Canasta":
-
-        st.markdown("""
-        <div class="resaltado">
-        ✔ Manijas
-
-        ✔ Hendiduras
-
-        ✔ Piso ventilado
-
-        ✔ Refuerzos estructurales
-
-        ✔ Sistema de anidado
-
-        ✔ Sistema de apilado
-
-        ✔ Identificador de posición
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif tema == "Partes del Separador":
-
-        st.info("""
-        Medidas:
-
-        • 124 cm x 66 cm
-
-        • Espesor aproximado: 2 cm
-        """)
-
-    elif tema == "Partes de la Estiba":
-
-        st.info("""
-        Medidas:
-
-        • Largo: 124 cm
-
-        • Ancho: 66 cm
-
-        • Altura: 10.5 cm
-        """)
-
-    elif tema == "Partes del Gancho":
-
-        st.success("""
-        Utilizado para asegurar la carga
-        durante el estibado.
-        """)
-
-    elif tema == "Apilado Correcto":
-
-        st.success("""
-        ✔ Las pestañas deben encajar.
-
-        ✔ El identificador debe quedar
-        en el lado opuesto.
-        """)
-
-    elif tema == "Anidado Correcto":
-
-        st.success("""
-        ✔ Las columnas inferiores deben
-        encajar en los rieles.
-
-        ✔ El identificador debe quedar
-        en el mismo costado.
-        """)
-
-    elif tema == "Capacidad de Canastas":
-
-        st.table({
-            "Tipo Huevo": ["A-AA-B-M-L", "XL", "JUMBO"],
-            "Cantidad": [240, 180, 120]
-        })
-
-    elif tema == "Sentido de la Bandeja":
-
-        st.warning("""
-        El primer nivel debe alinearse
-        correctamente con el piso
-        de la canasta.
-        """)
-
-    elif tema == "Armado de Estiba":
-
-        st.write("""
-        1. Ubicar 4 canastas base.
-
-        2. Instalar gancho inferior.
-
-        3. Completar niveles.
-
-        4. Instalar gancho superior.
-
-        5. Aplicar vinipel.
-        """)
-
-    elif tema == "Almacenamiento":
-
-        st.write("""
-        • Pasillo de maniobra: 1.5 m
-
-        • Pasillo de seguridad: 1.0 m
-
-        • Distancia a pared: 0.60 m
-        """)
-
-    elif tema == "Transporte":
-
-        st.write("""
-        Verificar:
-
-        ✔ Estado de canastas
-
-        ✔ Estado de separadores
-
-        ✔ Estado de estibas
-
-        ✔ Estado de ganchos
-        """)
-
-# ==================================================
-# MODULO 2
-# ==================================================
-elif modulo == "⚠️ Equipo de Canastas No Aptas":
-
-    st.markdown(
-        '<p class="subtitulo">Equipo de Canastas No Aptas</p>',
-        unsafe_allow_html=True
-    )
-
-    st.error("""
-    Una canasta NO apta presenta:
-
-    • Manijas rotas
-
-    • Piso fracturado
-
-    • Hendiduras dañadas
-
-    • Refuerzos fracturados
-
-    • Sistema de anidado roto
-
-    • Sistema de apilado roto
-
-    • Identificador dañado
-    """)
-
-    st.markdown("### Procedimiento")
-
-    st.write("""
-    1. Identificar daño.
-
-    2. Clasificar daño.
-
-    3. Contabilizar unidades.
-
-    4. Registrar formulario.
-
-    5. Coordinar envío.
-
-    6. Gestionar reparación.
-    """)
-
-    st.markdown("### Clasificación")
-
-    daño = st.selectbox(
-        "Seleccione el daño",
-        [
-            "Manija rota",
-            "Piso fracturado",
-            "Refuerzo roto",
-            "Sistema de apilado roto",
-            "Sistema de anidado roto"
-        ]
-    )
-
-    st.warning(f"Canasta clasificada como NO APTA por: {daño}")
-
-# ==================================================
-# MODULO 3
-# ==================================================
-elif modulo == "🧼 Lavado y Desinfección":
-
-    st.markdown(
-        '<p class="subtitulo">Lavado y Desinfección de Canastas</p>',
-        unsafe_allow_html=True
-    )
-
-    pestañas = st.tabs([
-        "EPP",
-        "Productos",
-        "Proceso",
-        "Secado",
-        "Consideraciones"
-    ])
-
-    with pestañas[0]:
-
-        st.markdown("""
-        ### Elementos de Protección Personal
-
-        ✔ Gorro
-
-        ✔ Monogafas
-
-        ✔ Guantes nitrilo
-
-        ✔ Delantal plástico
-
-        ✔ Botas
-        """)
-
-    with pestañas[1]:
-
+    
+    if st.sidebar.button("Cerrar Sesión ❌"):
+        st.session_state['cedula'] = None
+        st.rerun()
+
+    # --- CONTENIDO DE LOS MÓDULOS ---
+    
+    # ==========================================
+    # MÓDULO 1: EQUIPO DE CANASTAS APTAS
+    # ==========================================
+    if modulo == "Módulo 1: Equipo de Canastas Aptas":
+        st.title("📦 Módulo 1: Control y Uso de Equipo de Canastas Aptas")
+        st.write("Basado en la normativa vigente y el procedimiento **GL-P-02**.")
+        st.write("---")
+        
+        st.header("1. Criterios de una Canasta Apta")
+        st.write("Una canasta se considera **Apta** para la operación logística si cumple las siguientes condiciones:")
+        st.info("🔹 **Polvo medio:** Material particulado que no está fijado a la superficie y es fácil de eliminar.\n\n🔹 **Lavadas:** Canastas limpias listas para el cargue seguro de bandejas.")
+        
+        st.header("2. Ficha Técnica y Usabilidad")
         col1, col2 = st.columns(2)
-
         with col1:
-
-            st.success("""
-            DETERGENTE
-
-            Biodex
-
-            Dilución:
-
-            30 ml por cada
-            1000 ml de agua
+            st.subheader("Especificaciones de la Canasta Kikes (AFCA022)")
+            st.markdown("""
+            * **Dimensiones:** $63 \\times 32 \\times 23$ cm.
+            * **Peso vacío:** 1,75 Kg.
+            * **Diseño:** Piso tipo bandeja para optimización de espacio y hendiduras de fácil manipulación.
             """)
-
         with col2:
-
-            st.info("""
-            DESINFECTANTE
-
-            Biosanit
-
-            Dilución:
-
-            5 ml por cada
-            1000 ml de agua
+            st.subheader("Capacidad de Huevos por Canasta (Tallas)")
+            st.markdown("""
+            * **Tallas A, AA, B, M, L:** 240 unidades sueltas o 180 amarradas.
+            * **Talla XL:** 180 unidades sueltas o 120 amarradas.
+            * **Talla JUMBO:** 120 unidades sueltas (No aplica amarrado).
             """)
 
-    with pestañas[2]:
-
+        st.header("3. Procedimiento Correcto de Apilado y Anidado")
         st.markdown("""
-        ### Proceso de Lavado
-
-        1. Clasificar canastas
-
-        2. Humedecer
-
-        3. Aplicar detergente
-
-        4. Esperar 10 minutos
-
-        5. Refregar
-
-        6. Enjuagar
-
-        7. Aplicar desinfectante
-
-        8. No enjuagar
+        * **Apilado Adecuado (Con Producto):** Rectificar que las pestañas superiores de las esquinas encajen exactamente en las cavidades inferiores de la canasta siguiente. El identificador de posición debe ir al **costado opuesto**.
+        * **Anidado Adecuado (Vacías):** Las columnas inferiores deben encajar en los rieles superiores de la canasta de abajo. El identificador de posición debe quedar al **mismo costado** para optimizar espacio (en arrumes de 6 o 16 niveles según transporte).
+        """)
+        
+        st.header("4. Armado de Estiba y Uso de Vinipel")
+        st.warning("⚠️ **Sentido de la bandeja:** En el primer nivel, se deben alinear los agujeros inferiores de la canasta con las pestañas de la bandeja de cartón para evitar roturas.")
+        st.markdown("""
+        1. Colocar una base de **4 canastas** en la estiba unidas en el medio con un gancho metálico (MDGA105).
+        2. Asegurar el último nivel con un segundo gancho metálico.
+        3. **Aplicación de Vinipel:** Dar **dos vueltas tensadas** desde el taco de la estiba. Posteriormente, aplicar de forma ascendente la tercera, cuarta y quinta vuelta en **forma de corbatín** para permitir la ventilación del producto.
         """)
 
-    with pestañas[3]:
-
-        st.warning("""
-        Tiempo mínimo de secado:
-
-        4 horas
+    # ==========================================
+    # MÓDULO 2: EQUIPO DE CANASTAS NO APTAS
+    # ==========================================
+    elif modulo == "Módulo 2: Equipo de Canastas No Aptas y Dañadas":
+        st.title("⚠️ Módulo 2: Criterios de No Aptitud y Gestión de Equipos Dañados")
+        st.write("Instrucciones críticas para evitar daños estructurales y contaminación microbiológica.")
+        st.write("---")
+        
+        st.header("1. Clasificación del Estado No Apto")
+        st.error("🚨 **Una canasta se cataloga como NO APTA de inmediato si presenta:**\n\n1. **Residuos de huevo:** Filtraciones o suciedad orgánica pegada.\n2. **Polvo crítico:** Suciedad incrustada que requiere de acción mecánica o química para desprenderse.\n3. **Gusanos o plagas:** Presencia de vectores biológicos.")
+        
+        st.header("2. Definición de Canastas Dañadas (AFCA022-DA)")
+        st.write("Son aquellas que pierden su integridad física. Debes retirarlas de la operación si tienen partidas:")
+        st.markdown("""
+        * Las manijas o hendiduras de manipulación.
+        * El piso de la canasta o los refuerzos de estructura.
+        * La identificación visual o el sistema de apilado/anidado.
+        """)
+        
+        st.header("3. ❌ Usos Indebidos Estrictamente Prohibidos")
+        st.markdown("""
+        * **NO** usar las canastas como silla o escalera de apoyo.
+        * **NO** utilizarlas para almacenar papelería o documentación de oficina.
+        * **NO** usarlas como depósitos de basura, residuos o chatarra.
+        * **NO USAR EL GANCHO PARA ARRASTRAR EL ARRUME:** El uso de ganchos para jalar genera fracturas estructurales fatales en la zona de las manijas.
         """)
 
-    with pestañas[4]:
-
-        st.write("""
-        ✔ Lavar diariamente las canastas no aptas.
-
-        ✔ Mantener presión de 1700 PSI.
-
-        ✔ Usar cepillo ultrasuave.
-
-        ✔ Secar completamente antes del uso.
-
-        ✔ Utilizar siempre Biodex y Biosanit.
+        st.header("4. Flujo de Disposición de Dañados")
+        st.markdown("""
+        1. El auxiliar de despachos identifica y clasifica las cantidades de equipos dañados.
+        2. Se diligencia el formulario oficial de registro en Google de la compañía.
+        3. Planeación coordina con el proveedor (**Mercico**) para enviar desde las Plantas el lote dañado para su respectiva reposición bajo Orden de Trabajo (OT).
         """)
 
-# ==================================================
-# EVALUACIÓN FINAL
-# ==================================================
-elif modulo == "🎓 Evaluación Final":
+    # ==========================================
+    # MÓDULO 3: LAVADO Y DESINFECCIÓN
+    # ==========================================
+    elif modulo == "Módulo 3: Lavado y Desinfección de Canastas":
+        st.title("🧼 Módulo 3: Procedimiento Operativo de Limpieza y Desinfección")
+        st.write("Establecido bajo el código **GL-P-01** en concordancia con la Resolución 2674 de 2013 del Ministerio de Salud.")
+        st.write("---")
+        
+        st.header("1. Elementos de Protección Personal (EPP) Obligatorios")
+        st.write("Antes de iniciar las actividades en el lavadero, es obligatorio el uso de:")
+        st.markdown("""
+        * **Gorro:** Tela dacrón blanca.
+        * **Monogafas:** Antiempañantes con banda elástica ajustable.
+        * **Guantes:** De nitrilo de caña alta (Alphatec Solvex 18\").
+        * **Delantal:** Plástico amarillo calibre 25.
+        * **Botas:** Plásticas blancas caña alta con puntera de seguridad.
+        """)
+        
+        st.header("2. Paso a Paso del Proceso L&D")
+        
+        st.subheader("Fase A: Preparación y Lavado Químico")
+        st.markdown("""
+        1. **Anidamiento:** Organizar las canastas no aptas en columnas anidadas de **8 unidades**.
+        2. **Humedecimiento:** Mojar el arrume utilizando una hidrolavadora configurada estrictamente a **1700 PSI con chorro en abanico** (evita romper el plástico).
+        3. **Dosificación del Detergente:** Diluir **30 ml de Biodex** (detergente neutro, biodegradable sin fragancia) por cada **1000 ml de agua**.
+        4. **Aplicación:** Usar el espumador manual acoplado y **dejar actuar la espuma por un lapso de 10 minutos**.
+        5. **Acción Mecánica:** Restregar enérgicamente cada canasta con el **cepillo ultrasuave**, enfatizando en los bordes y en la base inferior.
+        6. **Enjuague:** Retirar por completo el jabón con la hidrolavadora a 1700 PSI en abanico sin dejar residuos.
+        """)
+        
+        st.subheader("Fase B: Desinfección y Secado")
+        st.markdown("""
+        7. **Dosificación del Desinfectante:** Diluir **5 ml de Biosanit** (bactericida, virucida y fungicida de amplio espectro) por cada **1000 ml de agua** dentro del fumigador atomizador.
+        8. **Aplicación:** Atomizar de forma individual cada canasta. ⚠️ **¡NO SE DEBE ENJUAGAR EL DESINFECTANTE!**
+        9. **Secado Óptimo:** Volver a anidar las canastas en columnas de 8 unidades y dejarlas secar sobre una superficie limpia durante **4 horas** como mínimo antes de usarlas de nuevo.
+        """)
 
-    st.markdown(
-        '<p class="subtitulo">Evaluación Final</p>',
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        '<div class="evaluacion">Responda las siguientes preguntas.</div>',
-        unsafe_allow_html=True
-    )
-
-    p1 = st.radio(
-        "1. En el apilado el identificador debe quedar:",
-        [
-            "Mismo lado",
-            "Lado opuesto"
-        ]
-    )
-
-    p2 = st.radio(
-        "2. Una canasta con manija rota es:",
-        [
-            "Apta",
-            "No apta"
-        ]
-    )
-
-    p3 = st.radio(
-        "3. Biodex se diluye:",
-        [
-            "5 ml por litro",
-            "30 ml por litro",
-            "100 ml por litro"
-        ]
-    )
-
-    p4 = st.radio(
-        "4. Tiempo mínimo de secado:",
-        [
-            "1 hora",
-            "2 horas",
-            "4 horas"
-        ]
-    )
-
-    if st.button("Calificar Examen"):
-
-        nota = 0
-
-        if p1 == "Lado opuesto":
-            nota += 25
-
-        if p2 == "No apta":
-            nota += 25
-
-        if p3 == "30 ml por litro":
-            nota += 25
-
-        if p4 == "4 horas":
-            nota += 25
-
-        st.metric("Resultado", f"{nota}/100")
-
-        if nota >= 80:
-            st.success("APROBADO ✅")
-            st.balloons()
-        else:
-            st.error("NO APROBADO ❌")
-
-# ==================================================
-# PIE DE PAGINA
-# ==================================================
-st.markdown("---")
-
-st.caption(
-    "Plataforma de Cadena de Abastecimiento | Gestión Logística | Incubadora Santander"
-)
+    # ==========================================
+    # EVALUACIÓN DE CONOCIMIENTOS
+    # ==========================================
+    elif modulo == "📝 Evaluación Final":
+        st.title("📝 Evaluación de Validación de Conocimientos")
+        st.write("Responde las siguientes preguntas para completar tu registro de capacitación.")
+        st.write("---")
+        
+        q1 = st.radio(
+            "1. ¿Cuál es la dosificación correcta para la solución de lavado con detergente Biodex?",
+            ["5 ml por cada 1000 ml de agua", "30 ml por cada 1000 ml de agua", "50 ml por cada 500 ml de agua"]
+        )
+        
+        q2 = st.radio(
+            "2. ¿Cuál es la presión correcta y tipo de chorro que debe configurarse en la hidrolavadora para no dañar las canastas?",
+            ["1200 PSI con chorro directo", "2500 PSI con chorro de aguja", "1700 PSI con chorro en abanico"]
+        )
+        
+        q3 = st.radio(
+            "3. ¿Cuál de las siguientes acciones representa un USO INDEBIDO prohibido por el procedimiento GL-P-02?",
+            ["Almacenar bandejas alineadas según la pestaña", "Usar el gancho metálico para arrastrar o halar los arrumes", "Anidar las canastas limpias en columnas de 8 unidades"]
+        )
+        
+        q4 = st.radio(
+            "4. Una vez aplicado el desinfectante Biosanit en la canasta, ¿qué acción sigue?",
+            ["Enjuagar de inmediato con agua limpia", "Restregar con el cepillo ultrasuave", "No enjuagar y dejar secar en arrumes de 8 por 4 horas"]
+        )
+        
+        if st.button("Enviar Respuestas ✔️"):
+            aciertos = 0
+            if q1 == "30 ml por cada 1000 ml de agua": aciertos += 1
+            if q2 == "1700 PSI con chorro en abanico": aciertos += 1
+            if q3 == "Usar el gancho metálico para arrastrar o halar los arrumes": aciertos += 1
+            if q4 == "No enjuagar y dejar secar en arrumes de 8 por 4 horas": aciertos += 1
+            
+            if aciertos == 4:
+                st.success(f"🎉 ¡Excelente! Operario con Cédula {st.session_state['cedula']} ha aprobado la capacitación con 4/4 aciertos.")
+                st.balloons()
+            else:
+                st.error(f"Has obtenido {aciertos} de 4 aciertos. Te recomendamos repasar los módulos y volver a intentarlo.")
