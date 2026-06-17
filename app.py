@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import base64
 
 # 1. CONFIGURACIÓN DE PÁGINA Y ESTILOS PARA MÁXIMA NITIDEZ
 st.set_page_config(page_title="Ruta de Aprendizaje Kikes", page_icon="📦", layout="wide")
@@ -17,7 +18,7 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA (CRISP EDGES) */
+        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA */
         img {
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: crisp-edges !important;
@@ -40,14 +41,21 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Función para convertir imagen local a Base64 (necesario para el certificado HTML)
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
 # --- CONTROL DEL ESTADO DE SESIÓN ---
 if 'cedula' not in st.session_state: st.session_state['cedula'] = None
 
+# Identificación de logo
+logo_path = "logo.png" if os.path.exists("logo.png") else ("logo.png.png" if os.path.exists("logo.png.png") else None)
+
 if st.session_state['cedula'] is None:
-    logo = "logo.png" if os.path.exists("logo.png") else ("logo.png.png" if os.path.exists("logo.png.png") else None)
-    if logo:
+    if logo_path:
         _, col_l, _ = st.columns([3, 1, 3])
-        with col_l: st.image(logo, use_container_width=True)
+        with col_l: st.image(logo_path, use_container_width=True)
             
     st.markdown("<div class='main-banner'><h1>Plataforma de Cadena de Abastecimiento</h1></div>", unsafe_allow_html=True)
     _, col_f, _ = st.columns([1, 1.5, 1])
@@ -101,21 +109,18 @@ else:
             st.subheader("🚫 Usos Indebidos del Equipo")
             st_image_nitida("usos_prohibidos.png")
 
-    # --- EVALUACIÓN (CORREGIDA PARA EL CERTIFICADO) ---
+    # --- EVALUACIÓN Y CERTIFICADO CREATIVO ---
     elif "Evaluación" in modulo:
         st.markdown(f"<h2 style='color: #008a3e;'>{modulo}</h2>", unsafe_allow_html=True)
         
-        # El formulario solo contiene las preguntas y el botón de envío
         with st.form("quiz"):
             p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"])
             p2 = st.radio("¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"])
             p3 = st.radio("¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"])
             p4 = st.radio("¿Se permite usar la canasta como escalera?", ["Sí", "No"])
             p5 = st.radio("¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"])
-            
             submit_eval = st.form_submit_button("Finalizar Evaluación")
 
-        # La lógica del resultado y el botón de descarga van FUERA del st.form
         if submit_eval:
             score = 0
             if p1 == "Mismo costado": score += 20
@@ -125,28 +130,35 @@ else:
             if p5 == "16": score += 20
             
             if score >= 80:
-                st.success(f"¡APROBADO! Puntaje obtenido: {score}%")
+                st.success(f"¡APROBADO CON {score}%!")
                 st.balloons()
                 
-                # Formateo del Certificado
-                certificado_contenido = f"""
-                ==========================================
-                CERTIFICADO DE APROBACIÓN TÉCNICA
-                ==========================================
-                EMPLEADO: {st.session_state['cedula']}
-                CURSO: {modulo}
-                CALIFICACIÓN: {score}%
-                ESTADO: APROBADO
-                ==========================================
+                # --- CERTIFICADO VISUAL (HTML DINÁMICO) ---
+                logo_base64 = get_base64_image(logo_path) if logo_path else ""
+                
+                certificado_html = f"""
+                <div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">
+                    <img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">
+                    <h1 style="color: #008a3e; font-family: 'Georgia', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>
+                    <p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>
+                    <h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state['cedula']}</h2>
+                    <p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>
+                    <h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">{modulo}</h3>
+                    <div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">
+                        <span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {score}%</span>
+                    </div>
+                    <p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p>
+                </div>
                 """
+                st.markdown(certificado_html, unsafe_allow_html=True)
                 
                 st.download_button(
-                    label="📥 Descargar Certificado de Aprobación",
-                    data=certificado_contenido,
-                    file_name=f"Certificado_Modulo1_{st.session_state['cedula']}.txt",
+                    label="📥 Guardar Registro de Certificado (TXT)",
+                    data=f"CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: {modulo}\nPuntaje: {score}%",
+                    file_name=f"Certificado_Kikes_{st.session_state['cedula']}.txt",
                     mime="text/plain"
                 )
             else:
-                st.error(f"Puntaje insuficiente: {score}%. Debes obtener al menos un 80% para aprobar. Repasa el material e intenta de nuevo.")
+                st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar. Repasa el material.")
     else:
         st.write("Módulo informativo.")
