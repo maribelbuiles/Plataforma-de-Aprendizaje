@@ -40,7 +40,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 2. LOGO Y ACCESO
+# --- CONTROL DEL ESTADO DE SESIÓN ---
 if 'cedula' not in st.session_state: st.session_state['cedula'] = None
 
 if st.session_state['cedula'] is None:
@@ -53,14 +53,14 @@ if st.session_state['cedula'] is None:
     _, col_f, _ = st.columns([1, 1.5, 1])
     with col_f:
         with st.form("login"):
-            ced = st.text_input("Ingrese su Cédula para comenzar:")
+            ced = st.text_input("Número de Cédula del Empleado:")
             if st.form_submit_button("Ingresar a la Capacitación"):
                 if ced.isdigit() and len(ced) >= 5:
                     st.session_state['cedula'] = ced
                     st.rerun()
                 else: st.error("Cédula no válida.")
 else:
-    # 3. SIDEBAR
+    # --- NAVEGACIÓN ---
     st.sidebar.markdown(f"### 👤 Empleado: `{st.session_state['cedula']}`")
     modulo = st.sidebar.radio("🗺️ Mapa de Ruta Pro", [
         "Módulo 1: Equipo de Canastas Aptas", 
@@ -72,62 +72,81 @@ else:
         st.session_state['cedula'] = None
         st.rerun()
 
-    # 4. CONTENIDO MÓDULO 1
+    # --- CONTENIDO MÓDULO 1 ---
     if modulo == "Módulo 1: Equipo de Canastas Aptas":
         st.markdown("<h2 style='color: #008a3e;'>📦 Módulo 1: Equipo de Canastas Aptas</h2>", unsafe_allow_html=True)
-        
         tabs = st.tabs(["🕒 Historia", "🔍 Partes", "📐 Dimensiones", "🔄 Sistemas", "🚛 Cargue", "🚫 Prohibiciones"])
 
-        # Función para mostrar imágenes nítidas con ancho controlado
         def st_image_nitida(path):
             if os.path.exists(path):
-                # Usamos una columna central más restringida para evitar que la imagen se pixelee al crecer
                 _, col_img, _ = st.columns([1, 3, 1]) 
-                with col_img:
-                    st.image(path, use_container_width=True)
+                with col_img: st.image(path, use_container_width=True)
 
         with tabs[0]:
             st.subheader("Cronología de la Canasta Ovoid")
-            # Aplicación de nitidez específica para la cronología
             st_image_nitida("cronologia.png")
-
         with tabs[1]:
             st.subheader("Partes de la Canasta Ovoid")
             st_image_nitida("partes.png")
-
         with tabs[2]:
             st.subheader("Ficha Técnica: Dimensiones")
             st_image_nitida("dimensiones.png")
-
         with tabs[3]:
             st.subheader("Sistemas de Apilado y Anidado")
             st_image_nitida("sistemas.png")
-
         with tabs[4]:
             st.subheader("Tablas de Cargue y Autoventa")
             st_image_nitida("cargue_vehiculos.png")
-
         with tabs[5]:
             st.subheader("🚫 Usos Indebidos del Equipo")
             st_image_nitida("usos_prohibidos.png")
 
-    # 5. EVALUACIÓN (Mantiene la lógica original)
+    # --- EVALUACIÓN (CORREGIDA PARA EL CERTIFICADO) ---
     elif "Evaluación" in modulo:
         st.markdown(f"<h2 style='color: #008a3e;'>{modulo}</h2>", unsafe_allow_html=True)
+        
+        # El formulario solo contiene las preguntas y el botón de envío
         with st.form("quiz"):
             p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"])
             p2 = st.radio("¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"])
             p3 = st.radio("¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"])
             p4 = st.radio("¿Se permite usar la canasta como escalera?", ["Sí", "No"])
-            p5 = st.radio("¿Cuántos niveles de canastas vacías se anidan por estiba?", ["11", "16", "24"])
+            p5 = st.radio("¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"])
             
-            if st.form_submit_button("Finalizar Evaluación"):
-                score = ( (p1=="Mismo costado") + (p2=="17.25 kg") + (p3=="75") + (p4=="No") + (p5=="16") ) * 20
-                if score >= 80:
-                    st.success(f"¡APROBADO! Puntaje: {score}%")
-                    st.balloons()
-                    st.download_button("📜 Descargar Certificado", f"Aprobado por: {st.session_state['cedula']}", f"Cert_Mod1.txt")
-                else:
-                    st.error(f"Puntaje: {score}%. Requieres 80%.")
+            submit_eval = st.form_submit_button("Finalizar Evaluación")
+
+        # La lógica del resultado y el botón de descarga van FUERA del st.form
+        if submit_eval:
+            score = 0
+            if p1 == "Mismo costado": score += 20
+            if p2 == "17.25 kg": score += 20
+            if p3 == "75": score += 20
+            if p4 == "No": score += 20
+            if p5 == "16": score += 20
+            
+            if score >= 80:
+                st.success(f"¡APROBADO! Puntaje obtenido: {score}%")
+                st.balloons()
+                
+                # Formateo del Certificado
+                certificado_contenido = f"""
+                ==========================================
+                CERTIFICADO DE APROBACIÓN TÉCNICA
+                ==========================================
+                EMPLEADO: {st.session_state['cedula']}
+                CURSO: {modulo}
+                CALIFICACIÓN: {score}%
+                ESTADO: APROBADO
+                ==========================================
+                """
+                
+                st.download_button(
+                    label="📥 Descargar Certificado de Aprobación",
+                    data=certificado_contenido,
+                    file_name=f"Certificado_Modulo1_{st.session_state['cedula']}.txt",
+                    mime="text/plain"
+                )
+            else:
+                st.error(f"Puntaje insuficiente: {score}%. Debes obtener al menos un 80% para aprobar. Repasa el material e intenta de nuevo.")
     else:
         st.write("Módulo informativo.")
