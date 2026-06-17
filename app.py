@@ -17,7 +17,7 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* CSS PARA FORZAR NITIDEZ EXTREMA */
+        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA (CRISP EDGES) */
         img {
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: crisp-edges !important;
@@ -76,17 +76,19 @@ else:
     if modulo == "Módulo 1: Equipo de Canastas Aptas":
         st.markdown("<h2 style='color: #008a3e;'>📦 Módulo 1: Equipo de Canastas Aptas</h2>", unsafe_allow_html=True)
         
-        # Pestañas actualizadas (sin Cobertura)
         tabs = st.tabs(["🕒 Historia", "🔍 Partes", "📐 Dimensiones", "🔄 Sistemas", "🚛 Cargue", "🚫 Prohibiciones"])
 
+        # Función para mostrar imágenes nítidas con ancho controlado
         def st_image_nitida(path):
             if os.path.exists(path):
-                _, col_img, _ = st.columns([0.5, 5, 0.5]) 
+                # Usamos una columna central más restringida para evitar que la imagen se pixelee al crecer
+                _, col_img, _ = st.columns([1, 3, 1]) 
                 with col_img:
                     st.image(path, use_container_width=True)
 
         with tabs[0]:
             st.subheader("Cronología de la Canasta Ovoid")
+            # Aplicación de nitidez específica para la cronología
             st_image_nitida("cronologia.png")
 
         with tabs[1]:
@@ -109,7 +111,7 @@ else:
             st.subheader("🚫 Usos Indebidos del Equipo")
             st_image_nitida("usos_prohibidos.png")
 
-    # 5. EVALUACIÓN
+    # 5. EVALUACIÓN (Mantiene la lógica original)
     elif "Evaluación" in modulo:
         st.markdown(f"<h2 style='color: #008a3e;'>{modulo}</h2>", unsafe_allow_html=True)
         with st.form("quiz"):
@@ -128,4 +130,4 @@ else:
                 else:
                     st.error(f"Puntaje: {score}%. Requieres 80%.")
     else:
-        st.write("Módulo informativo en construcción.")
+        st.write("Módulo informativo.")
