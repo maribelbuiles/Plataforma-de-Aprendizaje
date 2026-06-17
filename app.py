@@ -1,112 +1,156 @@
 import streamlit as st
 import os
 
-# Configuración de página
-st.set_page_config(page_title="Aprendizaje Kikes", page_icon="📦", layout="wide")
+# 1. CONFIGURACIÓN VISUAL
+st.set_page_config(page_title="Ruta de Aprendizaje Kikes", page_icon="📦", layout="wide")
 
-# Estilos Creativos
 st.markdown("""
     <style>
-        .stApp { background-color: #f0f7f0; }
-        .main-banner { background: linear-gradient(135deg, #008a3e 0%, #2bb673 100%); padding: 30px; border-radius: 20px; color: white; text-align: center; }
-        .card { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px; border-top: 5px solid #008a3e; }
-        .stButton>button { border-radius: 50px; background-color: #008a3e; color: white; font-weight: bold; height: 3em; }
+        .stApp { background-color: #f7fbf7; }
+        .slide-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            border-left: 8px solid #008a3e;
+        }
+        .main-banner {
+            background: linear-gradient(135deg, #008a3e 0%, #2bb673 100%);
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 { color: #008a3e; font-family: 'Arial Black'; }
+        .stButton>button { border-radius: 30px; background-color: #008a3e; color: white; font-weight: bold; }
     </style>
 """, unsafe_allow_html=True)
 
-# Función para mostrar imágenes de forma segura
-def mostrar_recurso(nombre_archivo, caption=""):
-    if os.path.exists(nombre_archivo):
-        st.image(nombre_archivo, caption=caption, use_container_width=True)
-    else:
-        st.info(f"🖼️ Aquí va el recurso: {nombre_archivo}")
-
-# --- LOGIN ---
+# 2. LÓGICA DE INGRESO Y LOGO
 if 'cedula' not in st.session_state: st.session_state['cedula'] = None
 
 if st.session_state['cedula'] is None:
-    logo = "logo.png" if os.path.exists("logo.png") else "logo.png.png"
-    if os.path.exists(logo):
-        _, col_l, _ = st.columns([2.5, 1, 2.5])
-        with col_l: st.image(logo, use_container_width=True)
-    
-    st.markdown("<div class='main-banner'><h1>Plataforma de Aprendizaje Kikes</h1></div>", unsafe_allow_html=True)
-    
-    _, col_f, _ = st.columns([1, 1.5, 1])
-    with col_f:
+    logo_path = "logo.png" if os.path.exists("logo.png") else ("logo.png.png" if os.path.exists("logo.png.png") else None)
+    if logo_path:
+        _, col_img, _ = st.columns([2.8, 1, 2.8])
+        with col_img: st.image(logo_path, use_container_width=True)
+            
+    st.markdown("<div class='main-banner'><h1>Plataforma de Cadena de Abastecimiento</h1></div>", unsafe_allow_html=True)
+    _, col_form, _ = st.columns([1, 1.5, 1])
+    with col_form:
         with st.form("login"):
-            ced = st.text_input("Ingresa tu Cédula para comenzar:")
-            if st.form_submit_button("Entrar a la Ruta de Aprendizaje"):
+            ced = st.text_input("Número de Cédula del Empleado:")
+            if st.form_submit_button("Ingresar a la Capacitación"):
                 if ced.isdigit() and len(ced) >= 5:
                     st.session_state['cedula'] = ced
                     st.rerun()
+                else: st.error("Ingrese una cédula válida.")
 else:
-    # --- INTERFAZ DE APRENDIZAJE ---
-    st.sidebar.image("logo.png" if os.path.exists("logo.png") else "logo.png.png", width=100)
-    modulo = st.sidebar.radio("📍 Tu Mapa de Ruta:", [
-        "Módulo 1: Equipo de Canastas Aptas", "📝 Examen Módulo 1",
-        "Módulo 2: Canastas No Aptas", "📝 Examen Módulo 2",
-        "Módulo 3: Lavado y Desinfección", "📝 Examen Módulo 3"
+    # 3. NAVEGACIÓN (MAPA DE RUTA)
+    st.sidebar.markdown(f"### 👤 Empleado: `{st.session_state['cedula']}`")
+    modulo = st.sidebar.radio("🗺️ Mapa de Ruta Pro", [
+        "Módulo 1: Equipo de Canastas Aptas", 
+        "📝 Evaluación Módulo 1",
+        "Módulo 2: Equipo de Canastas No Aptas", 
+        "📝 Evaluación Módulo 2",
+        "Módulo 3: Lavado y Desinfección",
+        "📝 Evaluación Módulo 3"
     ])
-    
-    if st.sidebar.button("Cerrar Sesión"):
+    if st.sidebar.button("Cerrar Sesión ❌"):
         st.session_state['cedula'] = None
         st.rerun()
 
-    # --- CONTENIDO DINÁMICO MÓDULO 1 ---
+    # 4. CONTENIDO MÓDULO 1 (Organizado como Diapositivas)
     if modulo == "Módulo 1: Equipo de Canastas Aptas":
-        st.markdown("<h2 style='color: #008a3e;'>📦 Módulo 1: Equipo de Canastas Aptas</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 class='module-title'>📦 Módulo 1: Equipo de Canastas Aptas</h2>", unsafe_allow_html=True)
         
-        tab1, tab2, tab3, tab4 = st.tabs(["🕒 Historia y Cobertura", "📐 Partes y Medidas", "🔄 Sistemas de Uso", "🚛 Cargue y Autoventa"])
-        
-        with tab1:
-            col_a, col_b = st.columns(2)
-            with col_a:
-                st.markdown("<div class='card'><h3>Nuestra Cobertura</h3></div>", unsafe_allow_html=True)
-                mostrar_recurso("mapa.png", "Mapa de Centros de Distribución")
-            with col_b:
-                st.markdown("<div class='card'><h3>Cronología Ovoid</h3></div>", unsafe_allow_html=True)
-                mostrar_recurso("cronologia.png", "Evolución 2019 - 2023")
+        # --- DIAPOSITIVA 1: COBERTURA ---
+        with st.container():
+            st.markdown("<div class='slide-container'>", unsafe_allow_html=True)
+            col1, col2 = st.columns([1.2, 1])
+            with col1:
+                if os.path.exists("mapa.png"): st.image("mapa.png", use_container_width=True)
+            with col2:
+                st.subheader("Cobertura Nacional")
+                st.write("Nuestra red logística conecta plantas y CEDI en todo el país: Santa Marta, Barranquilla, Bucaramanga, Bogotá, Cali y más.")
+            st.markdown("</div>", unsafe_allow_html=True)
 
-        with tab2:
-            st.markdown("<div class='card'><h3>Conoce tu herramienta de trabajo</h3></div>", unsafe_allow_html=True)
-            mostrar_recurso("partes.png", "Las 9 partes de la Canasta")
-            mostrar_recurso("dimensiones.png", "Ficha técnica de componentes")
+        # --- DIAPOSITIVA 2: CRONOLOGÍA ---
+        with st.container():
+            st.markdown("<div class='slide-container'>", unsafe_allow_html=True)
+            st.subheader("Cronología de la Canasta Ovoid")
+            if os.path.exists("cronologia.png"): st.image("cronologia.png", use_container_width=True)
+            st.write("Desde el diseño en 2019 hasta la operación total en 2023, la Canasta Ovoid ha evolucionado para proteger nuestro producto.")
+            st.markdown("</div>", unsafe_allow_html=True)
 
-        with tab3:
-            st.markdown("<div class='card'><h3>Sistemas de Apilado y Anidado</h3></div>", unsafe_allow_html=True)
-            mostrar_recurso("sistemas.png")
-            st.video("video_kikes.mp4") if os.path.exists("video_kikes.mp4") else st.warning("📹 Video: Dale sentido a la bandeja (Pendiente subir video_kikes.mp4)")
+        # --- DIAPOSITIVA 3: PARTES ---
+        with st.container():
+            st.markdown("<div class='slide-container'>", unsafe_allow_html=True)
+            st.subheader("Partes de la Canasta Ovoid")
+            if os.path.exists("partes.png"): st.image("partes.png", use_container_width=True)
+            st.info("9 componentes clave: Desde el piso tipo bandeja hasta la identidad visual Kikes.")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        # --- DIAPOSITIVA 4: DIMENSIONES ---
+        with st.container():
+            st.markdown("<div class='slide-container'>", unsafe_allow_html=True)
+            st.subheader("Equipo Ovoid: Componentes y Dimensiones")
+            if os.path.exists("dimensiones.png"): st.image("dimensiones.png", use_container_width=True)
+            st.write("**Fichas Técnicas:** Canasta (AFCA022), Estiba (AFES013), Gancho (MDGA105) y Separador (AFSE003).")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        # --- DIAPOSITIVA 5: SISTEMAS (APILAR/ANIDAR) ---
+        with st.container():
+            st.markdown("<div class='slide-container'>", unsafe_allow_html=True)
+            st.subheader("Sistemas de Posicionamiento")
+            if os.path.exists("sistemas.png"): st.image("sistemas.png", use_container_width=True)
+            st.success("✅ **Apilar (con producto):** Sentido opuesto. | ✅ **Anidar (vacía):** Mismo costado.")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        # --- DIAPOSITIVA 6: CARGUE Y VEHÍCULOS ---
+        with st.container():
+            st.markdown("<div class='slide-container'>", unsafe_allow_html=True)
+            st.subheader("Cargue por Tipo de Vehículo")
+            if os.path.exists("cargue_vehiculos.png"): st.image("cargue_vehiculos.png", use_container_width=True)
+            st.write("Optimización para Minitruck, Dongfeng y Motocarros Ayco/Vaisand.")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        # --- DIAPOSITIVA 7: USOS INDEBIDOS ---
+        with st.container():
+            st.markdown("<div class='slide-container'>", unsafe_allow_html=True)
+            st.subheader("🚫 Usos Indebidos")
+            if os.path.exists("usos_prohibidos.png"): st.image("usos_prohibidos.png", use_container_width=True)
+            st.error("Cuidar el equipo es responsabilidad de todos. Evite sanciones por mal uso.")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+    # 5. EVALUACIÓN Y CERTIFICADO
+    elif "Evaluación" in modulo:
+        st.markdown(f"<h2 class='module-title'>{modulo}</h2>", unsafe_allow_html=True)
+        with st.form("quiz_final"):
+            st.write("### Valida tus conocimientos")
+            p1 = st.radio("¿Cuál es la configuración correcta para anidar canastas vacías?", ["Lado opuesto", "Mismo costado"])
+            p2 = st.radio("¿Cuántas canastas carga un vehículo Dongfeng según la tabla?", ["75", "100", "48"])
+            p3 = st.radio("¿Cuál es el peso máximo de una canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"])
+            p4 = st.radio("¿Cuántos niveles de canastas vacías se anidan por estiba?", ["8", "11", "16"])
+            p5 = st.radio("¿Se puede usar la canasta como silla provisional?", ["Sí", "No"])
             
-            st.markdown("<div class='card'><h3>¡Cuidado! Usos Indebidos</h3></div>", unsafe_allow_html=True)
-            mostrar_recurso("usos.png")
-
-        with tab4:
-            st.markdown("<div class='card'><h3>Optimización de Transporte</h3></div>", unsafe_allow_html=True)
-            mostrar_recurso("cargue.png")
-            st.info("💡 Recuerda: El arrume vacío es de **16 niveles** sobre estiba Ovoid.")
-
-    # --- EVALUACIÓN Y CERTIFICADO ---
-    elif "Examen" in modulo:
-        st.markdown(f"<h2 style='color: #008a3e;'>📝 {modulo}</h2>", unsafe_allow_html=True)
-        with st.form("examen"):
-            st.write("Demuestra lo aprendido para obtener tu certificado.")
-            p1 = st.radio("¿Cuál es el arrume correcto de canastas vacías?", ["8 niveles", "16 niveles", "20 niveles"])
-            p2 = st.radio("Al apilar CON producto, ¿cómo van los identificadores?", ["Mismo costado", "Costado opuesto"])
-            
-            if st.form_submit_button("Calificar Examen"):
+            if st.form_submit_button("Calificar Evaluación"):
                 score = 0
-                if p1 == "16 niveles": score += 50
-                if p2 == "Costado opuesto": score += 50
+                if p1 == "Mismo costado": score += 20
+                if p2 == "100": score += 20
+                if p3 == "17.25 kg": score += 20
+                if p4 == "16": score += 20
+                if p5 == "No": score += 20
                 
                 if score >= 80:
-                    st.success(f"¡Excelente! Calificación: {score}%")
+                    st.success(f"¡APROBADO! Puntaje: {score}%")
                     st.balloons()
-                    # Generación de certificado simple
-                    cert_text = f"CERTIFICADO DE APROBACIÓN\n\nEl empleado con cédula {st.session_state['cedula']}\nha aprobado satisfactoriamente el {modulo}.\n\n¡Felicidades!"
-                    st.download_button("🎓 Descargar mi Certificado", cert_text, file_name=f"Certificado_{modulo}.txt")
+                    # Simulación de certificado
+                    st.download_button("📜 Descargar Certificado", f"Certificado de Logística Kikes\n\nEl estudiante con cédula {st.session_state['cedula']}\nha aprobado satisfactoriamente el Módulo 1.", f"Certificado_Modulo1_{st.session_state['cedula']}.txt")
                 else:
-                    st.error(f"Calificación: {score}%. Necesitas 80% para el certificado. ¡Repasa el módulo!")
+                    st.error(f"Puntaje insuficiente: {score}%. Debes repasar las diapositivas y obtener mínimo 80%.")
 
     else:
-        st.write("Información técnica en construcción...")
+        st.write("Módulo en construcción con la misma estructura visual.")
