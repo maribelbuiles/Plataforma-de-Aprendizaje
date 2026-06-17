@@ -17,14 +17,14 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA (Evita borrosidad al agrandar) */
+        /* CSS PARA FORZAR NITIDEZ EXTREMA */
         img {
-            image-rendering: -webkit-optimize-contrast !important; /* Chrome, Safari, Edge */
-            image-rendering: crisp-edges !important;               /* Firefox */
+            image-rendering: -webkit-optimize-contrast !important;
+            image-rendering: crisp-edges !important;
             image-rendering: -moz-crisp-edges !important;
             image-rendering: -o-crisp-edges !important;
             image-rendering: high-quality !important;
-            -ms-interpolation-mode: nearest-neighbor !important;   /* IE */
+            -ms-interpolation-mode: nearest-neighbor !important;
             display: block;
             margin-left: auto;
             margin-right: auto;
@@ -72,45 +72,40 @@ else:
         st.session_state['cedula'] = None
         st.rerun()
 
-    # 4. CONTENIDO MÓDULO 1 (Pestañas con control de nitidez)
+    # 4. CONTENIDO MÓDULO 1
     if modulo == "Módulo 1: Equipo de Canastas Aptas":
         st.markdown("<h2 style='color: #008a3e;'>📦 Módulo 1: Equipo de Canastas Aptas</h2>", unsafe_allow_html=True)
         
-        tabs = st.tabs(["🌎 Cobertura", "🕒 Historia", "🔍 Partes", "📐 Dimensiones", "🔄 Sistemas", "🚛 Cargue", "🚫 Prohibiciones"])
+        # Pestañas actualizadas (sin Cobertura)
+        tabs = st.tabs(["🕒 Historia", "🔍 Partes", "📐 Dimensiones", "🔄 Sistemas", "🚛 Cargue", "🚫 Prohibiciones"])
 
-        # Función optimizada para mostrar imágenes nítidas
         def st_image_nitida(path):
             if os.path.exists(path):
-                # Usamos una columna central para evitar que la imagen se estire más allá de su resolución real
                 _, col_img, _ = st.columns([0.5, 5, 0.5]) 
                 with col_img:
                     st.image(path, use_container_width=True)
 
         with tabs[0]:
-            st.subheader("Cobertura Nacional Kikes")
-            st_image_nitida("mapa.png")
-
-        with tabs[1]:
             st.subheader("Cronología de la Canasta Ovoid")
             st_image_nitida("cronologia.png")
 
-        with tabs[2]:
+        with tabs[1]:
             st.subheader("Partes de la Canasta Ovoid")
             st_image_nitida("partes.png")
 
-        with tabs[3]:
+        with tabs[2]:
             st.subheader("Ficha Técnica: Dimensiones")
             st_image_nitida("dimensiones.png")
 
-        with tabs[4]:
+        with tabs[3]:
             st.subheader("Sistemas de Apilado y Anidado")
             st_image_nitida("sistemas.png")
 
-        with tabs[5]:
+        with tabs[4]:
             st.subheader("Tablas de Cargue y Autoventa")
             st_image_nitida("cargue_vehiculos.png")
 
-        with tabs[6]:
+        with tabs[5]:
             st.subheader("🚫 Usos Indebidos del Equipo")
             st_image_nitida("usos_prohibidos.png")
 
@@ -133,4 +128,4 @@ else:
                 else:
                     st.error(f"Puntaje: {score}%. Requieres 80%.")
     else:
-        st.write("Módulo informativo.")
+        st.write("Módulo informativo en construcción.")
