@@ -1,7 +1,7 @@
 import streamlit as st
 import os
 
-# 1. CONFIGURACIÓN DE PÁGINA Y ESTILOS
+# 1. CONFIGURACIÓN DE PÁGINA Y ESTILOS PARA MÁXIMA NITIDEZ
 st.set_page_config(page_title="Ruta de Aprendizaje Kikes", page_icon="📦", layout="wide")
 
 st.markdown("""
@@ -17,14 +17,18 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* Mejora de nitidez forzada */
+        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA (Evita borrosidad al agrandar) */
         img {
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: pixelated;
+            image-rendering: -webkit-optimize-contrast !important; /* Chrome, Safari, Edge */
+            image-rendering: crisp-edges !important;               /* Firefox */
+            image-rendering: -moz-crisp-edges !important;
+            image-rendering: -o-crisp-edges !important;
+            image-rendering: high-quality !important;
+            -ms-interpolation-mode: nearest-neighbor !important;   /* IE */
             display: block;
             margin-left: auto;
             margin-right: auto;
+            border-radius: 8px;
         }
 
         .stButton>button {
@@ -42,7 +46,7 @@ if 'cedula' not in st.session_state: st.session_state['cedula'] = None
 if st.session_state['cedula'] is None:
     logo = "logo.png" if os.path.exists("logo.png") else ("logo.png.png" if os.path.exists("logo.png.png") else None)
     if logo:
-        _, col_l, _ = st.columns([3, 1, 3]) # Columna de logo más pequeña para nitidez
+        _, col_l, _ = st.columns([3, 1, 3])
         with col_l: st.image(logo, use_container_width=True)
             
     st.markdown("<div class='main-banner'><h1>Plataforma de Cadena de Abastecimiento</h1></div>", unsafe_allow_html=True)
@@ -68,48 +72,49 @@ else:
         st.session_state['cedula'] = None
         st.rerun()
 
-    # 4. CONTENIDO MÓDULO 1 (Pestañas con tamaño controlado para nitidez)
+    # 4. CONTENIDO MÓDULO 1 (Pestañas con control de nitidez)
     if modulo == "Módulo 1: Equipo de Canastas Aptas":
         st.markdown("<h2 style='color: #008a3e;'>📦 Módulo 1: Equipo de Canastas Aptas</h2>", unsafe_allow_html=True)
         
         tabs = st.tabs(["🌎 Cobertura", "🕒 Historia", "🔍 Partes", "📐 Dimensiones", "🔄 Sistemas", "🚛 Cargue", "🚫 Prohibiciones"])
 
-        # Función para centrar imagen y evitar que crezca demasiado
-        def st_image_pro(path):
+        # Función optimizada para mostrar imágenes nítidas
+        def st_image_nitida(path):
             if os.path.exists(path):
-                _, col_img, _ = st.columns([1, 4, 1]) # Crea un margen lateral para que la imagen no sea gigante
+                # Usamos una columna central para evitar que la imagen se estire más allá de su resolución real
+                _, col_img, _ = st.columns([0.5, 5, 0.5]) 
                 with col_img:
                     st.image(path, use_container_width=True)
 
         with tabs[0]:
             st.subheader("Cobertura Nacional Kikes")
-            st_image_pro("mapa.png")
+            st_image_nitida("mapa.png")
 
         with tabs[1]:
             st.subheader("Cronología de la Canasta Ovoid")
-            st_image_pro("cronologia.png")
+            st_image_nitida("cronologia.png")
 
         with tabs[2]:
             st.subheader("Partes de la Canasta Ovoid")
-            st_image_pro("partes.png")
+            st_image_nitida("partes.png")
 
         with tabs[3]:
             st.subheader("Ficha Técnica: Dimensiones")
-            st_image_pro("dimensiones.png")
+            st_image_nitida("dimensiones.png")
 
         with tabs[4]:
             st.subheader("Sistemas de Apilado y Anidado")
-            st_image_pro("sistemas.png")
+            st_image_nitida("sistemas.png")
 
         with tabs[5]:
             st.subheader("Tablas de Cargue y Autoventa")
-            st_image_pro("cargue_vehiculos.png")
+            st_image_nitida("cargue_vehiculos.png")
 
         with tabs[6]:
             st.subheader("🚫 Usos Indebidos del Equipo")
-            st_image_pro("usos_prohibidos.png")
+            st_image_nitida("usos_prohibidos.png")
 
-    # 5. EVALUACIÓN (Lógica original)
+    # 5. EVALUACIÓN
     elif "Evaluación" in modulo:
         st.markdown(f"<h2 style='color: #008a3e;'>{modulo}</h2>", unsafe_allow_html=True)
         with st.form("quiz"):
