@@ -172,14 +172,14 @@ else:
                     st.info("💡 Diapositiva: Canasta Kikes.png (Suba la imagen para visualizarla)")
             with col_dim:
                 img_found = False
-                for nombre in ["Dimensiones Canasta.png", "Dimensiones Canasta Ovoid.png", "Slide11.PNG", "Slide11.png", "dimensiones_canasta.png"]:
+                for nombre in ["Dimensiones Canasta Kikes.png", "Dimensiones Canasta.png", "Dimensiones Canasta Ovoid.png", "Slide11.PNG", "Slide11.png", "dimensiones_canasta.png"]:
                     if os.path.exists(nombre):
                         st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Canasta ($63\\text{ cm} \\times 32\\text{ cm} \\times 23\\text{ cm}$)</p>", unsafe_allow_html=True)
                         st.image(nombre, use_container_width=True)
                         img_found = True
                         break
                 if not img_found:
-                    st.info("💡 Diapositiva: Dimensiones Canasta.png (Suba la imagen para visualizarla)")
+                    st.info("💡 Diapositiva: Dimensiones Canasta Kikes.png (Suba la imagen para visualizarla)")
             st.markdown("---")
             
             # --- ESTIBA ---
@@ -342,7 +342,7 @@ else:
             )
             st_image_nitida_multiple(
                 ["Slide31.PNG", "Slide31.png", "tabla_unidades_cedi.png"], 
-                "Capacidades de Distribución en CEDI"
+                "Capacidades de Distribización en CEDI"
             )
             st_image_nitida_multiple(
                 ["Slide32.PNG", "Slide32.png", "llegada_canastas_producto.png"], 
