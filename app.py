@@ -118,7 +118,7 @@ if st.session_state['cedula'] is None:
                 else: 
                     st.error("Cédula no válida.")
 else:
-    # --- NAVENACIÓN ---
+    # --- NAVEGACIÓN ---
     st.sidebar.markdown(f"### 👤 Empleado: `{st.session_state['cedula']}`")
     modulo = st.sidebar.radio("🗺️ Mapa de Ruta Pro", [
         "Módulo 1: Equipo de Canastas Aptas", 
@@ -289,21 +289,21 @@ else:
         with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
             
-            # Primer set de imágenes renderizado pequeño y nítido sin alert box
+            # Primer set de imágenes renderizado mediano y nítido
             img_found1 = False
             for nombre in ["Sistemas Canasta Ovoid.png", "Slide13.PNG", "Slide13.png", "sistemas_canasta.png"]:
                 if os.path.exists(nombre):
                     img_base64 = get_base64_image(nombre)
-                    st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="uniform-container" style="height: 380px;"><img src="data:image/png;base64,{img_base64}" class="uniform-img" style="image-rendering: crisp-edges !important;"></div>', unsafe_allow_html=True)
                     img_found1 = True
                     break
                     
-            # Segundo set de imágenes renderizado pequeño y nítido sin alert box
+            # Segundo set de imágenes renderizado mediano y nítido
             img_found2 = False
             for nombre in ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png"]:
                 if os.path.exists(nombre):
                     img_base64 = get_base64_image(nombre)
-                    st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="uniform-container" style="height: 380px;"><img src="data:image/png;base64,{img_base64}" class="uniform-img" style="image-rendering: crisp-edges !important;"></div>', unsafe_allow_html=True)
                     img_found2 = True
                     break
 
