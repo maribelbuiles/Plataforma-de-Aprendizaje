@@ -32,8 +32,9 @@ st.markdown("""
             border-radius: 8px;
         }
 
-        /* 🔍 OPTIMIZACIÓN LOGÍSTICA PARA LETRAS Y TEXTOS ULTRA NÍTIDOS */
-        html, body, p, div, span, h1, h2, h3, h4, h5, h6 {
+        /* 🔍 OPTIMIZACIÓN PARA QUE TODA LA PLATAFORMA TENGA LA MISMA LETRA ULTRA NÍTIDA */
+        *, html, body, p, div, span, h1, h2, h3, h4, h5, h6, label, input, button, select, textarea {
+            font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
             -webkit-font-smoothing: antialiased !important;
             -moz-osx-font-smoothing: grayscale !important;
             text-rendering: optimizeLegibility !important;
