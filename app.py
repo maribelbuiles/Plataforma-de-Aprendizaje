@@ -33,7 +33,7 @@ st.markdown("""
             border-radius: 8px;
         }
 
-        /* 🔍 OPTIMIZACIÓN DE FUFUENTES EXCLUYENDO SELECTORES UNIVERSALES PARA NO ROMPER FUENTES DE ICONOS DE STREAMLIT */
+        /* 🔍 OPTIMIZACIÓN DE FUENTE EXCLUYENDO SELECTORES UNIVERSALES PARA NO ROMPER FUENTES DE ICONOS DE STREAMLIT */
         html, body, p, h1, h2, h3, h4, h5, h6, label, input, button, select, textarea {
             font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
             -webkit-font-smoothing: antialiased !important;
@@ -140,21 +140,23 @@ if st.session_state['cedula'] is None:
         with st.form("login"):
             ced = st.text_input("Número de Cédula del Empleado:")
             if st.form_submit_button("Ingresar a la Capacitación"):
-                # Carga dinámica y robusta de las cédulas autorizadas del CSV adjunto
                 csv_path = "Cadena de abastecimiento (1).xlsx - Cadena de abastecimiento.csv"
                 try:
                     df_auth = pd.read_csv(csv_path)
+                    # Normalizamos los nombres de las columnas para remover espacios accidentales
+                    df_auth.columns = df_auth.columns.str.strip()
+                    # Extraemos las cédulas válidas apuntando de forma exacta a la columna 'Identificacion'
                     cedulas_validas = set(df_auth['Identificacion'].astype(str).str.strip())
                 except Exception as e:
                     cedulas_validas = set()
-                    st.error("Error al cargar la base de datos de autorización. Contacte al administrador.")
+                    st.error("Error al cargar la base de datos de autorización. Verifique el archivo CSV.")
 
                 input_cedula = ced.strip()
                 if input_cedula in cedulas_validas:
                     st.session_state['cedula'] = input_cedula
                     st.rerun()
                 else: 
-                    st.error("Número de cédula no autorizado o no registrado en la base de datos de Cadena de Abastecimiento.")
+                    st.error("Número de cédula no autorizado o no registrado en el personal de Cadena de Abastecimiento.")
 else:
     # Definición de opciones de menú exactamente idénticas en aspecto usando caracteres invisibles únicos
     opt_m1 = "Módulo 1: Equipo de Canastas Aptas"
@@ -233,7 +235,21 @@ else:
         # Pestaña 2: Partes
         with tabs[1]:
             st.subheader("Partes de la Canasta Ovoid")
-            st_image_nitida_multiple(["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"])
+            imagen_encontrada_p1 = False
+            for nombre in ["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"]:
+                if os.path.exists(nombre):
+                    img_base64 = get_base64_image(nombre)
+                    st.markdown(f'<div style="max-width: 750px; margin: 0 auto 20px auto;"><img src="data:image/png;base64,{img_base64}" style="width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;"></div>', unsafe_allow_html=True)
+                    imagen_encontrada_p1 = True
+                    break
+            if not imagen_encontrada_p1:
+                st.info("💡 Diapositiva: Partes.png (Suba la imagen para visualizarla en este apartado)")
+                
+            if os.path.exists("Partes2.png"):
+                img_base64_2 = get_base64_image("Partes2.png")
+                st.markdown(f'<div style="max-width: 750px; margin: 20px auto 20px auto;"><img src="data:image/png;base64,{img_base64_2}" style="width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;"></div>', unsafe_allow_html=True)
+            else:
+                st.info("💡 Diapositiva: Partes2.png (Suba la imagen para visualizarla en este apartado)")
 
         # Pestaña 3: Ficha Técnica
         with tabs[2]:
