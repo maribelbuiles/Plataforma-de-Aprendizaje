@@ -150,7 +150,7 @@ else:
         with tabs[1]:
             st.subheader("Partes de la Canasta Ovoid")
             st_image_nitida_multiple(
-                ["Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"], 
+                ["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"], 
                 "Los 9 Componentes Estructurales de la Canasta"
             )
 
