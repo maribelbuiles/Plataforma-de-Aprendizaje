@@ -145,7 +145,7 @@ if st.session_state['cedula'] is None:
                     df_auth = pd.read_csv(csv_path)
                     df_auth.columns = df_auth.columns.str.strip()
                     
-                    # Limpieza ultra robusta para forzar conversión de flotantes (.0) a enteros de texto
+                    # Limpieza robusta para forzar conversión de flotantes (.0) a enteros de texto
                     cedulas_validas = set()
                     if 'Identificacion' in df_auth.columns:
                         for x in df_auth['Identificacion'].dropna():
@@ -376,7 +376,7 @@ else:
             for nombre in ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png"]:
                 if os.path.exists(nombre):
                     img_base64 = get_base64_image(nombre)
-                    st.markdown(f'<div class="uniform-container" style="height: 380px;"><img src="data:image/png;base64,{img_base64}" class="uniform-img" style="image-rendering: crisp-edges !important;"></div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="uniform-container" style="height: 380px;"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                     img_found2 = True
                     break
 
