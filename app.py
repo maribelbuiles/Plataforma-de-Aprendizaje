@@ -161,57 +161,97 @@ else:
             # --- CANASTA ---
             col_comp, col_dim = st.columns(2)
             with col_comp:
-                st_image_nitida_multiple(
-                    ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"], 
-                    "Canastas Kikes AFCA022"
-                )
+                img_found = False
+                for nombre in ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"]:
+                    if os.path.exists(nombre):
+                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Canastas Kikes AFCA022</p>", unsafe_allow_html=True)
+                        st.image(nombre, use_container_width=True)
+                        img_found = True
+                        break
+                if not img_found:
+                    st.info("💡 Diapositiva: Canasta Kikes.png (Suba la imagen para visualizarla)")
             with col_dim:
-                st_image_nitida_multiple(
-                    ["Slide11.PNG", "Slide11.png", "dimensiones_canasta.png"], 
-                    "Dimensiones Canasta ($63\\text{ cm} \\times 32\\text{ cm} \\times 23\\text{ cm}$)"
-                )
+                img_found = False
+                for nombre in ["Slide11.PNG", "Slide11.png", "dimensiones_canasta.png"]:
+                    if os.path.exists(nombre):
+                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Canasta ($63\\text{ cm} \\times 32\\text{ cm} \\times 23\\text{ cm}$)</p>", unsafe_allow_html=True)
+                        st.image(nombre, use_container_width=True)
+                        img_found = True
+                        break
+                if not img_found:
+                    st.info("💡 Diapositiva: Slide11.PNG (Suba la imagen para visualizarla)")
             st.markdown("---")
             
             # --- ESTIBA ---
             col_comp, col_dim = st.columns(2)
             with col_comp:
-                st_image_nitida_multiple(
-                    ["Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"], 
-                    "Estiba Ovoid AFES013"
-                )
+                img_found = False
+                for nombre in ["Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"]:
+                    if os.path.exists(nombre):
+                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Estiba Ovoid AFES013</p>", unsafe_allow_html=True)
+                        st.image(nombre, use_container_width=True)
+                        img_found = True
+                        break
+                if not img_found:
+                    st.info("💡 Diapositiva: Estiba Ovoid.png (Suba la imagen para visualizarla)")
             with col_dim:
-                st_image_nitida_multiple(
-                    ["Dimensiones Estiba Ovoid.png", "Slide10.PNG", "Slide10.png", "dimensiones_estiba.png"], 
-                    "Dimensiones Estiba ($124\\text{ cm} \\times 65\\text{ cm} \\times 10.5\\text{ cm}$)"
-                )
+                img_found = False
+                for nombre in ["Dimensiones Estiba Ovoid.png", "Slide10.PNG", "Slide10.png", "dimensiones_estiba.png"]:
+                    if os.path.exists(nombre):
+                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Estiba ($124\\text{ cm} \\times 65\\text{ cm} \\times 10.5\\text{ cm}$)</p>", unsafe_allow_html=True)
+                        st.image(nombre, use_container_width=True)
+                        img_found = True
+                        break
+                if not img_found:
+                    st.info("💡 Diapositiva: Dimensiones Estiba Ovoid.png (Suba la imagen para visualizarla)")
             st.markdown("---")
             
             # --- GANCHO METÁLICO ---
             col_comp, col_dim = st.columns(2)
             with col_comp:
-                st_image_nitida_multiple(
-                    ["Gancho Metálico.png", "Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"], 
-                    "Gancho Metálico MDGA105"
-                )
+                img_found = False
+                for nombre in ["Gancho Metálico.png", "Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"]:
+                    if os.path.exists(nombre):
+                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Gancho Metálico MDGA105</p>", unsafe_allow_html=True)
+                        st.image(nombre, use_container_width=True)
+                        img_found = True
+                        break
+                if not img_found:
+                    st.info("💡 Diapositiva: Gancho Metálico.png (Suba la imagen para visualizarla)")
             with col_dim:
-                st_image_nitida_multiple(
-                    ["Dimensiones Gancho Metálico.png"], 
-                    "Dimensiones Gancho Metálico ($8\\text{ cm} \\times 8.6\\text{ cm} \\times 3\\text{ cm}$)"
-                )
+                img_found = False
+                for nombre in ["Dimensiones Gancho Metálico.png"]:
+                    if os.path.exists(nombre):
+                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Gancho Metálico ($8\\text{ cm} \\times 8.6\\text{ cm} \\times 3\\text{ cm}$)</p>", unsafe_allow_html=True)
+                        st.image(nombre, use_container_width=True)
+                        img_found = True
+                        break
+                if not img_found:
+                    st.info("💡 Diapositiva: Dimensiones Gancho Metálico.png (Suba la imagen para visualizarla)")
             st.markdown("---")
             
             # --- SEPARADOR OVOID ---
             col_comp, col_dim = st.columns(2)
             with col_comp:
-                st_image_nitida_multiple(
-                    ["Separador Ovoid.png", "Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"], 
-                    "Separador Ovoid AFSE003"
-                )
+                img_found = False
+                for nombre in ["Separador Ovoid.png", "Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"]:
+                    if os.path.exists(nombre):
+                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Separador Ovoid AFSE003</p>", unsafe_allow_html=True)
+                        st.image(nombre, use_container_width=True)
+                        img_found = True
+                        break
+                if not img_found:
+                    st.info("💡 Diapositiva: Separador Ovoid.png (Suba la imagen para visualizarla)")
             with col_dim:
-                st_image_nitida_multiple(
-                    ["Dimensiones Separador Ovoid.png", "Slide12.PNG", "Slide12.png", "dimensiones_separador.png"], 
-                    "Dimensiones Separador ($124\\text{ cm} \\times 66\\text{ cm} \\times 2\\text{ cm}$)"
-                )
+                img_found = False
+                for nombre in ["Dimensiones Separador Ovoid.png", "Slide12.PNG", "Slide12.png", "dimensiones_separador.png"]:
+                    if os.path.exists(nombre):
+                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Separador ($124\\text{ cm} \\times 66\\text{ cm} \\times 2\\text{ cm}$)</p>", unsafe_allow_html=True)
+                        st.image(nombre, use_container_width=True)
+                        img_found = True
+                        break
+                if not img_found:
+                    st.info("💡 Diapositiva: Dimensiones Separador Ovoid.png (Suba la imagen para visualizarla)")
 
         # Pestaña 4: Sistemas (Slide 13 y 14)
         with tabs[3]:
@@ -302,7 +342,7 @@ else:
             )
             st_image_nitida_multiple(
                 ["Slide31.PNG", "Slide31.png", "tabla_unidades_cedi.png"], 
-                "Capacidades de Distribución en CEDI"
+                "Capacidades de Distribización en CEDI"
             )
             st_image_nitida_multiple(
                 ["Slide32.PNG", "Slide32.png", "llegada_canastas_producto.png"], 
