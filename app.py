@@ -289,7 +289,7 @@ else:
         with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
             st_image_nitida_multiple(
-                ["Slide13.PNG", "Slide13.png", "sistemas_canasta.png"], 
+                ["Sistemas Canasta Ovoid.png", "Slide13.PNG", "Slide13.png", "sistemas_canasta.png"], 
                 "Alineación y Posicionamiento de Identificadores de Color"
             )
             st_image_nitida_multiple(
