@@ -153,25 +153,27 @@ else:
             col_izq, col_der = st.columns([2.2, 1])
             
             with col_izq:
-                # Infografía del timeline (Lado izquierdo)
+                # Infografía del timeline (Lado izquierdo con nitidez optimizada para textos)
                 imagen_cronologia_cargada = False
                 for nombre in ["Slide4.PNG", "Slide4.png", "cronologia.png"]:
                     if os.path.exists(nombre):
-                        st.image(nombre, use_container_width=True)
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f'<img src="data:image/png;base64,{img_base64}" style="width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; -webkit-transform: translateZ(0); transform: translateZ(0); border-radius: 8px;">', unsafe_allow_html=True)
                         imagen_cronologia_cargada = True
                         break
                 if not imagen_cronologia_cargada:
                     st.info("💡 Diapositiva: Slide4.PNG (Línea de tiempo de la Cronología)")
                     
             with col_der:
-                # Presentador (Video interactivo si existe, o imagen estática en su defecto)
+                # Presentador (Video interactivo si existe, o imagen estática optimizada en su defecto)
                 if os.path.exists("Video.mp4"):
                     st.video("Video.mp4")
                 else:
                     imagen_presentador_cargada = False
                     for nombre in ["Slide3.PNG", "Slide3.png", "introduccion_cronologia.png"]:
                         if os.path.exists(nombre):
-                            st.image(nombre, use_container_width=True)
+                            img_base64 = get_base64_image(nombre)
+                            st.markdown(f'<img src="data:image/png;base64,{img_base64}" style="width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; -webkit-transform: translateZ(0); transform: translateZ(0); border-radius: 8px;">', unsafe_allow_html=True)
                             imagen_presentador_cargada = True
                             break
                     if not imagen_presentador_cargada:
