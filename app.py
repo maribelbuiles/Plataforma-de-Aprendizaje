@@ -32,6 +32,32 @@ st.markdown("""
             border-radius: 8px;
         }
 
+        /* 🔍 OPTIMIZACIÓN LOGÍSTICA PARA LETRAS Y TEXTOS ULTRA NÍTIDOS */
+        html, body, p, div, span, h1, h2, h3, h4, h5, h6 {
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
+            text-rendering: optimizeLegibility !important;
+        }
+
+        /* 📐 CONTENEDOR ESTÁNDAR PARA HACER LAS IMÁGENES DEL MISMO TAMÁÑO */
+        .uniform-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 320px; /* Altura idéntica simétrica */
+            width: 100%;
+            background-color: transparent;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .uniform-img {
+            height: 100% !important;
+            width: 100% !important;
+            object-fit: contain !important; /* Mantiene la proporción original para no pixelar ni estirar la letra */
+            border-radius: 8px;
+        }
+
         .stButton>button {
             border-radius: 30px;
             background-color: #008a3e;
@@ -165,7 +191,8 @@ else:
                 for nombre in ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"]:
                     if os.path.exists(nombre):
                         st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Canastas Kikes AFCA022</p>", unsafe_allow_html=True)
-                        st.image(nombre, use_container_width=True)
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
                         break
                 if not img_found:
@@ -175,7 +202,8 @@ else:
                 for nombre in ["Dimensiones Canasta Kikes.png", "Dimensiones Canasta.png", "Dimensiones Canasta Ovoid.png", "Slide11.PNG", "Slide11.png", "dimensiones_canasta.png"]:
                     if os.path.exists(nombre):
                         st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Canasta ($63\\text{ cm} \\times 32\\text{ cm} \\times 23\\text{ cm}$)</p>", unsafe_allow_html=True)
-                        st.image(nombre, use_container_width=True)
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
                         break
                 if not img_found:
@@ -189,7 +217,8 @@ else:
                 for nombre in ["Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"]:
                     if os.path.exists(nombre):
                         st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Estiba Ovoid AFES013</p>", unsafe_allow_html=True)
-                        st.image(nombre, use_container_width=True)
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
                         break
                 if not img_found:
@@ -199,7 +228,8 @@ else:
                 for nombre in ["Dimensiones Estiba Ovoid.png", "Slide10.PNG", "Slide10.png", "dimensiones_estiba.png"]:
                     if os.path.exists(nombre):
                         st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Estiba ($124\\text{ cm} \\times 65\\text{ cm} \\times 10.5\\text{ cm}$)</p>", unsafe_allow_html=True)
-                        st.image(nombre, use_container_width=True)
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
                         break
                 if not img_found:
@@ -213,7 +243,8 @@ else:
                 for nombre in ["Gancho Metálico.png", "Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"]:
                     if os.path.exists(nombre):
                         st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Gancho Metálico MDGA105</p>", unsafe_allow_html=True)
-                        st.image(nombre, use_container_width=True)
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
                         break
                 if not img_found:
@@ -223,7 +254,8 @@ else:
                 for nombre in ["Dimensiones Gancho Metálico.png"]:
                     if os.path.exists(nombre):
                         st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Gancho Metálico ($8\\text{ cm} \\times 8.6\\text{ cm} \\times 3\\text{ cm}$)</p>", unsafe_allow_html=True)
-                        st.image(nombre, use_container_width=True)
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
                         break
                 if not img_found:
@@ -237,7 +269,8 @@ else:
                 for nombre in ["Separador Ovoid.png", "Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"]:
                     if os.path.exists(nombre):
                         st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Separador Ovoid AFSE003</p>", unsafe_allow_html=True)
-                        st.image(nombre, use_container_width=True)
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
                         break
                 if not img_found:
@@ -247,7 +280,8 @@ else:
                 for nombre in ["Dimensiones Separador Ovoid.png", "Slide12.PNG", "Slide12.png", "dimensiones_separador.png"]:
                     if os.path.exists(nombre):
                         st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Separador ($124\\text{ cm} \\times 66\\text{ cm} \\times 2\\text{ cm}$)</p>", unsafe_allow_html=True)
-                        st.image(nombre, use_container_width=True)
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
                         break
                 if not img_found:
@@ -342,7 +376,7 @@ else:
             )
             st_image_nitida_multiple(
                 ["Slide31.PNG", "Slide31.png", "tabla_unidades_cedi.png"], 
-                "Capacidades de Distribización en CEDI"
+                "Capacidades de Distribución en CEDI"
             )
             st_image_nitida_multiple(
                 ["Slide32.PNG", "Slide32.png", "llegada_canastas_producto.png"], 
