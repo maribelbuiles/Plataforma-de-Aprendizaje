@@ -18,7 +18,7 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA EN DISPOSITIVOS EN PANTALLAS */
+        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA EN DISPOSITIVOS Y PANTALLAS */
         img {
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: crisp-edges !important;
@@ -32,7 +32,7 @@ st.markdown("""
             border-radius: 8px;
         }
 
-        /* 🔍 OPTIMIZACIÓN PARA QUE TODA LA PLATAFORMA TENGA LA MISMA LETRA ULTRA NÍTIDOS */
+        /* 🔍 OPTIMIZACIÓN PARA QUE TODA LA PLATAFORMA TENGA LA MISMA LETRA ULTRA NÍTIDA */
         *, html, body, p, div, span, h1, h2, h3, h4, h5, h6, label, input, button, select, textarea {
             font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
             -webkit-font-smoothing: antialiased !important;
@@ -40,22 +40,19 @@ st.markdown("""
             text-rendering: optimizeLegibility !important;
         }
 
-        /* 📐 CONTENEDOR AJUSTADO PARA QUE LAS LETRAS INTERNAS DE LAS IMÁGENES TENGAN EL MISMO TAMÁÑO */
+        /* 📐 CONTENEDOR AJUSTADO PARA QUE LAS LETRAS INTERNAS DE LAS IMÁGENES TENGAN EL MISMO TAMAÑO PERMANECIENDO PROPORCIONALES */
         .uniform-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 220px; /* Altura regulada pequeña constante */
             width: 100%;
             background-color: transparent;
-            overflow: hidden;
             margin-bottom: 10px;
         }
 
         .uniform-img {
-            height: 100% !important;  /* Fuerza la misma altura absoluta para que el tamaño de letra escale idéntico */
-            width: auto !important;    /* Ajusta el ancho de forma proporcional manteniendo la relación de aspecto */
-            max-width: 100% !important; /* Evita desbordamientos en columnas estrechas */
+            width: 100% !important;    /* Ajusta al ancho completo de la columna proporcional */
+            height: auto !important;   /* Mantiene la proporción perfecta del texto sin encoger por restricciones de altura */
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: high-quality !important; 
             -webkit-transform: translateZ(0); 
@@ -190,7 +187,7 @@ else:
             st.subheader("Ficha Técnica: Componentes y Dimensiones")
             
             # --- CANASTA ---
-            col_comp, col_dim = st.columns(2)
+            col_comp, col_dim = st.columns([1, 1.65])
             with col_comp:
                 img_found = False
                 for nombre in ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"]:
@@ -214,7 +211,7 @@ else:
             st.markdown("---")
             
             # --- ESTIBA ---
-            col_comp, col_dim = st.columns(2)
+            col_comp, col_dim = st.columns([1, 1.65])
             with col_comp:
                 img_found = False
                 for nombre in ["Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"]:
@@ -238,7 +235,7 @@ else:
             st.markdown("---")
             
             # --- GANCHO METÁLICO ---
-            col_comp, col_dim = st.columns(2)
+            col_comp, col_dim = st.columns([1, 1.65])
             with col_comp:
                 img_found = False
                 for nombre in ["Gancho Metálico.png", "Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"]:
@@ -262,7 +259,7 @@ else:
             st.markdown("---")
             
             # --- SEPARADOR OVOID ---
-            col_comp, col_dim = st.columns(2)
+            col_comp, col_dim = st.columns([1, 1.65])
             with col_comp:
                 img_found = False
                 for nombre in ["Separador Ovoid.png", "Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"]:
