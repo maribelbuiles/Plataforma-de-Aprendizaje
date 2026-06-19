@@ -18,7 +18,7 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA */
+        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA DE IMÁGENES DE DIAPOSITIVAS */
         img {
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: crisp-edges !important;
@@ -38,6 +38,16 @@ st.markdown("""
             color: white;
             font-weight: bold;
         }
+        
+        /* Contenedor elegante de advertencias logísticas */
+        .info-card-kikes {
+            background-color: #e8f5e9;
+            border-left: 6px solid #008a3e;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -47,7 +57,8 @@ def get_base64_image(image_path):
         return base64.b64encode(img_file.read()).decode()
 
 # --- CONTROL DEL ESTADO DE SESIÓN ---
-if 'cedula' not in st.session_state: st.session_state['cedula'] = None
+if 'cedula' not in st.session_state: 
+    st.session_state['cedula'] = None
 
 # Identificación de logo
 logo_path = "logo.png" if os.path.exists("logo.png") else ("logo.png.png" if os.path.exists("logo.png.png") else None)
@@ -55,7 +66,8 @@ logo_path = "logo.png" if os.path.exists("logo.png") else ("logo.png.png" if os.
 if st.session_state['cedula'] is None:
     if logo_path:
         _, col_l, _ = st.columns([3, 1, 3])
-        with col_l: st.image(logo_path, use_container_width=True)
+        with col_l: 
+            st.image(logo_path, use_container_width=True)
             
     st.markdown("<div class='main-banner'><h1>Plataforma de Cadena de Abastecimiento</h1></div>", unsafe_allow_html=True)
     _, col_f, _ = st.columns([1, 1.5, 1])
@@ -66,9 +78,10 @@ if st.session_state['cedula'] is None:
                 if ced.isdigit() and len(ced) >= 5:
                     st.session_state['cedula'] = ced
                     st.rerun()
-                else: st.error("Cédula no válida.")
+                else: 
+                    st.error("Cédula no válida.")
 else:
-    # --- NAVEGACIÓN ---
+    # --- NAVEGACIÓN LATERAL ---
     st.sidebar.markdown(f"### 👤 Empleado: `{st.session_state['cedula']}`")
     modulo = st.sidebar.radio("🗺️ Mapa de Ruta Pro", [
         "Módulo 1: Equipo de Canastas Aptas", 
@@ -80,34 +93,124 @@ else:
         st.session_state['cedula'] = None
         st.rerun()
 
-    # --- CONTENIDO MÓDULO 1 ---
+    # --- CONTENIDO MÓDULO 1 (REDISEÑADO CON LAS DIAPOSITIVAS DE LA PPT CORPORATIVA) ---
     if modulo == "Módulo 1: Equipo de Canastas Aptas":
         st.markdown("<h2 style='color: #008a3e;'>📦 Módulo 1: Equipo de Canastas Aptas</h2>", unsafe_allow_html=True)
-        tabs = st.tabs(["🕒 Historia", "🔍 Partes", "📐 Dimensiones", "🔄 Sistemas", "🚛 Cargue", "🚫 Prohibiciones"])
+        
+        # Pestañas basadas al 100% en el orden e información de "Equipo Canastas Aptas.pptx"
+        tabs = st.tabs([
+            "📋 Portada", 
+            "🕒 Cronología", 
+            "🔍 Partes", 
+            "📐 Dimensiones", 
+            "🔄 Sistemas", 
+            "🚫 Usos Indebidos", 
+            "📦 Uso Con Producto", 
+            "🏗️ Apilado", 
+            "🏢 Cedi & CE", 
+            "🏭 Plantas"
+        ])
 
-        def st_image_nitida(path):
-            if os.path.exists(path):
-                _, col_img, _ = st.columns([1, 3, 1]) 
-                with col_img: st.image(path, use_container_width=True)
+        # Función robusta con fallback para renderizar imágenes de la presentación
+        def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
+            imagen_encontrada = False
+            for nombre in posibles_nombres:
+                if os.path.exists(nombre):
+                    if subtitulo_opcional:
+                        st.markdown(f"<p style='text-align: center; color: #475569; font-weight: bold;'>{subtitulo_opcional}</p>", unsafe_allow_html=True)
+                    _, col_img, _ = st.columns([1, 4, 1]) 
+                    with col_img: 
+                        st.image(nombre, use_container_width=True)
+                    imagen_encontrada = True
+                    break
+            if not imagen_encontrada:
+                # Indicador elegante en caso de que falte cargar la diapositiva específica en Streamlit
+                st.info(f"Diapositiva disponible: {posibles_nombres[0]} (Suba la imagen para visualizarla en este apartado)")
 
+        # Pestaña 1: Portada
         with tabs[0]:
-            st.subheader("Cronología de la Canasta Ovoid")
-            st_image_nitida("cronologia.png")
+            st.subheader("Equipo de Canastas Aptas - Ruta de Abastecimiento Nacional")
+            st_image_nitida_multiple(
+                ["portada.png", "portada.jpg", "Slide1.png", "Slide1.PNG"], 
+                "Esquema e Identidad Corporativa de Canastas Aptas"
+            )
+            st_image_nitida_multiple(
+                ["mapa.png", "mapa.jpg", "Slide2.png", "Slide2.PNG"], 
+                "Mapa General de Distribución Nacional (Caloto, Bucaramanga, Bogotá D.C., Barranquilla, Cali, etc.)"
+            )
+
+        # Pestaña 2: Cronología
         with tabs[1]:
-            st.subheader("Partes de la Canasta Ovoid")
-            st_image_nitida("partes.png")
+            st.subheader("Cronología de la Canasta Ovoid")
+            st_image_nitida_multiple(
+                ["cronologia.png", "cronologia.jpg", "Slide3.png", "Slide4.png", "Slide4.PNG"],
+                "Línea de Tiempo del Proyecto: Desde el Diseño Conceptual (2019) hasta la Operación Nacional Total (2023)"
+            )
+
+        # Pestaña 3: Partes
         with tabs[2]:
-            st.subheader("Ficha Técnica: Dimensiones")
-            st_image_nitida("dimensiones.png")
+            st.subheader("Partes de la Canasta Ovoid")
+            st_image_nitida_multiple(
+                ["partes.png", "partes.jpg", "image_3a2949.jpg", "Slide5.png", "Slide5.PNG"],
+                "Los 9 Componentes del Molde y sus Funciones de Distribución de Carga"
+            )
+
+        # Pestaña 4: Dimensiones
         with tabs[3]:
-            st.subheader("Sistemas de Apilado y Anidado")
-            st_image_nitida("sistemas.png")
+            st.subheader("Ficha Técnica: Dimensiones del Equipo")
+            st.write("Medidas del sistema para la prevención de riesgos y un estibado balanceado:")
+            st_image_nitida_multiple(
+                ["dimensiones.png", "dimensiones.jpg", "Slide6.png", "Slide7.png", "Slide8.png", "Slide9.png", "Slide10.png", "Slide11.png", "Slide12.png"],
+                "Dimensiones Oficiales: Canastas Kikes (AFCA022), Estiba (AFES013), Gancho (MDGA105) y Separadores (AFSE003)"
+            )
+
+        # Pestaña 5: Sistemas
         with tabs[4]:
-            st.subheader("Tablas de Cargue y Autoventa")
-            st_image_nitida("cargue_vehiculos.png")
+            st.subheader("Sistemas de Apilado y Anidado")
+            st_image_nitida_multiple(
+                ["sistemas.png", "sistemas.jpg", "Slide13.png", "Slide14.png", "Slide14.PNG"],
+                "Orientación Técnica de los Identificadores de Color en Costados"
+            )
+
+        # Pestaña 6: Usos Indebidos
         with tabs[5]:
-            st.subheader("🚫 Usos Indebidos del Equipo")
-            st_image_nitida("usos_prohibidos.png")
+            st.subheader("Usos Indebidos de los Activos de Kikes")
+            st_image_nitida_multiple(
+                ["usos_prohibidos.png", "usos_prohibidos.jpg", "usos_indebidos.png", "usos_indebidos.jpg", "Slide15.png", "Slide16.png", "Slide16.PNG"],
+                "🚫 Protocolo de Protección del Activo: Prohibido arrastrar, usar como silla, escalón o guardar basuras"
+            )
+
+        # Pestaña 7: Uso Con Producto
+        with tabs[6]:
+            st.subheader("Uso de Canasta Ovoid con Producto")
+            st_image_nitida_multiple(
+                ["uso_con_producto.png", "uso_con_producto.jpg", "Slide17.png", "Slide18.png", "Slide19.png", "Slide20.png", "Slide21.png", "Slide22.png", "Slide23.png", "Slide24.png", "Slide25.png", "Slide26.png", "Slide27.png"],
+                "Carga Máxima Operativa Autorizada: 17.25 kg y Cantidad Límite de 240 huevos por canasta"
+            )
+
+        # Pestaña 8: Apilado
+        with tabs[7]:
+            st.subheader("Paso a Paso de Apilado de Canasta Ovoid")
+            st_image_nitida_multiple(
+                ["apilado.png", "apilado.jpg", "apilado_canasta.png", "Slide28.png", "Slide28.PNG"],
+                "Procedimiento Correcto para Garantizar la Estabilidad Vertical de las Columnas"
+            )
+
+        # Pestaña 9: Cedi & CE
+        with tabs[8]:
+            st.subheader("Parámetros y Capacidad de Vehículos Autoventa")
+            st_image_nitida_multiple(
+                ["cedi_ce.png", "cedi_ce.jpg", "cargue_vehiculos.png", "cargue_vehiculos.jpg", "Slide29.png", "Slide30.png", "Slide31.png", "Slide32.png", "Slide33.png", "Slide34.png", "Slide35.png"],
+                "Distribución de Vehículos: Límites Técnicos para Dongfeng, Minitruck y Motocarros"
+            )
+
+        # Pestaña 10: Plantas
+        with tabs[9]:
+            st.subheader("Flujos Técnicos y Remontado en Plantas")
+            st_image_nitida_multiple(
+                ["plantas.png", "plantas.jpg", "Slide36.png", "Slide37.png", "Slide38.png"],
+                "Aseguramiento con Ganchos de Estibas Remontadas y Uso del Separador Ovoid"
+            )
 
     # --- EVALUACIÓN Y CERTIFICADO CREATIVO ---
     elif "Evaluación" in modulo:
@@ -161,4 +264,3 @@ else:
             else:
                 st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar. Repasa el material.")
     else:
-        st.write("Módulo informativo.")
