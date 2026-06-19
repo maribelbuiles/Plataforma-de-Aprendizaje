@@ -144,7 +144,21 @@ if st.session_state['cedula'] is None:
                 try:
                     df_auth = pd.read_csv(csv_path)
                     df_auth.columns = df_auth.columns.str.strip()
-                    cedulas_validas = set(df_auth['Identificacion'].astype(str).str.strip())
+                    
+                    # Limpieza ultra robusta para forzar conversión de flotantes (.0) a enteros de texto
+                    cedulas_validas = set()
+                    if 'Identificacion' in df_auth.columns:
+                        for x in df_auth['Identificacion'].dropna():
+                            try:
+                                f_val = float(x)
+                                if f_val.is_integer():
+                                    cedulas_validas.add(str(int(f_val)))
+                                else:
+                                    cedulas_validas.add(str(f_val))
+                            except:
+                                cedulas_validas.add(str(x).strip())
+                    else:
+                        st.error("No se encontró la columna 'Identificacion' en el archivo.")
                 except Exception as e:
                     cedulas_validas = set()
                     st.error("Error al cargar la base de datos de autorización. Verifique el archivo CSV.")
@@ -233,7 +247,21 @@ else:
         # Pestaña 2: Partes
         with tabs[1]:
             st.subheader("Partes de la Canasta Ovoid")
-            st_image_nitida_multiple(["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"])
+            imagen_encontrada_p1 = False
+            for nombre in ["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"]:
+                if os.path.exists(nombre):
+                    img_base64 = get_base64_image(nombre)
+                    st.markdown(f'<div style="max-width: 750px; margin: 0 auto 20px auto;"><img src="data:image/png;base64,{img_base64}" style="width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;"></div>', unsafe_allow_html=True)
+                    imagen_encontrada_p1 = True
+                    break
+            if not imagen_encontrada_p1:
+                st.info("💡 Diapositiva: Partes.png (Suba la imagen para visualizarla en este apartado)")
+                
+            if os.path.exists("Partes2.png"):
+                img_base64_2 = get_base64_image("Partes2.png")
+                st.markdown(f'<div style="max-width: 750px; margin: 20px auto 20px auto;"><img src="data:image/png;base64,{img_base64_2}" style="width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;"></div>', unsafe_allow_html=True)
+            else:
+                st.info("💡 Diapositiva: Partes2.png (Suba la imagen para visualizarla en este apartado)")
 
         # Pestaña 3: Ficha Técnica
         with tabs[2]:
@@ -376,7 +404,7 @@ else:
         # Pestaña 7: Estibado y Armado
         with tabs[6]:
             st.subheader("Procedimiento Correcto de Armado y Apilado")
-            st_image_nitida_multiple(["Slide28.PNG", "Slide28.png", "apilado_pasos.png"], "Pao a Paso del Apilado de la Canasta Ovoid")
+            st_image_nitida_multiple(["Slide28.PNG", "Slide28.png", "apilado_pasos.png"], "Paso a Paso del Apilado de la Canasta Ovoid")
             st_image_nitida_multiple(["Slide29.PNG", "Slide29.png", "cedi_ce_generalidades.png"], "Operación en CEDI y Centros de Entrega")
             st_image_nitida_multiple(["Slide30.PNG", "Slide30.png", "dale_sentido_bandeja_video1.png"], "Identificación y Orientación Correcta de la Bandeja")
             st_image_nitida_multiple(["Slide31.PNG", "Slide31.png", "tabla_unidades_cedi.png"], "Capacidades de Distribución en CEDI")
