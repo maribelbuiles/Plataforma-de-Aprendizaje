@@ -127,13 +127,22 @@ else:
                 "Mapa de Ruta Nacional: Puntos de Distribución de Huevos Kikes"
             )
 
-        # Pestaña 2: Cronología (Slide 3 y 4)
+        # Pestaña 2: Cronología (Slide 3 y 4 con integración de Video instructivo)
         with tabs[1]:
             st.subheader("Cronología de la Canasta Ovoid")
-            st_image_nitida_multiple(
-                ["Slide3.PNG", "Slide3.png", "introduccion_cronologia.png"], 
-                "Introducción de Línea de Abastecimiento"
-            )
+            
+            # Integración dinámica del video/audio instructivo del ponente
+            if os.path.exists("Video.mp4"):
+                st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Presentación de la Cronología (Video Instructivo)</p>", unsafe_allow_html=True)
+                _, col_v, _ = st.columns([1, 4, 1])
+                with col_v:
+                    st.video("Video.mp4")
+            else:
+                st_image_nitida_multiple(
+                    ["Slide3.PNG", "Slide3.png", "introduccion_cronologia.png"], 
+                    "Introducción de Línea de Abastecimiento (Carga de Video.mp4 alternativa)"
+                )
+                
             st_image_nitida_multiple(
                 ["Slide4.PNG", "Slide4.png", "cronologia.png"], 
                 "Hitos de Evolución de la Canasta Ovoid (2019 - 2023)"
@@ -147,27 +156,27 @@ else:
                 "Los 9 Componentes Estructurales de la Canasta"
             )
 
-        # Pestaña 4: Ficha Técnica (Slide 6 a 12)
+        # Pestaña 4: Ficha Técnica (Slide 6 a 12 sincronizado con el contenido de GitHub)
         with tabs[3]:
             st.subheader("Ficha Técnica: Componentes y Dimensiones")
             st_image_nitida_multiple(
-                ["Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"], 
+                ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"], 
                 "Canastas Kikes AFCA022"
             )
             st_image_nitida_multiple(
-                ["Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"], 
+                ["Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"], 
                 "Estiba Ovoid AFES013"
             )
             st_image_nitida_multiple(
-                ["Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"], 
+                ["Gancho Metálico.png", "Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"], 
                 "Gancho Metálico MDGA105"
             )
             st_image_nitida_multiple(
-                ["Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"], 
+                ["Separador Ovoid.png", "Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"], 
                 "Separador Ovoid AFSE003"
             )
             st_image_nitida_multiple(
-                ["Slide10.PNG", "Slide10.png", "dimensiones_estiba.png"], 
+                ["Dimensiones Estiba Ovoid.png", "Slide10.PNG", "Slide10.png", "dimensiones_estiba.png"], 
                 "Dimensiones Estiba ($124\\text{ cm} \\times 65\\text{ cm} \\times 10.5\\text{ cm}$)"
             )
             st_image_nitida_multiple(
@@ -175,8 +184,12 @@ else:
                 "Dimensiones Canasta ($63\\text{ cm} \\times 32\\text{ cm} \\times 23\\text{ cm}$)"
             )
             st_image_nitida_multiple(
-                ["Slide12.PNG", "Slide12.png", "dimensiones_separador.png"], 
+                ["Dimensiones Separador Ovoid.png", "Slide12.PNG", "Slide12.png", "dimensiones_separador.png"], 
                 "Dimensiones Separador ($124\\text{ cm} \\times 66\\text{ cm} \\times 2\\text{ cm}$)"
+            )
+            st_image_nitida_multiple(
+                ["Dimensiones Gancho Metálico.png"], 
+                "Dimensiones Gancho Metálico ($8\\text{ cm} \\times 8.6\\text{ cm} \\times 3\\text{ cm}$)"
             )
 
         # Pestaña 5: Sistemas (Slide 13 y 14)
