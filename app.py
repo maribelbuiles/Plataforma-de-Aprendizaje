@@ -222,8 +222,21 @@ else:
         # Pestaña 2: Partes
         with tabs[1]:
             st.subheader("Partes de la Canasta Ovoid")
-            st_image_nitida_multiple(["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"])
-            st_image_nitida_multiple(["Partes2.png"])
+            imagen_encontrada_p1 = False
+            for nombre in ["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"]:
+                if os.path.exists(nombre):
+                    img_base64 = get_base64_image(nombre)
+                    st.markdown(f'<div style="max-width: 750px; margin: 0 auto 20px auto;"><img src="data:image/png;base64,{img_base64}" style="width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;"></div>', unsafe_allow_html=True)
+                    imagen_encontrada_p1 = True
+                    break
+            if not imagen_encontrada_p1:
+                st.info("💡 Diapositiva: Partes.png (Suba la imagen para visualizarla en este apartado)")
+                
+            if os.path.exists("Partes2.png"):
+                img_base64_2 = get_base64_image("Partes2.png")
+                st.markdown(f'<div style="max-width: 750px; margin: 20px auto 20px auto;"><img src="data:image/png;base64,{img_base64_2}" style="width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;"></div>', unsafe_allow_html=True)
+            else:
+                st.info("💡 Diapositiva: Partes2.png (Suba la imagen para visualizarla en este apartado)")
 
         # Pestaña 3: Ficha Técnica
         with tabs[2]:
@@ -379,7 +392,7 @@ else:
         with tabs[7]:
             st.subheader("Estándares de Almacenamiento y Retorno")
             st_image_nitida_multiple(["Slide36.PNG", "Slide36.png", "anidado_pasos.png"], "Paso a Paso del Anidado de Canastas Vacías")
-            st_image_nitida_multiple(["Slide37.PNG", "Slide37.png", "cedi_generalidades_vacias.png"], "Normas de Retorno y Consolidación de Vacíos")
+            st_image_nitida_multiple(["Slide37.PNG", "Slide37.png", "cedi_generalidades_vacias.png"], "Normas de Retorno y Comsolidación de Vacíos")
             st_image_nitida_multiple(["Slide38.PNG", "Slide38.png", "almacenamiento_transporte_ficha.png"], "Límites: Niveles de Canastas, Estibas, Separadores y Ganchos")
 
     elif modulo == opt_e1:
