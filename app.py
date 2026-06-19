@@ -104,7 +104,6 @@ else:
         st.markdown("<h2 style='color: #008a3e;'>📦 Módulo 1: Equipo de Canastas Aptas</h2>", unsafe_allow_html=True)
         
         tabs = st.tabs([
-            "📋 Portada y Ruta", 
             "🕒 Cronología", 
             "🔍 Partes", 
             "📐 Dimensiones", 
@@ -115,20 +114,8 @@ else:
             "🏢 Almacenamiento"
         ])
 
-        # Pestaña 1: Portada (Slide 1 y 2)
+        # Pestaña 1: Cronología (Lado a lado: Infografía a la izquierda, Presentador/Video a la derecha)
         with tabs[0]:
-            st.subheader("Equipo de Canastas Aptas - Ruta de Abastecimiento Nacional")
-            st_image_nitida_multiple(
-                ["Slide1.PNG", "Slide1.png", "portada.png"], 
-                "Presentación Oficial del Equipo de Canastas"
-            )
-            st_image_nitida_multiple(
-                ["Slide2.PNG", "Slide2.png", "mapa.png"], 
-                "Mapa de Ruta Nacional: Puntos de Distribución de Huevos Kikes"
-            )
-
-        # Pestaña 2: Cronología (Lado a lado: Infografía a la izquierda, Presentador/Video a la derecha)
-        with tabs[1]:
             st.subheader("Cronología de la Canasta Ovoid")
             
             # Diagramación side-by-side con columnas de Streamlit
@@ -159,16 +146,16 @@ else:
                     if not imagen_presentador_cargada:
                         st.info("💡 Diapositiva: Slide3.PNG (Presentador de la Cronología)")
 
-        # Pestaña 3: Partes (Slide 5)
-        with tabs[2]:
+        # Pestaña 2: Partes (Slide 5)
+        with tabs[1]:
             st.subheader("Partes de la Canasta Ovoid")
             st_image_nitida_multiple(
                 ["Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"], 
                 "Los 9 Componentes Estructurales de la Canasta"
             )
 
-        # Pestaña 4: Ficha Técnica (Slide 6 a 12)
-        with tabs[3]:
+        # Pestaña 3: Ficha Técnica (Slide 6 a 12)
+        with tabs[2]:
             st.subheader("Ficha Técnica: Componentes y Dimensiones")
             st_image_nitida_multiple(
                 ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"], 
@@ -203,8 +190,8 @@ else:
                 "Dimensiones Gancho Metálico ($8\\text{ cm} \\times 8.6\\text{ cm} \\times 3\\text{ cm}$)"
             )
 
-        # Pestaña 5: Sistemas (Slide 13 y 14)
-        with tabs[4]:
+        # Pestaña 4: Sistemas (Slide 13 y 14)
+        with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
             st_image_nitida_multiple(
                 ["Slide13.PNG", "Slide13.png", "sistemas_canasta.png"], 
@@ -215,8 +202,8 @@ else:
                 "Uso de Identificador de Posición (Apilar vs Anidar)"
             )
 
-        # Pestaña 6: Usos Indebidos (Slide 15 y 16)
-        with tabs[5]:
+        # Pestaña 5: Usos Indebidos (Slide 15 y 16)
+        with tabs[4]:
             st.subheader("Usos Indebidos del Equipo")
             st_image_nitida_multiple(
                 ["Slide15.PNG", "Slide15.png", "usos_prohibidos.png"], 
@@ -227,8 +214,8 @@ else:
                 "Guía de Uso del Equipo Ovoid Con y Sin Producto"
             )
 
-        # Pestaña 7: Carga y Huevos (Slide 17 a 27)
-        with tabs[6]:
+        # Pestaña 6: Carga y Huevos (Slide 17 a 27)
+        with tabs[5]:
             st.subheader("Carga Máxima, Tipos de Huevo y Capacidades")
             st_image_nitida_multiple(
                 ["Slide17.PNG", "Slide17.png", "carga_maxima_canasta.png"], 
@@ -275,8 +262,8 @@ else:
                 "Reglas Logísticas para Canastas Vacías"
             )
 
-        # Pestaña 8: Estibado y Armado (Slide 28 a 35)
-        with tabs[7]:
+        # Pestaña 7: Estibado y Armado (Slide 28 a 35)
+        with tabs[6]:
             st.subheader("Procedimiento Correcto de Armado y Apilado")
             st_image_nitida_multiple(
                 ["Slide28.PNG", "Slide28.png", "apilado_pasos.png"], 
@@ -311,8 +298,8 @@ else:
                 "Armado de Estibas y Carga de Primera Milla en Plantas"
             )
 
-        # Pestaña 9: Almacenamiento (Slide 36 a 38)
-        with tabs[8]:
+        # Pestaña 8: Almacenamiento (Slide 36 a 38)
+        with tabs[7]:
             st.subheader("Estándares de Almacenamiento y Retorno")
             st_image_nitida_multiple(
                 ["Slide36.PNG", "Slide36.png", "anidado_pasos.png"], 
