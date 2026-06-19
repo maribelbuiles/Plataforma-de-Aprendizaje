@@ -1,4 +1,5 @@
-import streamlit as st
+with open("app.py", "w", encoding="utf-8") as f:
+    f.write('''import streamlit as st
 import os
 import base64
 
@@ -30,10 +31,10 @@ st.markdown("""
             margin-left: auto;
             margin-right: auto;
             border-radius: 8px;
-        }
+            }
 
-        /* 🔍 OPTIMIZACIÓN PARA QUE TODA LA PLATAFORMA TENGA LA MISMA LETRA ULTRA NÍTIDA */
-        *, html, body, p, div, span, h1, h2, h3, h4, h5, h6, label, input, button, select, textarea {
+        /* 🔍 OPTIMIZACIÓN DE FUENTE EXCLUYENDO SELECTORES UNIVERSALES PARA NO ROMPER FUENTES DE ICONOS DE STREAMLIT */
+        html, body, p, h1, h2, h3, h4, h5, h6, label, input, button, select, textarea {
             font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
             -webkit-font-smoothing: antialiased !important;
             -moz-osx-font-smoothing: grayscale !important;
@@ -126,16 +127,16 @@ if st.session_state['cedula'] is None:
 else:
     # Definición de opciones de menú exactamente idénticas en aspecto usando caracteres invisibles únicos
     opt_m1 = "Módulo 1: Equipo de Canastas Aptas"
-    opt_e1 = "    📝 Evaluación"
-    opt_c1 = "    🎓 Certificado"
+    opt_e1 = "    📝 Evaluación"
+    opt_c1 = "    🎓 Certificado"
     
     opt_m2 = "Módulo 2: Equipo de Canastas No Aptas"
-    opt_e2 = "    📝 Evaluación​"
-    opt_c2 = "    🎓 Certificado​"
+    opt_e2 = "    📝 Evaluación\u200b"
+    opt_c2 = "    🎓 Certificado\u200b"
     
     opt_m3 = "Módulo 3: Lavado y Desinfección"
-    opt_e3 = "    📝 Evaluación​​"
-    opt_c3 = "    🎓 Certificado​​"
+    opt_e3 = "    📝 Evaluación\u200b\u200b"
+    opt_c3 = "    🎓 Certificado\u200b\u200b"
 
     # --- NAVEGACIÓN ANIDADA ---
     st.sidebar.markdown(f"### 👤 Empleado: `{st.session_state['cedula']}`")
@@ -408,7 +409,7 @@ else:
             st.markdown(certificado_html, unsafe_allow_html=True)
             st.download_button(
                 label="📥 Guardar Registro de Certificado (TXT)",
-                data=f"CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 1: Equipo de Canastas Aptas\nPuntaje: {st.session_state['score_m1']}%",
+                data=f"CERTIFICADO HUEVOS KIKES\\nID: {st.session_state['cedula']}\\nCurso: Módulo 1: Equipo de Canastas Aptas\\nPuntaje: {st.session_state['score_m1']}%",
                 file_name=f"Certificado_Kikes_M1_{st.session_state['cedula']}.txt",
                 mime="text/plain",
                 key="dl_m1"
@@ -541,3 +542,5 @@ else:
             )
         else:
             st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
+''')
+print("Saved successfully.")
