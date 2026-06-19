@@ -39,12 +39,12 @@ st.markdown("""
             text-rendering: optimizeLegibility !important;
         }
 
-        /* 📐 CONTENEDOR ESTÁNDAR PARA HACER LAS IMÁGENES DEL MISMO TAMÁÑO */
+        /* 📐 CONTENEDOR AJUSTADO PARA IMÁGENES Y LETRAS MÁS PEQUEÑAS Y NÍTIDAS */
         .uniform-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 320px; /* Altura idéntica simétrica */
+            height: 220px; /* Altura reducida para hacer la imagen y la letra más pequeñas */
             width: 100%;
             background-color: transparent;
             overflow: hidden;
@@ -54,7 +54,12 @@ st.markdown("""
         .uniform-img {
             height: 100% !important;
             width: 100% !important;
-            object-fit: contain !important; /* Mantiene la proporción original para no pixelar ni estirar la letra */
+            object-fit: contain !important; /* Mantiene la proporción original sin deformar */
+            image-rendering: -webkit-optimize-contrast !important;
+            image-rendering: crisp-edges !important;
+            image-rendering: -moz-crisp-edges !important;
+            image-rendering: high-quality !important;
+            -ms-interpolation-mode: nearest-neighbor !important;
             border-radius: 8px;
         }
 
