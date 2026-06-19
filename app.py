@@ -39,12 +39,12 @@ st.markdown("""
             text-rendering: optimizeLegibility !important;
         }
 
-        /* 📐 CONTENEDOR AJUSTADO PARA IMÁGENES Y LETRAS MÁS PEQUEÑAS Y NÍTIDAS */
+        /* 📐 CONTENEDOR AJUSTADO PARA IMÁGENES Y LETRAS MÁS PEQUEÑAS Y ULTRA NÍTIDAS */
         .uniform-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 220px; /* Altura reducida para hacer la imagen y la letra más pequeñas */
+            height: 220px; /* Altura regulada pequeña */
             width: 100%;
             background-color: transparent;
             overflow: hidden;
@@ -52,14 +52,13 @@ st.markdown("""
         }
 
         .uniform-img {
-            height: 100% !important;
-            width: 100% !important;
-            object-fit: contain !important; /* Mantiene la proporción original sin deformar */
+            max-height: 100% !important;
+            max-width: 100% !important;
+            object-fit: contain !important; /* Mantiene la proporción perfecta del texto */
             image-rendering: -webkit-optimize-contrast !important;
-            image-rendering: crisp-edges !important;
-            image-rendering: -moz-crisp-edges !important;
-            image-rendering: high-quality !important;
-            -ms-interpolation-mode: nearest-neighbor !important;
+            image-rendering: high-quality !important; /* Fuerza al navegador a usar el escalado de mayor definición para letras */
+            -webkit-transform: translateZ(0); /* Hardware acceleration para evitar desenfoque */
+            transform: translateZ(0);
             border-radius: 8px;
         }
 
