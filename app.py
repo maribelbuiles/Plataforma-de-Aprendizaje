@@ -146,6 +146,7 @@ if st.session_state['cedula'] is None:
                     st.error(f"⚠️ Archivo de base de datos no encontrado. Asegúrate de que el archivo '{csv_path}' esté subido en el repositorio.")
                 else:
                     try:
+                        import pandas as pd  # Importación inline para asegurar la definición absoluta de 'pd'
                         # Detección inteligente automática de separador (coma o punto y coma)
                         df_auth = pd.read_csv(csv_path, sep=None, engine='python')
                         df_auth.columns = df_auth.columns.str.strip()
@@ -384,7 +385,7 @@ else:
             st_image_nitida_multiple(["Slide17.PNG", "Slide17.png", "carga_maxima_canasta.png"], "Límites de Peso Máximo Operativo (17.25 kg)")
             st_image_nitida_multiple(["Slide18.PNG", "Slide18.png", "cantidad_maxima_huevos.png"], "Cantidad Máxima por Canasta (240 Huevos)")
             st_image_nitida_multiple(["Slide19.PNG", "Slide19.png", "tabla_numeros_huevos.png"], "Tabla de Unidades por Canasta Según Tipo de Huevo")
-            st_image_nitida_multiple(["Slide20.PNG", "Slide20.png", "estibas_niveles.png"], "N Niveles de Remontado en Distribución")
+            st_image_nitida_multiple(["Slide20.PNG", "Slide20.png", "estibas_niveles.png"], "Niveles de Remontado en Distribución")
             st_image_nitida_multiple(["Slide21.PNG", "Slide21.png", "cargue_autoventa.png"], "Configuración de Cargue para Autoventa")
             st_image_nitida_multiple(["Slide22.PNG", "Slide22.png", "cargue_plantas.png"], "Líneas de Production y Carga en Plantas")
             st_image_nitida_multiple(["Slide23.PNG", "Slide23.png", "numeros_huevos_planta.png"], "Consumo e Inventario de Huevos por Tipo")
