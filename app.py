@@ -223,6 +223,7 @@ else:
         with tabs[1]:
             st.subheader("Partes de la Canasta Ovoid")
             st_image_nitida_multiple(["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"])
+            st_image_nitida_multiple(["Partes2.png"])
 
         # Pestaña 3: Ficha Técnica
         with tabs[2]:
