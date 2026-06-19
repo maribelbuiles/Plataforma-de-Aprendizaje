@@ -146,7 +146,7 @@ if st.session_state['cedula'] is None:
                     st.error(f"⚠️ Archivo de base de datos no encontrado. Asegúrate de que el archivo '{csv_path}' esté subido en el repositorio.")
                 else:
                     try:
-                        import pandas as pd  # Importación inline para asegurar la definición absoluta de 'pd'
+                        import pandas as pd  # Importación explícita para blindar la ejecución frente a cachés locales
                         # Detección inteligente automática de separador (coma o punto y coma)
                         df_auth = pd.read_csv(csv_path, sep=None, engine='python')
                         df_auth.columns = df_auth.columns.str.strip()
