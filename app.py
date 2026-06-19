@@ -190,7 +190,6 @@ else:
                 img_found = False
                 for nombre in ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"]:
                     if os.path.exists(nombre):
-                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Canastas Kikes AFCA022</p>", unsafe_allow_html=True)
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
@@ -201,7 +200,6 @@ else:
                 img_found = False
                 for nombre in ["Dimensiones Canasta Kikes.png", "Dimensiones Canasta.png", "Dimensiones Canasta Ovoid.png", "Slide11.PNG", "Slide11.png", "dimensiones_canasta.png"]:
                     if os.path.exists(nombre):
-                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Canasta ($63\\text{ cm} \\times 32\\text{ cm} \\times 23\\text{ cm}$)</p>", unsafe_allow_html=True)
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
@@ -216,7 +214,6 @@ else:
                 img_found = False
                 for nombre in ["Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"]:
                     if os.path.exists(nombre):
-                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Estiba Ovoid AFES013</p>", unsafe_allow_html=True)
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
@@ -227,7 +224,6 @@ else:
                 img_found = False
                 for nombre in ["Dimensiones Estiba Ovoid.png", "Slide10.PNG", "Slide10.png", "dimensiones_estiba.png"]:
                     if os.path.exists(nombre):
-                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Estiba ($124\\text{ cm} \\times 65\\text{ cm} \\times 10.5\\text{ cm}$)</p>", unsafe_allow_html=True)
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
@@ -242,7 +238,6 @@ else:
                 img_found = False
                 for nombre in ["Gancho Metálico.png", "Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"]:
                     if os.path.exists(nombre):
-                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Gancho Metálico MDGA105</p>", unsafe_allow_html=True)
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
@@ -253,7 +248,6 @@ else:
                 img_found = False
                 for nombre in ["Dimensiones Gancho Metálico.png"]:
                     if os.path.exists(nombre):
-                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Gancho Metálico ($8\\text{ cm} \\times 8.6\\text{ cm} \\times 3\\text{ cm}$)</p>", unsafe_allow_html=True)
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
@@ -268,7 +262,6 @@ else:
                 img_found = False
                 for nombre in ["Separador Ovoid.png", "Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"]:
                     if os.path.exists(nombre):
-                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Separador Ovoid AFSE003</p>", unsafe_allow_html=True)
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
@@ -279,7 +272,6 @@ else:
                 img_found = False
                 for nombre in ["Dimensiones Separador Ovoid.png", "Slide12.PNG", "Slide12.png", "dimensiones_separador.png"]:
                     if os.path.exists(nombre):
-                        st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Dimensiones Separador ($124\\text{ cm} \\times 66\\text{ cm} \\times 2\\text{ cm}$)</p>", unsafe_allow_html=True)
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
                         img_found = True
