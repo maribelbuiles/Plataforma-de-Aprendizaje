@@ -18,7 +18,7 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA EN DISPOSITIVOS Y PANTALLAS */
+        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA EN DISPOSITIVOS EN PANTALLAS */
         img {
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: crisp-edges !important;
@@ -32,7 +32,7 @@ st.markdown("""
             border-radius: 8px;
         }
 
-        /* 🔍 OPTIMIZACIÓN PARA QUE TODA LA PLATAFORMA TENGA LA MISMA LETRA ULTRA NÍTIDA */
+        /* 🔍 OPTIMIZACIÓN PARA QUE TODA LA PLATAFORMA TENGA LA MISMA LETRA ULTRA NÍTIDOS */
         *, html, body, p, div, span, h1, h2, h3, h4, h5, h6, label, input, button, select, textarea {
             font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
             -webkit-font-smoothing: antialiased !important;
@@ -40,12 +40,12 @@ st.markdown("""
             text-rendering: optimizeLegibility !important;
         }
 
-        /* 📐 CONTENEDOR AJUSTADO PARA IMÁGENES Y LETRAS MÁS PEQUEÑAS Y ULTRA NÍTIDAS */
+        /* 📐 CONTENEDOR AJUSTADO PARA QUE LAS LETRAS INTERNAS DE LAS IMÁGENES TENGAN EL MISMO TAMÁÑO */
         .uniform-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 220px; /* Altura regulada pequeña */
+            height: 220px; /* Altura regulada pequeña constante */
             width: 100%;
             background-color: transparent;
             overflow: hidden;
@@ -53,12 +53,12 @@ st.markdown("""
         }
 
         .uniform-img {
-            max-height: 100% !important;
-            max-width: 100% !important;
-            object-fit: contain !important; /* Mantiene la proporción perfecta del texto */
+            height: 100% !important;  /* Fuerza la misma altura absoluta para que el tamaño de letra escale idéntico */
+            width: auto !important;    /* Ajusta el ancho de forma proporcional manteniendo la relación de aspecto */
+            max-width: 100% !important; /* Evita desbordamientos en columnas estrechas */
             image-rendering: -webkit-optimize-contrast !important;
-            image-rendering: high-quality !important; /* Fuerza al navegador a usar el escalado de mayor definición para letras */
-            -webkit-transform: translateZ(0); /* Hardware acceleration para evitar desenfoque */
+            image-rendering: high-quality !important; 
+            -webkit-transform: translateZ(0); 
             transform: translateZ(0);
             border-radius: 8px;
         }
