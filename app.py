@@ -124,18 +124,12 @@ if st.session_state['cedula'] is None:
                 else: 
                     st.error("Cédula no válida.")
 else:
-    # --- NAVEGACIÓN ANIDADA ---
+    # --- NAVEGACIÓN ---
     st.sidebar.markdown(f"### 👤 Empleado: `{st.session_state['cedula']}`")
     modulo = st.sidebar.radio("🗺️ Mapa de Ruta Pro", [
         "Módulo 1: Equipo de Canastas Aptas", 
-        "    📝 Evaluación Módulo 1",
-        "    🎓 Certificado Módulo 1",
         "Módulo 2: Equipo de Canastas No Aptas", 
-        "    📝 Evaluación Módulo 2",
-        "    🎓 Certificado Módulo 2",
-        "Módulo 3: Lavado y Desinfección",
-        "    📝 Evaluación Módulo 3",
-        "    🎓 Certificado Módulo 3"
+        "Módulo 3: Lavado y Desinfección"
     ])
     if st.sidebar.button("Cerrar Sesión ❌"):
         st.session_state['cedula'] = None
@@ -315,44 +309,45 @@ else:
         # Pestaña 5: Usos Indebidos
         with tabs[4]:
             st.subheader("Usos Indebidos del Equipo")
-            st.image_nitida_multiple(["Slide15.PNG", "Slide15.png", "usos_prohibidos.png"], "🚫 Prohibiciones: Cuidado Físico y Ergonomía del Activo")
-            st.image_nitida_multiple(["Slide16.PNG", "Slide16.png", "uso_con_sin_producto.png"], "Guía de Uso del Equipo Ovoid Con y Sin Producto")
+            st_image_nitida_multiple(["Slide15.PNG", "Slide15.png", "usos_prohibidos.png"], "🚫 Prohibiciones: Cuidado Físico y Ergonomía del Activo")
+            st_image_nitida_multiple(["Slide16.PNG", "Slide16.png", "uso_con_sin_producto.png"], "Guía de Uso del Equipo Ovoid Con y Sin Producto")
 
         # Pestaña 6: Carga y Huevos
         with tabs[5]:
             st.subheader("Carga Máxima, Tipos de Huevo y Capacidades")
-            st.image_nitida_multiple(["Slide17.PNG", "Slide17.png", "carga_maxima_canasta.png"], "Límites de Peso Máximo Operativo (17.25 kg)")
-            st.image_nitida_multiple(["Slide18.PNG", "Slide18.png", "cantidad_maxima_huevos.png"], "Cantidad Máxima por Canasta (240 Huevos)")
-            st.image_nitida_multiple(["Slide19.PNG", "Slide19.png", "tabla_numeros_huevos.png"], "Tabla de Unidades por Canasta Según Tipo de Huevo")
-            st.image_nitida_multiple(["Slide20.PNG", "Slide20.png", "estibas_niveles.png"], "Niveles de Remontado en Distribución")
-            st.image_nitida_multiple(["Slide21.PNG", "Slide21.png", "cargue_autoventa.png"], "Configuración de Cargue para Autoventa")
-            st.image_nitida_multiple(["Slide22.PNG", "Slide22.png", "cargue_plantas.png"], "Líneas de Production y Carga en Plantas")
-            st.image_nitida_multiple(["Slide23.PNG", "Slide23.png", "numeros_huevos_planta.png"], "Consumo e Inventario de Huevos por Tipo")
-            st.image_nitida_multiple(["Slide24.PNG", "Slide24.png", "armado_estibas_planta.png"], "Estándar de Armado de Estibas en Clasificadoras")
-            st.image_nitida_multiple(["Slide25.PNG", "Slide25.png", "cargue_primera_milla.png"], "Parámetros de Carga en Vehículos de Primera Milla")
-            st.image_nitida_multiple(["Slide26.PNG", "Slide26.png", "cargue_tractocamion.png"], "Capacidad Técnica de Carga en Tractocamiones")
-            st.image_nitida_multiple(["Slide27.PNG", "Slide27.png", "uso_sin_producto_generalidades.png"], "Reglas Logísticas para Canastas Vacías")
+            st_image_nitida_multiple(["Slide17.PNG", "Slide17.png", "carga_maxima_canasta.png"], "Límites de Peso Máximo Operativo (17.25 kg)")
+            st_image_nitida_multiple(["Slide18.PNG", "Slide18.png", "cantidad_maxima_huevos.png"], "Cantidad Máxima por Canasta (240 Huevos)")
+            st_image_nitida_multiple(["Slide19.PNG", "Slide19.png", "tabla_numeros_huevos.png"], "Tabla de Unidades por Canasta Según Tipo de Huevo")
+            st_image_nitida_multiple(["Slide20.PNG", "Slide20.png", "estibas_niveles.png"], "Niveles de Remontado en Distribución")
+            st_image_nitida_multiple(["Slide21.PNG", "Slide21.png", "cargue_autoventa.png"], "Configuración de Cargue para Autoventa")
+            st_image_nitida_multiple(["Slide22.PNG", "Slide22.png", "cargue_plantas.png"], "Líneas de Production y Carga en Plantas")
+            st_image_nitida_multiple(["Slide23.PNG", "Slide23.png", "numeros_huevos_planta.png"], "Consumo e Inventario de Huevos por Tipo")
+            st_image_nitida_multiple(["Slide24.PNG", "Slide24.png", "armado_estibas_planta.png"], "Estándar de Armado de Estibas en Clasificadoras")
+            st_image_nitida_multiple(["Slide25.PNG", "Slide25.png", "cargue_primera_milla.png"], "Parámetros de Carga en Vehículos de Primera Milla")
+            st_image_nitida_multiple(["Slide26.PNG", "Slide26.png", "cargue_tractocamion.png"], "Capacidad Técnica de Carga en Tractocamiones")
+            st_image_nitida_multiple(["Slide27.PNG", "Slide27.png", "uso_sin_producto_generalidades.png"], "Reglas Logísticas para Canastas Vacías")
 
         # Pestaña 7: Estibado y Armado
         with tabs[6]:
             st.subheader("Procedimiento Correcto de Armado y Apilado")
-            st.image_nitida_multiple(["Slide28.PNG", "Slide28.png", "apilado_pasos.png"], "Paso a Paso del Apilado de la Canasta Ovoid")
-            st.image_nitida_multiple(["Slide29.PNG", "Slide29.png", "cedi_ce_generalidades.png"], "Operación en CEDI y Centros de Entrega")
-            st.image_nitida_multiple(["Slide30.PNG", "Slide30.png", "dale_sentido_bandeja_video1.png"], "Identificación y Orientación Correcta de la Bandeja")
-            st.image_nitida_multiple(["Slide31.PNG", "Slide31.png", "tabla_unidades_cedi.png"], "Capacidades de Distribución en CEDI")
-            st.image_nitida_multiple(["Slide32.PNG", "Slide32.png", "llegada_canastas_producto.png"], "Cómo Recibir y Registrar las Canastas con Producto")
-            st.image_nitida_multiple(["Slide33.PNG", "Slide33.png", "formas_cargue_autoventa.png"], "Nuevas Formas y Patrones de Cargue de Autoventa")
-            st.image_nitida_multiple(["Slide34.PNG", "Slide34.png", "dale_sentido_bandeja_video2.png"], "Aseguramiento de Canastas en Plantas")
-            st.image_nitida_multiple(["Slide35.PNG", "Slide35.png", "tabla_unidades_plantas.png"], "Armado de Estibas y Carga de Primera Milla en Plantas")
+            st_image_nitida_multiple(["Slide28.PNG", "Slide28.png", "apilado_pasos.png"], "Paso a Paso del Apilado de la Canasta Ovoid")
+            st_image_nitida_multiple(["Slide29.PNG", "Slide29.png", "cedi_ce_generalidades.png"], "Operación en CEDI y Centros de Entrega")
+            st_image_nitida_multiple(["Slide30.PNG", "Slide30.png", "dale_sentido_bandeja_video1.png"], "Identificación y Orientación Correcta de la Bandeja")
+            st_image_nitida_multiple(["Slide31.PNG", "Slide31.png", "tabla_unidades_cedi.png"], "Capacidades de Distribución en CEDI")
+            st_image_nitida_multiple(["Slide32.PNG", "Slide32.png", "llegada_canastas_producto.png"], "Cómo Recibir y Registrar las Canastas con Producto")
+            st_image_nitida_multiple(["Slide33.PNG", "Slide33.png", "formas_cargue_autoventa.png"], "Nuevas Formas y Patrones de Cargue de Autoventa")
+            st_image_nitida_multiple(["Slide34.PNG", "Slide34.png", "dale_sentido_bandeja_video2.png"], "Aseguramiento de Canastas en Plantas")
+            st_image_nitida_multiple(["Slide35.PNG", "Slide35.png", "tabla_unidades_plantas.png"], "Armado de Estibas y Carga de Primera Milla en Plantas")
 
         # Pestaña 8: Almacenamiento
         with tabs[7]:
             st.subheader("Estándares de Almacenamiento y Retorno")
-            st.image_nitida_multiple(["Slide36.PNG", "Slide36.png", "anidado_pasos.png"], "Paso a Paso del Anidado de Canastas Vacías")
-            st.image_nitida_multiple(["Slide37.PNG", "Slide37.png", "cedi_generalidades_vacias.png"], "Normas de Retorno y Consolidación de Vacíos")
-            st.image_nitida_multiple(["Slide38.PNG", "Slide38.png", "almacenamiento_transporte_ficha.png"], "Límites: Niveles de Canastas, Estibas, Separadores y Ganchos")
+            st_image_nitida_multiple(["Slide36.PNG", "Slide36.png", "anidado_pasos.png"], "Paso a Paso del Anidado de Canastas Vacías")
+            st_image_nitida_multiple(["Slide37.PNG", "Slide37.png", "cedi_generalidades_vacias.png"], "Normas de Retorno y Consolidación de Vacíos")
+            st_image_nitida_multiple(["Slide38.PNG", "Slide38.png", "almacenamiento_transporte_ficha.png"], "Límites: Niveles de Canastas, Estibas, Separadores y Ganchos")
 
-    elif "Evaluación Módulo 1" in modulo:
+        # --- EVALUACIÓN Y CERTIFICADO DEBAJO DEL MÓDULO 1 ---
+        st.markdown("---")
         st.subheader("Evaluación de Conocimientos Técnicos - Módulo 1")
         with st.form("quiz_m1"):
             p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m1_p1")
@@ -373,13 +368,12 @@ else:
             st.session_state['score_m1'] = score
             if score >= 80:
                 st.session_state['aprobado_m1'] = True
-                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
+                st.success(f"¡APROBADO CON {score}%! Certificado disponible a continuación.")
                 st.balloons()
             else:
                 st.session_state['aprobado_m1'] = False
                 st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar. Repasa el material.")
 
-    elif "Certificado Módulo 1" in modulo:
         st.subheader("Certificado Oficial Módulo 1")
         if st.session_state['aprobado_m1']:
             logo_base64 = get_base64_image(logo_path) if logo_path else ""
@@ -415,7 +409,8 @@ else:
         with tabs[0]:
             st.write("Módulo informativo.")
         
-    elif "Evaluación Módulo 2" in modulo:
+        # --- EVALUACIÓN Y CERTIFICADO DEBAJO DEL MÓDULO 2 ---
+        st.markdown("---")
         st.subheader("Evaluación de Conocimientos Técnicos - Módulo 2")
         with st.form("quiz_m2"):
             p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m2_p1")
@@ -436,13 +431,12 @@ else:
             st.session_state['score_m2'] = score
             if score >= 80:
                 st.session_state['aprobado_m2'] = True
-                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
+                st.success(f"¡APROBADO CON {score}%! Certificado disponible a continuación.")
                 st.balloons()
             else:
                 st.session_state['aprobado_m2'] = False
                 st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
 
-    elif "Certificado Módulo 2" in modulo:
         st.subheader("Certificado Oficial Módulo 2")
         if st.session_state['aprobado_m2']:
             logo_base64 = get_base64_image(logo_path) if logo_path else ""
@@ -478,7 +472,8 @@ else:
         with tabs[0]:
             st.write("Módulo informativo.")
         
-    elif "Evaluación Módulo 3" in modulo:
+        # --- EVALUACIÓN Y CERTIFICADO DEBAJO DEL MÓDULO 3 ---
+        st.markdown("---")
         st.subheader("Evaluación de Conocimientos Técnicos - Módulo 3")
         with st.form("quiz_m3"):
             p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m3_p1")
@@ -499,13 +494,12 @@ else:
             st.session_state['score_m3'] = score
             if score >= 80:
                 st.session_state['aprobado_m3'] = True
-                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
+                st.success(f"¡APROBADO CON {score}%! Certificado disponible a continuación.")
                 st.balloons()
             else:
                 st.session_state['aprobado_m3'] = False
                 st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
 
-    elif "Certificado Módulo 3" in modulo:
         st.subheader("Certificado Oficial Módulo 3")
         if st.session_state['aprobado_m3']:
             logo_base64 = get_base64_image(logo_path) if logo_path else ""
