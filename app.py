@@ -124,13 +124,27 @@ if st.session_state['cedula'] is None:
                 else: 
                     st.error("Cédula no válida.")
 else:
-    # --- NAVEGACIÓN ---
+    # Definición de opciones de menú exactamente idénticas en aspecto usando caracteres invisibles únicos
+    opt_m1 = "Módulo 1: Equipo de Canastas Aptas"
+    opt_e1 = "    📝 Evaluación"
+    opt_c1 = "    🎓 Certificado"
+    
+    opt_m2 = "Módulo 2: Equipo de Canastas No Aptas"
+    opt_e2 = "    📝 Evaluación​"
+    opt_c2 = "    🎓 Certificado​"
+    
+    opt_m3 = "Módulo 3: Lavado y Desinfección"
+    opt_e3 = "    📝 Evaluación​​"
+    opt_c3 = "    🎓 Certificado​​"
+
+    # --- NAVEGACIÓN ANIDADA ---
     st.sidebar.markdown(f"### 👤 Empleado: `{st.session_state['cedula']}`")
     modulo = st.sidebar.radio("🗺️ Mapa de Ruta Pro", [
-        "Módulo 1: Equipo de Canastas Aptas", 
-        "Módulo 2: Equipo de Canastas No Aptas", 
-        "Módulo 3: Lavado y Desinfección"
+        opt_m1, opt_e1, opt_c1,
+        opt_m2, opt_e2, opt_c2,
+        opt_m3, opt_e3, opt_c3
     ])
+    
     if st.sidebar.button("Cerrar Sesión ❌"):
         st.session_state['cedula'] = None
         st.session_state['aprobado_m1'] = False
@@ -142,7 +156,7 @@ else:
         st.rerun()
 
     # --- CONTENIDO MÓDULO 1 ---
-    if modulo == "Módulo 1: Equipo de Canastas Aptas":
+    if modulo == opt_m1:
         st.markdown("<h2 style='color: #008a3e;'>📦 Módulo 1: Equipo de Canastas Aptas</h2>", unsafe_allow_html=True)
         
         tabs = st.tabs([
@@ -288,7 +302,7 @@ else:
                 if not img_found:
                     st.info("💡 Diapositiva: Dimensiones Separador Ovoid.png (Suba la imagen para visualizarla)")
 
-        # Pestaña 4: Sistemas
+        # Pestaña 4: Systems
         with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
             img_found1 = False
@@ -346,8 +360,7 @@ else:
             st_image_nitida_multiple(["Slide37.PNG", "Slide37.png", "cedi_generalidades_vacias.png"], "Normas de Retorno y Consolidación de Vacíos")
             st_image_nitida_multiple(["Slide38.PNG", "Slide38.png", "almacenamiento_transporte_ficha.png"], "Límites: Niveles de Canastas, Estibas, Separadores y Ganchos")
 
-        # --- EVALUACIÓN Y CERTIFICADO DEBAJO DEL MÓDULO 1 ---
-        st.markdown("---")
+    elif modulo == opt_e1:
         st.subheader("Evaluación de Conocimientos Técnicos - Módulo 1")
         with st.form("quiz_m1"):
             p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m1_p1")
@@ -368,12 +381,13 @@ else:
             st.session_state['score_m1'] = score
             if score >= 80:
                 st.session_state['aprobado_m1'] = True
-                st.success(f"¡APROBADO CON {score}%! Certificado disponible a continuación.")
+                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
                 st.balloons()
             else:
                 st.session_state['aprobado_m1'] = False
                 st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar. Repasa el material.")
 
+    elif modulo == opt_c1:
         st.subheader("Certificado Oficial Módulo 1")
         if st.session_state['aprobado_m1']:
             logo_base64 = get_base64_image(logo_path) if logo_path else ""
@@ -403,14 +417,13 @@ else:
             st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
 
     # --- CONTENIDO MÓDULO 2 ---
-    elif modulo == "Módulo 2: Equipo de Canastas No Aptas":
+    elif modulo == opt_m2:
         st.markdown("<h2 style='color: #008a3e;'>📦 Módulo 2: Equipo de Canastas No Aptas</h2>", unsafe_allow_html=True)
         tabs = st.tabs(["📖 Contenido Informativo"])
         with tabs[0]:
             st.write("Módulo informativo.")
         
-        # --- EVALUACIÓN Y CERTIFICADO DEBAJO DEL MÓDULO 2 ---
-        st.markdown("---")
+    elif modulo == opt_e2:
         st.subheader("Evaluación de Conocimientos Técnicos - Módulo 2")
         with st.form("quiz_m2"):
             p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m2_p1")
@@ -431,12 +444,13 @@ else:
             st.session_state['score_m2'] = score
             if score >= 80:
                 st.session_state['aprobado_m2'] = True
-                st.success(f"¡APROBADO CON {score}%! Certificado disponible a continuación.")
+                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
                 st.balloons()
             else:
                 st.session_state['aprobado_m2'] = False
                 st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
 
+    elif modulo == opt_c2:
         st.subheader("Certificado Oficial Módulo 2")
         if st.session_state['aprobado_m2']:
             logo_base64 = get_base64_image(logo_path) if logo_path else ""
@@ -466,14 +480,13 @@ else:
             st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
 
     # --- CONTENIDO MÓDULO 3 ---
-    elif modulo == "Módulo 3: Lavado y Desinfección":
+    elif modulo == opt_m3:
         st.markdown("<h2 style='color: #008a3e;'>🧼 Módulo 3: Lavado y Desinfección</h2>", unsafe_allow_html=True)
         tabs = st.tabs(["📖 Contenido Informativo"])
         with tabs[0]:
             st.write("Módulo informativo.")
         
-        # --- EVALUACIÓN Y CERTIFICADO DEBAJO DEL MÓDULO 3 ---
-        st.markdown("---")
+    elif modulo == opt_e3:
         st.subheader("Evaluación de Conocimientos Técnicos - Módulo 3")
         with st.form("quiz_m3"):
             p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m3_p1")
@@ -494,12 +507,13 @@ else:
             st.session_state['score_m3'] = score
             if score >= 80:
                 st.session_state['aprobado_m3'] = True
-                st.success(f"¡APROBADO CON {score}%! Certificado disponible a continuación.")
+                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
                 st.balloons()
             else:
                 st.session_state['aprobado_m3'] = False
                 st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
 
+    elif modulo == opt_c3:
         st.subheader("Certificado Oficial Módulo 3")
         if st.session_state['aprobado_m3']:
             logo_base64 = get_base64_image(logo_path) if logo_path else ""
