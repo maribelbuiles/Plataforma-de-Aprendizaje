@@ -1,7 +1,6 @@
 import streamlit as st
 import os
 import base64
-import pandas as pd
 
 # 1. CONFIGURACIÓN DE PÁGINA Y ESTILOS PARA MÁXIMA NITIDEZ
 st.set_page_config(page_title="Ruta de Aprendizaje Kikes", page_icon="📦", layout="wide")
@@ -41,7 +40,7 @@ st.markdown("""
             text-rendering: optimizeLegibility !important;
         }
 
-        /* 📉 REDUCIR EL TAMAÑO Y ESPACIADO DE LAS OPCIONES ANIDADAS EN EL SIDEBAR */
+        /* 📉 REDUCIR EL TAMAÑO Y ESPACIADO DE LAS OPCIONES ANIDADAS EN EL SIDEBAR (image_1de780.png) */
         div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(2),
         div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(3),
         div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(5),
@@ -140,40 +139,11 @@ if st.session_state['cedula'] is None:
         with st.form("login"):
             ced = st.text_input("Número de Cédula del Empleado:")
             if st.form_submit_button("Ingresar a la Capacitación"):
-                csv_path = "Cadena de abastecimiento (1).xlsx - Cadena de abastecimiento.csv"
-                
-                if not os.path.exists(csv_path):
-                    st.error(f"⚠️ Archivo de base de datos no encontrado. Asegúrate de que el archivo '{csv_path}' esté subido en el repositorio.")
-                else:
-                    try:
-                        import pandas as pd  # Importación explícita para blindar la ejecución frente a cachés locales
-                        # Detección inteligente automática de separador (coma o punto y coma)
-                        df_auth = pd.read_csv(csv_path, sep=None, engine='python')
-                        df_auth.columns = df_auth.columns.str.strip()
-                        
-                        # Formateo y limpieza de números de identificación flotantes a enteros limpios
-                        cedulas_validas = set()
-                        if 'Identificacion' in df_auth.columns:
-                            for x in df_auth['Identificacion'].dropna():
-                                try:
-                                    f_val = float(x)
-                                    if f_val.is_integer():
-                                        cedulas_validas.add(str(int(f_val)))
-                                    else:
-                                        cedulas_validas.add(str(f_val))
-                                except:
-                                    cedulas_validas.add(str(x).strip())
-                            
-                            input_cedula = ced.strip()
-                            if input_cedula in cedulas_validas:
-                                st.session_state['cedula'] = input_cedula
-                                st.rerun()
-                            else: 
-                                st.error("Número de cédula no autorizado o no registrado en el personal de Cadena de Abastecimiento.")
-                        else:
-                            st.error("No se encontró la columna 'Identificacion' en el archivo CSV.")
-                    except Exception as e:
-                        st.error("Error al procesar la base de datos de autorización. Verifique el formato del archivo CSV.")
+                if ced.isdigit() and len(ced) >= 5:
+                    st.session_state['cedula'] = ced
+                    st.rerun()
+                else: 
+                    st.error("Cédula no válida.")
 else:
     # Definición de opciones de menú exactamente idénticas en aspecto usando caracteres invisibles únicos
     opt_m1 = "Módulo 1: Equipo de Canastas Aptas"
@@ -252,9 +222,21 @@ else:
         # Pestaña 2: Partes
         with tabs[1]:
             st.subheader("Partes de la Canasta Ovoid")
-            st_image_nitida_multiple(["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"])
+            imagen_encontrada_p1 = False
+            for nombre in ["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"]:
+                if os.path.exists(nombre):
+                    img_base64 = get_base64_image(nombre)
+                    st.markdown(f'<div style="max-width: 750px; margin: 0 auto 20px auto;"><img src="data:image/png;base64,{img_base64}" style="width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;"></div>', unsafe_allow_html=True)
+                    imagen_encontrada_p1 = True
+                    break
+            if not imagen_encontrada_p1:
+                st.info("💡 Diapositiva: Partes.png (Suba la imagen para visualizarla en este apartado)")
+                
             if os.path.exists("Partes2.png"):
-                st_image_nitida_multiple(["Partes2.png"])
+                img_base64_2 = get_base64_image("Partes2.png")
+                st.markdown(f'<div style="max-width: 750px; margin: 20px auto 20px auto;"><img src="data:image/png;base64,{img_base64_2}" style="width: 100%; height: auto; display: block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;"></div>', unsafe_allow_html=True)
+            else:
+                st.info("💡 Diapositiva: Partes2.png (Suba la imagen para visualizarla en este apartado)")
 
         # Pestaña 3: Ficha Técnica
         with tabs[2]:
@@ -355,7 +337,7 @@ else:
                 if not img_found:
                     st.info("💡 Diapositiva: Dimensiones Separador Ovoid.png (Suba la imagen para visualizarla)")
 
-        # Pestaña 4: Sistemas
+        # Pestaña 4: Systems
         with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
             img_found1 = False
@@ -369,7 +351,7 @@ else:
             for nombre in ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png"]:
                 if os.path.exists(nombre):
                     img_base64 = get_base64_image(nombre)
-                    st.markdown(f'<div class="uniform-container" style="height: 380px;"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="uniform-container" style="height: 380px;"><img src="data:image/png;base64,{img_base64}" class="uniform-img" style="image-rendering: crisp-edges !important;"></div>', unsafe_allow_html=True)
                     img_found2 = True
                     break
 
@@ -410,7 +392,7 @@ else:
         with tabs[7]:
             st.subheader("Estándares de Almacenamiento y Retorno")
             st_image_nitida_multiple(["Slide36.PNG", "Slide36.png", "anidado_pasos.png"], "Paso a Paso del Anidado de Canastas Vacías")
-            st_image_nitida_multiple(["Slide37.PNG", "Slide37.png", "cedi_generalidades_vacias.png"], "Normas de Retorno y Consolidación de Vacíos")
+            st_image_nitida_multiple(["Slide37.PNG", "Slide37.png", "cedi_generalidades_vacias.png"], "Normas de Retorno y Comsolidación de Vacíos")
             st_image_nitida_multiple(["Slide38.PNG", "Slide38.png", "almacenamiento_transporte_ficha.png"], "Límites: Niveles de Canastas, Estibas, Separadores y Ganchos")
 
     elif modulo == opt_e1:
@@ -444,22 +426,24 @@ else:
         st.subheader("Certificado Oficial Módulo 1")
         if st.session_state['aprobado_m1']:
             logo_base64 = get_base64_image(logo_path) if logo_path else ""
-            certificado_html = (
-                '<div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">'
-                f'<img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">'
-                '<h1 style="color: #008a3e; font-family: \'Georgia\', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>'
-                '<p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>'
-                f'<h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state["cedula"]}</h2>'
-                '<p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>'
-                '<h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 1: Equipo de Canastas Aptas</h3>'
-                '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
-                f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m1"]}%</span></div>'
-                '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
-            )
+            certificado_html = f"""
+            <div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">
+                <img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">
+                <h1 style="color: #008a3e; font-family: 'Georgia', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>
+                <p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>
+                <h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state['cedula']}</h2>
+                <p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>
+                <h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 1: Equipo de Canastas Aptas</h3>
+                <div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">
+                    <span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state['score_m1']}%</span>
+                </div>
+                <p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p>
+            </div>
+            """
             st.markdown(certificado_html, unsafe_allow_html=True)
             st.download_button(
                 label="📥 Guardar Registro de Certificado (TXT)",
-                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 1: Equipo de Canastas Aptas\nPuntaje: " + str(st.session_state['score_m1']) + "%",
+                data=f"""CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 1: Equipo de Canastas Aptas\nPuntaje: {st.session_state['score_m1']}%""",
                 file_name=f"Certificado_Kikes_M1_{st.session_state['cedula']}.txt",
                 mime="text/plain",
                 key="dl_m1"
@@ -505,22 +489,24 @@ else:
         st.subheader("Certificado Oficial Módulo 2")
         if st.session_state['aprobado_m2']:
             logo_base64 = get_base64_image(logo_path) if logo_path else ""
-            certificado_html = (
-                '<div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">'
-                f'<img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">'
-                '<h1 style="color: #008a3e; font-family: \'Georgia\', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>'
-                '<p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>'
-                f'<h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state["cedula"]}</h2>'
-                '<p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>'
-                '<h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 2: Equipo de Canastas No Aptas</h3>'
-                '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
-                f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m2"]}%</span></div>'
-                '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
-            )
+            certificado_html = f"""
+            <div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">
+                <img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">
+                <h1 style="color: #008a3e; font-family: 'Georgia', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>
+                <p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>
+                <h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state['cedula']}</h2>
+                <p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>
+                <h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 2: Equipo de Canastas No Aptas</h3>
+                <div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">
+                    <span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state['score_m2']}%</span>
+                </div>
+                <p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p>
+            </div>
+            """
             st.markdown(certificado_html, unsafe_allow_html=True)
             st.download_button(
                 label="📥 Guardar Registro de Certificado (TXT)",
-                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 2: Equipo de Canastas No Aptas\nPuntaje: " + str(st.session_state['score_m2']) + "%",
+                data=f"""CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 2: Equipo de Canastas No Aptas\nPuntaje: {st.session_state['score_m2']}%""",
                 file_name=f"Certificado_Kikes_M2_{st.session_state['cedula']}.txt",
                 mime="text/plain",
                 key="dl_m2"
@@ -566,22 +552,24 @@ else:
         st.subheader("Certificado Oficial Módulo 3")
         if st.session_state['aprobado_m3']:
             logo_base64 = get_base64_image(logo_path) if logo_path else ""
-            certificado_html = (
-                '<div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">'
-                f'<img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">'
-                '<h1 style="color: #008a3e; font-family: \'Georgia\', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>'
-                '<p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>'
-                f'<h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state["cedula"]}</h2>'
-                '<p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>'
-                '<h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 3: Lavado y Desinfección</h3>'
-                '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
-                f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m3"]}%</span></div>'
-                '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
-            )
+            certificado_html = f"""
+            <div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">
+                <img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">
+                <h1 style="color: #008a3e; font-family: 'Georgia', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>
+                <p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>
+                <h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state['cedula']}</h2>
+                <p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>
+                <h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 3: Lavado y Desinfección</h3>
+                <div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">
+                    <span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state['score_m3']}%</span>
+                </div>
+                <p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p>
+            </div>
+            """
             st.markdown(certificado_html, unsafe_allow_html=True)
             st.download_button(
                 label="📥 Guardar Registro de Certificado (TXT)",
-                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 3: Lavado y Desinfección\nPuntaje: " + str(st.session_state['score_m3']) + "%",
+                data=f"""CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 3: Lavado y Desinfección\nPuntaje: {st.session_state['score_m3']}%""",
                 file_name=f"Certificado_Kikes_M3_{st.session_state['cedula']}.txt",
                 mime="text/plain",
                 key="dl_m3"
