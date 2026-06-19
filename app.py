@@ -1,5 +1,4 @@
-with open("app.py", "w", encoding="utf-8") as f:
-    f.write('''import streamlit as st
+import streamlit as st
 import os
 import base64
 
@@ -556,12 +555,10 @@ else:
             st.markdown(certificado_html, unsafe_allow_html=True)
             st.download_button(
                 label="📥 Guardar Registro de Certificado (TXT)",
-                data=f"CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 3: Lavado y Desinfección\nPuntaje: {st.session_state['score_m3']}%",
+                data=f"""CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 3: Lavado y Desinfección\nPuntaje: {st.session_state['score_m3']}%""",
                 file_name=f"Certificado_Kikes_M3_{st.session_state['cedula']}.txt",
                 mime="text/plain",
                 key="dl_m3"
             )
         else:
             st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
-''')
-print("Successfully generated.")
