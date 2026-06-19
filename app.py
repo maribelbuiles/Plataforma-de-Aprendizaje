@@ -118,7 +118,7 @@ if st.session_state['cedula'] is None:
                 else: 
                     st.error("Cédula no válida.")
 else:
-    # --- NAVEGACIÓN ---
+    # --- NAVENACIÓN ---
     st.sidebar.markdown(f"### 👤 Empleado: `{st.session_state['cedula']}`")
     modulo = st.sidebar.radio("🗺️ Mapa de Ruta Pro", [
         "Módulo 1: Equipo de Canastas Aptas", 
@@ -288,14 +288,24 @@ else:
         # Pestaña 4: Sistemas (Slide 13 y 14)
         with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
-            st_image_nitida_multiple(
-                ["Sistemas Canasta Ovoid.png", "Slide13.PNG", "Slide13.png", "sistemas_canasta.png"], 
-                "Alineación y Posicionamiento de Identificadores de Color"
-            )
-            st_image_nitida_multiple(
-                ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png"], 
-                "Uso de Identificador de Posición (Apilar vs Anidar)"
-            )
+            
+            # Primer set de imágenes renderizado pequeño y nítido sin alert box
+            img_found1 = False
+            for nombre in ["Sistemas Canasta Ovoid.png", "Slide13.PNG", "Slide13.png", "sistemas_canasta.png"]:
+                if os.path.exists(nombre):
+                    img_base64 = get_base64_image(nombre)
+                    st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
+                    img_found1 = True
+                    break
+                    
+            # Segundo set de imágenes renderizado pequeño y nítido sin alert box
+            img_found2 = False
+            for nombre in ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png"]:
+                if os.path.exists(nombre):
+                    img_base64 = get_base64_image(nombre)
+                    st.markdown(f'<div class="uniform-container"><img src="data:image/png;base64,{img_base64}" class="uniform-img"></div>', unsafe_allow_html=True)
+                    img_found2 = True
+                    break
 
         # Pestaña 5: Usos Indebidos (Slide 15 y 16)
         with tabs[4]:
