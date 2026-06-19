@@ -142,7 +142,8 @@ if st.session_state['cedula'] is None:
             if st.form_submit_button("Ingresar a la Capacitación"):
                 csv_path = "Cadena de abastecimiento (1).xlsx - Cadena de abastecimiento.csv"
                 try:
-                    df_auth = pd.read_csv(csv_path)
+                    # Usamos sep=None y engine='python' para detectar automáticamente comas o puntos y comas
+                    df_auth = pd.read_csv(csv_path, sep=None, engine='python')
                     df_auth.columns = df_auth.columns.str.strip()
                     
                     # Limpieza robusta para forzar conversión de flotantes (.0) a enteros de texto
