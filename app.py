@@ -1,4 +1,5 @@
-import streamlit as st
+with open("app.py", "w", encoding="utf-8") as f:
+    f.write('''import streamlit as st
 import os
 import base64
 
@@ -38,6 +39,27 @@ st.markdown("""
             -webkit-font-smoothing: antialiased !important;
             -moz-osx-font-smoothing: grayscale !important;
             text-rendering: optimizeLegibility !important;
+        }
+
+        /* 📉 REDUCIR EL TAMAÑO Y ESPACIADO DE LAS OPCIONES ANIDADAS EN EL SIDEBAR (image_1de780.png) */
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(2),
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(3),
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(5),
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(6),
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(8),
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(9) {
+            margin-top: -5px !important;
+            margin-bottom: -5px !important;
+        }
+        
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(2) p,
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(3) p,
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(5) p,
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(6) p,
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(8) p,
+        div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(9) p {
+            font-size: 14px !important;
+            color: #444444 !important;
         }
 
         /* 📐 CONTENEDOR AJUSTADO PARA EVITAR CUALQUIER DISTORSIÓN Y MANTENER PROPORCIÓN DE LETRAS */
@@ -302,7 +324,7 @@ else:
                 if not img_found:
                     st.info("💡 Diapositiva: Dimensiones Separador Ovoid.png (Suba la imagen para visualizarla)")
 
-        # Pestaña 4: Sistemas
+        # Pestaña 4: Systems
         with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
             img_found1 = False
@@ -361,64 +383,60 @@ else:
             st_image_nitida_multiple(["Slide38.PNG", "Slide38.png", "almacenamiento_transporte_ficha.png"], "Límites: Niveles de Canastas, Estibas, Separadores y Ganchos")
 
     elif modulo == opt_e1:
-        _, col_eval, _ = st.columns([1, 2, 1])
-        with col_eval:
-            st.subheader("Evaluación - Módulo 1")
-            with st.form("quiz_m1"):
-                p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m1_p1")
-                p2 = st.radio("¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m1_p2")
-                p3 = st.radio("¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m1_p3")
-                p4 = st.radio("¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m1_p4")
-                p5 = st.radio("¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m1_p5")
-                submit_eval = st.form_submit_button("Finalizar Evaluación")
+        st.subheader("Evaluación de Conocimientos Técnicos - Módulo 1")
+        with st.form("quiz_m1"):
+            p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m1_p1")
+            p2 = st.radio("¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m1_p2")
+            p3 = st.radio("¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m1_p3")
+            p4 = st.radio("¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m1_p4")
+            p5 = st.radio("¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m1_p5")
+            submit_eval = st.form_submit_button("Finalizar Evaluación")
 
-            if submit_eval:
-                score = 0
-                if p1 == "Mismo costado": score += 20
-                if p2 == "17.25 kg": score += 20
-                if p3 == "75": score += 20
-                if p4 == "No": score += 20
-                if p5 == "16": score += 20
-                
-                st.session_state['score_m1'] = score
-                if score >= 80:
-                    st.session_state['aprobado_m1'] = True
-                    st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
-                    st.balloons()
-                else:
-                    st.session_state['aprobado_m1'] = False
-                    st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar. Repasa el material.")
+        if submit_eval:
+            score = 0
+            if p1 == "Mismo costado": score += 20
+            if p2 == "17.25 kg": score += 20
+            if p3 == "75": score += 20
+            if p4 == "No": score += 20
+            if p5 == "16": score += 20
+            
+            st.session_state['score_m1'] = score
+            if score >= 80:
+                st.session_state['aprobado_m1'] = True
+                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
+                st.balloons()
+            else:
+                st.session_state['aprobado_m1'] = False
+                st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar. Repasa el material.")
 
     elif modulo == opt_c1:
-        _, col_cert, _ = st.columns([1, 2, 1])
-        with col_cert:
-            st.subheader("Certificado Oficial Módulo 1")
-            if st.session_state['aprobado_m1']:
-                logo_base64 = get_base64_image(logo_path) if logo_path else ""
-                certificado_html = f"""
-                <div style="border: 10px solid #008a3e; padding: 25px; text-align: center; background-color: white; border-style: double; margin: 10px auto; max-width: 550px;">
-                    <img src="data:image/png;base64,{logo_base64}" width="110" style="margin-bottom: 15px;">
-                    <h1 style="color: #008a3e; font-family: 'Georgia', serif; font-size: 32px; margin: 5px 0;">Certificado de Aprobación</h1>
-                    <p style="font-size: 16px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>
-                    <h2 style="font-size: 24px; color: #000; text-decoration: underline; margin: 15px 0;">ID DE EMPLEADO: {st.session_state['cedula']}</h2>
-                    <p style="font-size: 16px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>
-                    <h3 style="font-size: 20px; color: #2bb673; margin: 10px 0;">Módulo 1: Equipo de Canastas Aptas</h3>
-                    <div style="margin-top: 20px; padding: 10px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">
-                        <span style="font-size: 18px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state['score_m1']}%</span>
-                    </div>
-                    <p style="margin-top: 25px; font-style: italic; color: #777; font-size: 13px;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p>
+        st.subheader("Certificado Oficial Módulo 1")
+        if st.session_state['aprobado_m1']:
+            logo_base64 = get_base64_image(logo_path) if logo_path else ""
+            certificado_html = f"""
+            <div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">
+                <img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">
+                <h1 style="color: #008a3e; font-family: 'Georgia', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>
+                <p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>
+                <h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state['cedula']}</h2>
+                <p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>
+                <h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 1: Equipo de Canastas Aptas</h3>
+                <div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">
+                    <span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state['score_m1']}%</span>
                 </div>
-                """
-                st.markdown(certificado_html, unsafe_allow_html=True)
-                st.download_button(
-                    label="📥 Guardar Registro de Certificado (TXT)",
-                    data=f"""CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 1: Equipo de Canastas Aptas\nPuntaje: {st.session_state['score_m1']}%""",
-                    file_name=f"Certificado_Kikes_M1_{st.session_state['cedula']}.txt",
-                    mime="text/plain",
-                    key="dl_m1"
-                )
-            else:
-                st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
+                <p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p>
+            </div>
+            """
+            st.markdown(certificado_html, unsafe_allow_html=True)
+            st.download_button(
+                label="📥 Guardar Registro de Certificado (TXT)",
+                data=f"""CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 1: Equipo de Canastas Aptas\nPuntaje: {st.session_state['score_m1']}%""",
+                file_name=f"Certificado_Kikes_M1_{st.session_state['cedula']}.txt",
+                mime="text/plain",
+                key="dl_m1"
+            )
+        else:
+            st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
 
     # --- CONTENIDO MÓDULO 2 ---
     elif modulo == opt_m2:
@@ -428,64 +446,60 @@ else:
             st.write("Módulo informativo.")
         
     elif modulo == opt_e2:
-        _, col_eval, _ = st.columns([1, 2, 1])
-        with col_eval:
-            st.subheader("Evaluación - Módulo 2")
-            with st.form("quiz_m2"):
-                p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m2_p1")
-                p2 = st.radio("¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m2_p2")
-                p3 = st.radio("¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m2_p3")
-                p4 = st.radio("¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m2_p4")
-                p5 = st.radio("¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m2_p5")
-                submit_eval = st.form_submit_button("Finalizar Evaluación")
+        st.subheader("Evaluación de Conocimientos Técnicos - Módulo 2")
+        with st.form("quiz_m2"):
+            p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m2_p1")
+            p2 = st.radio("¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m2_p2")
+            p3 = st.radio("¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m2_p3")
+            p4 = st.radio("¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m2_p4")
+            p5 = st.radio("¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m2_p5")
+            submit_eval = st.form_submit_button("Finalizar Evaluación")
 
-            if submit_eval:
-                score = 0
-                if p1 == "Mismo costado": score += 20
-                if p2 == "17.25 kg": score += 20
-                if p3 == "75": score += 20
-                if p4 == "No": score += 20
-                if p5 == "16": score += 20
-                
-                st.session_state['score_m2'] = score
-                if score >= 80:
-                    st.session_state['aprobado_m2'] = True
-                    st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
-                    st.balloons()
-                else:
-                    st.session_state['aprobado_m2'] = False
-                    st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
+        if submit_eval:
+            score = 0
+            if p1 == "Mismo costado": score += 20
+            if p2 == "17.25 kg": score += 20
+            if p3 == "75": score += 20
+            if p4 == "No": score += 20
+            if p5 == "16": score += 20
+            
+            st.session_state['score_m2'] = score
+            if score >= 80:
+                st.session_state['aprobado_m2'] = True
+                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
+                st.balloons()
+            else:
+                st.session_state['aprobado_m2'] = False
+                st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
 
     elif modulo == opt_c2:
-        _, col_cert, _ = st.columns([1, 2, 1])
-        with col_cert:
-            st.subheader("Certificado Oficial Módulo 2")
-            if st.session_state['aprobado_m2']:
-                logo_base64 = get_base64_image(logo_path) if logo_path else ""
-                certificado_html = f"""
-                <div style="border: 10px solid #008a3e; padding: 25px; text-align: center; background-color: white; border-style: double; margin: 10px auto; max-width: 550px;">
-                    <img src="data:image/png;base64,{logo_base64}" width="110" style="margin-bottom: 15px;">
-                    <h1 style="color: #008a3e; font-family: 'Georgia', serif; font-size: 32px; margin: 5px 0;">Certificado de Aprobación</h1>
-                    <p style="font-size: 16px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>
-                    <h2 style="font-size: 24px; color: #000; text-decoration: underline; margin: 15px 0;">ID DE EMPLEADO: {st.session_state['cedula']}</h2>
-                    <p style="font-size: 16px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>
-                    <h3 style="font-size: 20px; color: #2bb673; margin: 10px 0;">Módulo 2: Equipo de Canastas No Aptas</h3>
-                    <div style="margin-top: 20px; padding: 10px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">
-                        <span style="font-size: 18px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state['score_m2']}%</span>
-                    </div>
-                    <p style="margin-top: 25px; font-style: italic; color: #777; font-size: 13px;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p>
+        st.subheader("Certificado Oficial Módulo 2")
+        if st.session_state['aprobado_m2']:
+            logo_base64 = get_base64_image(logo_path) if logo_path else ""
+            certificado_html = f"""
+            <div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">
+                <img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">
+                <h1 style="color: #008a3e; font-family: 'Georgia', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>
+                <p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>
+                <h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state['cedula']}</h2>
+                <p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>
+                <h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 2: Equipo de Canastas No Aptas</h3>
+                <div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">
+                    <span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state['score_m2']}%</span>
                 </div>
-                """
-                st.markdown(certificado_html, unsafe_allow_html=True)
-                st.download_button(
-                    label="📥 Guardar Registro de Certificado (TXT)",
-                    data=f"""CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 2: Equipo de Canastas No Aptas\nPuntaje: {st.session_state['score_m2']}%""",
-                    file_name=f"Certificado_Kikes_M2_{st.session_state['cedula']}.txt",
-                    mime="text/plain",
-                    key="dl_m2"
-                )
-            else:
-                st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
+                <p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p>
+            </div>
+            """
+            st.markdown(certificado_html, unsafe_allow_html=True)
+            st.download_button(
+                label="📥 Guardar Registro de Certificado (TXT)",
+                data=f"""CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 2: Equipo de Canastas No Aptas\nPuntaje: {st.session_state['score_m2']}%""",
+                file_name=f"Certificado_Kikes_M2_{st.session_state['cedula']}.txt",
+                mime="text/plain",
+                key="dl_m2"
+            )
+        else:
+            st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
 
     # --- CONTENIDO MÓDULO 3 ---
     elif modulo == opt_m3:
@@ -495,61 +509,59 @@ else:
             st.write("Módulo informativo.")
         
     elif modulo == opt_e3:
-        _, col_eval, _ = st.columns([1, 2, 1])
-        with col_eval:
-            st.subheader("Evaluación - Módulo 3")
-            with st.form("quiz_m3"):
-                p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m3_p1")
-                p2 = st.radio("¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m3_p2")
-                p3 = st.radio("¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m3_p3")
-                p4 = st.radio("¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m3_p4")
-                p5 = st.radio("¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m3_p5")
-                submit_eval = st.form_submit_button("Finalizar Evaluación")
+        st.subheader("Evaluación de Conocimientos Técnicos - Módulo 3")
+        with st.form("quiz_m3"):
+            p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m3_p1")
+            p2 = st.radio("¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m3_p2")
+            p3 = st.radio("¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m3_p3")
+            p4 = st.radio("¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m3_p4")
+            p5 = st.radio("¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m3_p5")
+            submit_eval = st.form_submit_button("Finalizar Evaluación")
 
-            if submit_eval:
-                score = 0
-                if p1 == "Mismo costado": score += 20
-                if p2 == "17.25 kg": score += 20
-                if p3 == "75": score += 20
-                if p4 == "No": score += 20
-                if p5 == "16": score += 20
-                
-                st.session_state['score_m3'] = score
-                if score >= 80:
-                    st.session_state['aprobado_m3'] = True
-                    st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
-                    st.balloons()
-                else:
-                    st.session_state['aprobado_m3'] = False
-                    st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
+        if submit_eval:
+            score = 0
+            if p1 == "Mismo costado": score += 20
+            if p2 == "17.25 kg": score += 20
+            if p3 == "75": score += 20
+            if p4 == "No": score += 20
+            if p5 == "16": score += 20
+            
+            st.session_state['score_m3'] = score
+            if score >= 80:
+                st.session_state['aprobado_m3'] = True
+                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
+                st.balloons()
+            else:
+                st.session_state['aprobado_m3'] = False
+                st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
 
     elif modulo == opt_c3:
-        _, col_cert, _ = st.columns([1, 2, 1])
-        with col_cert:
-            st.subheader("Certificado Oficial Módulo 3")
-            if st.session_state['aprobado_m3']:
-                logo_base64 = get_base64_image(logo_path) if logo_path else ""
-                certificado_html = f"""
-                <div style="border: 10px solid #008a3e; padding: 25px; text-align: center; background-color: white; border-style: double; margin: 10px auto; max-width: 550px;">
-                    <img src="data:image/png;base64,{logo_base64}" width="110" style="margin-bottom: 15px;">
-                    <h1 style="color: #008a3e; font-family: 'Georgia', serif; font-size: 32px; margin: 15px 0;">Certificado de Aprobación</h1>
-                    <p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>
-                    <h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state['cedula']}</h2>
-                    <p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>
-                    <h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 3: Lavado y Desinfección</h3>
-                    <div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">
-                        <span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state['score_m3']}%</span>
-                    </div>
-                    <p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p>
+        st.subheader("Certificado Oficial Módulo 3")
+        if st.session_state['aprobado_m3']:
+            logo_base64 = get_base64_image(logo_path) if logo_path else ""
+            certificado_html = f"""
+            <div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">
+                <img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">
+                <h1 style="color: #008a3e; font-family: 'Georgia', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>
+                <p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>
+                <h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state['cedula']}</h2>
+                <p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>
+                <h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 3: Lavado y Desinfección</h3>
+                <div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">
+                    <span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state['score_m3']}%</span>
                 </div>
-                """
-                st.markdown(certificado_html, unsafe_allow_html=True)
-                st.download_button(
-                    label="📥 Guardar Registro de Certificado (TXT)",
-                    data=f"CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 3: Lavado y Desinfección\nPuntaje: {st.session_state['score_m3']}%",
-                    file_name=f"Certificado_Kikes_M3_{st.session_state['cedula']}.txt",
-                    mime="text/plain",
-                    key="dl_m3"
-                )
-            else:
-                st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
+                <p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p>
+            </div>
+            """
+            st.markdown(certificado_html, unsafe_allow_html=True)
+            st.download_button(
+                label="📥 Guardar Registro de Certificado (TXT)",
+                data=f"CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 3: Lavado y Desinfección\nPuntaje: {st.session_state['score_m3']}%",
+                file_name=f"Certificado_Kikes_M3_{st.session_state['cedula']}.txt",
+                mime="text/plain",
+                key="dl_m3"
+            )
+        else:
+            st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
+''')
+print("Successfully generated.")
