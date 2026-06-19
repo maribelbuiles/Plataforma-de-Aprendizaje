@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import base64
+import pandas as pd
 
 # 1. CONFIGURACIÓN DE PÁGINA Y ESTILOS PARA MÁXIMA NITIDEZ
 st.set_page_config(page_title="Ruta de Aprendizaje Kikes", page_icon="📦", layout="wide")
@@ -338,20 +339,30 @@ else:
     elif modulo == opt_e1:
         st.subheader("Evaluación de Conocimientos Técnicos - Módulo 1")
         with st.form("quiz_m1"):
-            p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m1_p1")
-            p2 = st.radio("¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m1_p2")
-            p3 = st.radio("¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m1_p3")
-            p4 = st.radio("¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m1_p4")
-            p5 = st.radio("¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m1_p5")
+            p1 = st.radio("1. ¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m1_p1")
+            p2 = st.radio("2. ¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m1_p2")
+            p3 = st.radio("3. ¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m1_p3")
+            p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m1_p4")
+            p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m1_p5")
+            p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m1_p6")
+            p7 = st.radio("7. ¿Qué herramienta metálica se utiliza para el aseguramiento y arrastre seguro del equipo?", ["Gancho Metálico", "Cable tensor", "Barra de empuje"], key="m1_p7")
+            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m1_p8")
+            p9 = st.radio("9. ¿Cuál es el límite técnico operativo de peso por canasta?", ["15.00 kg", "17.25 kg", "20.00 kg"], key="m1_p9")
+            p10 = st.radio("10. ¿Dónde se realiza principalmente el proceso de anidado de canastas vacías para el retorno?", ["En Planta de Incubación", "En CEDI y Centros de Entrega"], key="m1_p10")
             submit_eval = st.form_submit_button("Finalizar Evaluación")
 
         if submit_eval:
             score = 0
-            if p1 == "Mismo costado": score += 20
-            if p2 == "17.25 kg": score += 20
-            if p3 == "75": score += 20
-            if p4 == "No": score += 20
-            if p5 == "16": score += 20
+            if p1 == "Mismo costado": score += 10
+            if p2 == "17.25 kg": score += 10
+            if p3 == "75": score += 10
+            if p4 == "No": score += 10
+            if p5 == "16": score += 10
+            if p6 == "240 Huevos": score += 10
+            if p7 == "Gancho Metálico": score += 10
+            if p8 == "No": score += 10
+            if p9 == "17.25 kg": score += 10
+            if p10 == "En CEDI y Centros de Entrega": score += 10
             
             st.session_state['score_m1'] = score
             if score >= 80:
@@ -399,20 +410,30 @@ else:
     elif modulo == opt_e2:
         st.subheader("Evaluación de Conocimientos Técnicos - Módulo 2")
         with st.form("quiz_m2"):
-            p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m2_p1")
-            p2 = st.radio("¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m2_p2")
-            p3 = st.radio("¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m2_p3")
-            p4 = st.radio("¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m2_p4")
-            p5 = st.radio("¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m2_p5")
+            p1 = st.radio("1. ¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m2_p1")
+            p2 = st.radio("2. ¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m2_p2")
+            p3 = st.radio("3. ¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m2_p3")
+            p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m2_p4")
+            p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m2_p5")
+            p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m2_p6")
+            p7 = st.radio("7. ¿Qué herramienta metálica se utiliza para el aseguramiento y arrastre seguro del equipo?", ["Gancho Metálico", "Cable tensor", "Barra de empuje"], key="m2_p7")
+            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m2_p8")
+            p9 = st.radio("9. ¿Cuál es el límite técnico operativo de peso por canasta?", ["15.00 kg", "17.25 kg", "20.00 kg"], key="m2_p9")
+            p10 = st.radio("10. ¿Dónde se realiza principalmente el proceso de anidado de canastas vacías para el retorno?", ["En Planta de Incubación", "En CEDI y Centros de Entrega"], key="m2_p10")
             submit_eval = st.form_submit_button("Finalizar Evaluación")
 
         if submit_eval:
             score = 0
-            if p1 == "Mismo costado": score += 20
-            if p2 == "17.25 kg": score += 20
-            if p3 == "75": score += 20
-            if p4 == "No": score += 20
-            if p5 == "16": score += 20
+            if p1 == "Mismo costado": score += 10
+            if p2 == "17.25 kg": score += 10
+            if p3 == "75": score += 10
+            if p4 == "No": score += 10
+            if p5 == "16": score += 10
+            if p6 == "240 Huevos": score += 10
+            if p7 == "Gancho Metálico": score += 10
+            if p8 == "No": score += 10
+            if p9 == "17.25 kg": score += 10
+            if p10 == "En CEDI y Centros de Entrega": score += 10
             
             st.session_state['score_m2'] = score
             if score >= 80:
@@ -460,20 +481,30 @@ else:
     elif modulo == opt_e3:
         st.subheader("Evaluación de Conocimientos Técnicos - Módulo 3")
         with st.form("quiz_m3"):
-            p1 = st.radio("¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m3_p1")
-            p2 = st.radio("¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m3_p2")
-            p3 = st.radio("¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m3_p3")
-            p4 = st.radio("¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m3_p4")
-            p5 = st.radio("¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m3_p5")
+            p1 = st.radio("1. ¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m3_p1")
+            p2 = st.radio("2. ¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m3_p2")
+            p3 = st.radio("3. ¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m3_p3")
+            p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m3_p4")
+            p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m3_p5")
+            p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m3_p6")
+            p7 = st.radio("7. ¿Qué herramienta metálica se utiliza para el aseguramiento y arrastre seguro del equipo?", ["Gancho Metálico", "Cable tensor", "Barra de empuje"], key="m3_p7")
+            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m3_p8")
+            p9 = st.radio("9. ¿Cuál es el límite técnico operativo de peso por canasta?", ["15.00 kg", "17.25 kg", "20.00 kg"], key="m3_p9")
+            p10 = st.radio("10. ¿Dónde se realiza principalmente el proceso de anidado de canastas vacías para el retorno?", ["En Planta de Incubación", "En CEDI y Centros de Entrega"], key="m3_p10")
             submit_eval = st.form_submit_button("Finalizar Evaluación")
 
         if submit_eval:
             score = 0
-            if p1 == "Mismo costado": score += 20
-            if p2 == "17.25 kg": score += 20
-            if p3 == "75": score += 20
-            if p4 == "No": score += 20
-            if p5 == "16": score += 20
+            if p1 == "Mismo costado": score += 10
+            if p2 == "17.25 kg": score += 10
+            if p3 == "75": score += 10
+            if p4 == "No": score += 10
+            if p5 == "16": score += 10
+            if p6 == "240 Huevos": score += 10
+            if p7 == "Gancho Metálico": score += 10
+            if p8 == "No": score += 10
+            if p9 == "17.25 kg": score += 10
+            if p10 == "En CEDI y Centros de Entrega": score += 10
             
             st.session_state['score_m3'] = score
             if score >= 80:
