@@ -40,19 +40,22 @@ st.markdown("""
             text-rendering: optimizeLegibility !important;
         }
 
-        /* 📐 CONTENEDOR AJUSTADO PARA QUE LAS LETRAS INTERNAS DE LAS IMÁGENES TENGAN EL MISMO TAMAÑO PERMANECIENDO PROPORCIONALES */
+        /* 📐 CONTENEDOR AJUSTADO PARA EVITAR CUALQUIER DISTORSIÓN Y MANTENER PROPORCIÓN DE LETRAS */
         .uniform-container {
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 250px; /* Altura fija ideal para visualización limpia */
             width: 100%;
             background-color: transparent;
+            overflow: hidden;
             margin-bottom: 10px;
         }
 
         .uniform-img {
-            width: 100% !important;    /* Ajusta al ancho completo de la columna proporcional */
-            height: auto !important;   /* Mantiene la proporción perfecta del texto sin encoger por restricciones de altura */
+            max-height: 100% !important;
+            max-width: 100% !important;
+            object-fit: contain !important; /* Protege la imagen contra cualquier tipo de estiramiento o distorsión */
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: high-quality !important; 
             -webkit-transform: translateZ(0); 
@@ -187,7 +190,7 @@ else:
             st.subheader("Ficha Técnica: Componentes y Dimensiones")
             
             # --- CANASTA ---
-            col_comp, col_dim = st.columns([1, 1.65])
+            col_comp, col_dim = st.columns(2)
             with col_comp:
                 img_found = False
                 for nombre in ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"]:
@@ -211,7 +214,7 @@ else:
             st.markdown("---")
             
             # --- ESTIBA ---
-            col_comp, col_dim = st.columns([1, 1.65])
+            col_comp, col_dim = st.columns(2)
             with col_comp:
                 img_found = False
                 for nombre in ["Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"]:
@@ -235,7 +238,7 @@ else:
             st.markdown("---")
             
             # --- GANCHO METÁLICO ---
-            col_comp, col_dim = st.columns([1, 1.65])
+            col_comp, col_dim = st.columns(2)
             with col_comp:
                 img_found = False
                 for nombre in ["Gancho Metálico.png", "Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"]:
@@ -259,7 +262,7 @@ else:
             st.markdown("---")
             
             # --- SEPARADOR OVOID ---
-            col_comp, col_dim = st.columns([1, 1.65])
+            col_comp, col_dim = st.columns(2)
             with col_comp:
                 img_found = False
                 for nombre in ["Separador Ovoid.png", "Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"]:
@@ -330,7 +333,7 @@ else:
             )
             st_image_nitida_multiple(
                 ["Slide22.PNG", "Slide22.png", "cargue_plantas.png"], 
-                "Líneas de Producción y Carga en Plantas"
+                "Líneas de Production y Carga en Plantas"
             )
             st_image_nitida_multiple(
                 ["Slide23.PNG", "Slide23.png", "numeros_huevos_planta.png"], 
