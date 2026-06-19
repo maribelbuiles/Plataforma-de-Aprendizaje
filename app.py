@@ -157,38 +157,61 @@ else:
         # Pestaña 3: Ficha Técnica (Slide 6 a 12)
         with tabs[2]:
             st.subheader("Ficha Técnica: Componentes y Dimensiones")
-            st_image_nitida_multiple(
-                ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"], 
-                "Canastas Kikes AFCA022"
-            )
-            st_image_nitida_multiple(
-                ["Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"], 
-                "Estiba Ovoid AFES013"
-            )
-            st_image_nitida_multiple(
-                ["Gancho Metálico.png", "Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"], 
-                "Gancho Metálico MDGA105"
-            )
-            st_image_nitida_multiple(
-                ["Separador Ovoid.png", "Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"], 
-                "Separador Ovoid AFSE003"
-            )
-            st_image_nitida_multiple(
-                ["Dimensiones Estiba Ovoid.png", "Slide10.PNG", "Slide10.png", "dimensiones_estiba.png"], 
-                "Dimensiones Estiba ($124\\text{ cm} \\times 65\\text{ cm} \\times 10.5\\text{ cm}$)"
-            )
-            st_image_nitida_multiple(
-                ["Slide11.PNG", "Slide11.png", "dimensiones_canasta.png"], 
-                "Dimensiones Canasta ($63\\text{ cm} \\times 32\\text{ cm} \\times 23\\text{ cm}$)"
-            )
-            st_image_nitida_multiple(
-                ["Dimensiones Separador Ovoid.png", "Slide12.PNG", "Slide12.png", "dimensiones_separador.png"], 
-                "Dimensiones Separador ($124\\text{ cm} \\times 66\\text{ cm} \\times 2\\text{ cm}$)"
-            )
-            st_image_nitida_multiple(
-                ["Dimensiones Gancho Metálico.png"], 
-                "Dimensiones Gancho Metálico ($8\\text{ cm} \\times 8.6\\text{ cm} \\times 3\\text{ cm}$)"
-            )
+            
+            # --- CANASTA ---
+            col_comp, col_dim = st.columns(2)
+            with col_comp:
+                st_image_nitida_multiple(
+                    ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"], 
+                    "Canastas Kikes AFCA022"
+                )
+            with col_dim:
+                st_image_nitida_multiple(
+                    ["Slide11.PNG", "Slide11.png", "dimensiones_canasta.png"], 
+                    "Dimensiones Canasta ($63\\text{ cm} \\times 32\\text{ cm} \\times 23\\text{ cm}$)"
+                )
+            st.markdown("---")
+            
+            # --- ESTIBA ---
+            col_comp, col_dim = st.columns(2)
+            with col_comp:
+                st_image_nitida_multiple(
+                    ["Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"], 
+                    "Estiba Ovoid AFES013"
+                )
+            with col_dim:
+                st_image_nitida_multiple(
+                    ["Dimensiones Estiba Ovoid.png", "Slide10.PNG", "Slide10.png", "dimensiones_estiba.png"], 
+                    "Dimensiones Estiba ($124\\text{ cm} \\times 65\\text{ cm} \\times 10.5\\text{ cm}$)"
+                )
+            st.markdown("---")
+            
+            # --- GANCHO METÁLICO ---
+            col_comp, col_dim = st.columns(2)
+            with col_comp:
+                st_image_nitida_multiple(
+                    ["Gancho Metálico.png", "Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"], 
+                    "Gancho Metálico MDGA105"
+                )
+            with col_dim:
+                st_image_nitida_multiple(
+                    ["Dimensiones Gancho Metálico.png"], 
+                    "Dimensiones Gancho Metálico ($8\\text{ cm} \\times 8.6\\text{ cm} \\times 3\\text{ cm}$)"
+                )
+            st.markdown("---")
+            
+            # --- SEPARADOR OVOID ---
+            col_comp, col_dim = st.columns(2)
+            with col_comp:
+                st_image_nitida_multiple(
+                    ["Separador Ovoid.png", "Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"], 
+                    "Separador Ovoid AFSE003"
+                )
+            with col_dim:
+                st_image_nitida_multiple(
+                    ["Dimensiones Separador Ovoid.png", "Slide12.PNG", "Slide12.png", "dimensiones_separador.png"], 
+                    "Dimensiones Separador ($124\\text{ cm} \\times 66\\text{ cm} \\times 2\\text{ cm}$)"
+                )
 
         # Pestaña 4: Sistemas (Slide 13 y 14)
         with tabs[3]:
@@ -220,7 +243,7 @@ else:
             st_image_nitida_multiple(
                 ["Slide17.PNG", "Slide17.png", "carga_maxima_canasta.png"], 
                 "Límites de Peso Máximo Operativo (17.25 kg)"
-            )
+                )
             st_image_nitida_multiple(
                 ["Slide18.PNG", "Slide18.png", "cantidad_maxima_huevos.png"], 
                 "Cantidad Máxima por Canasta (240 Huevos)"
