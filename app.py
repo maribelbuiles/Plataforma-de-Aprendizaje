@@ -1,7 +1,6 @@
 import streamlit as st
 import os
 import base64
-import pandas as pd
 
 # 1. CONFIGURACIÓN DE PÁGINA Y ESTILOS PARA MÁXIMA NITIDEZ
 st.set_page_config(page_title="Ruta de Aprendizaje Kikes", page_icon="📦", layout="wide")
@@ -135,40 +134,12 @@ if st.session_state['cedula'] is None:
         with st.form("login"):
             ced = st.text_input("Número de Cédula del Empleado:")
             if st.form_submit_button("Ingresar a la Capacitación"):
-                csv_path = "Cadena de abastecimiento (1).xlsx - Cadena de abastecimiento.csv"
-                
-                if not os.path.exists(csv_path):
-                    st.error(f"⚠️ Archivo de base de datos no encontrado. Asegúrate de que el archivo '{csv_path}' esté subido en el repositorio.")
-                else:
-                    try:
-                        import pandas as pd  # Importación explícita para blindar la ejecución frente a cachés locales
-                        # Detección inteligente automática de separador (coma o punto y coma)
-                        df_auth = pd.read_csv(csv_path, sep=None, engine='python')
-                        df_auth.columns = df_auth.columns.str.strip()
-                        
-                        # Formateo y limpieza de números de identificación flotantes a enteros limpios
-                        cedulas_validas = set()
-                        if 'Identificacion' in df_auth.columns:
-                            for x in df_auth['Identificacion'].dropna():
-                                try:
-                                    f_val = float(x)
-                                    if f_val.is_integer():
-                                        cedulas_validas.add(str(int(f_val)))
-                                    else:
-                                        cedulas_validas.add(str(f_val))
-                                except:
-                                    cedulas_validas.add(str(x).strip())
-                            
-                            input_cedula = ced.strip()
-                            if input_cedula in cedulas_validas:
-                                st.session_state['cedula'] = input_cedula
-                                st.rerun()
-                            else: 
-                                st.error("Número de cédula no autorizado o no registrado en el personal de Cadena de Abastecimiento.")
-                        else:
-                            st.error("No se encontró la columna 'Identificacion' en el archivo CSV.")
-                    except Exception as e:
-                        st.error("Error al procesar la base de datos de autorización. Verifique el formato del archivo CSV.")
+                input_cedula = ced.strip()
+                if input_cedula.isdigit() and len(input_cedula) >= 5:
+                    st.session_state['cedula'] = input_cedula
+                    st.rerun()
+                else: 
+                    st.error("Por favor, ingrese un número de cédula válido (mínimo 5 dígitos).")
 else:
     # Definición de opciones de menú exactamente idénticas en aspecto usando caracteres invisibles únicos
     opt_m1 = "Módulo 1: Equipo de Canastas Aptas"
