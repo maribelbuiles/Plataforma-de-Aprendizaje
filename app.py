@@ -1,5 +1,4 @@
-with open("app.py", "w", encoding="utf-8") as f:
-    f.write('''import streamlit as st
+import streamlit as st
 import os
 import base64
 
@@ -31,7 +30,7 @@ st.markdown("""
             margin-left: auto;
             margin-right: auto;
             border-radius: 8px;
-            }
+        }
 
         /* 🔍 OPTIMIZACIÓN DE FUENTE EXCLUYENDO SELECTORES UNIVERSALES PARA NO ROMPER FUENTES DE ICONOS DE STREAMLIT */
         html, body, p, h1, h2, h3, h4, h5, h6, label, input, button, select, textarea {
@@ -409,7 +408,7 @@ else:
             st.markdown(certificado_html, unsafe_allow_html=True)
             st.download_button(
                 label="📥 Guardar Registro de Certificado (TXT)",
-                data=f"CERTIFICADO HUEVOS KIKES\\nID: {st.session_state['cedula']}\\nCurso: Módulo 1: Equipo de Canastas Aptas\\nPuntaje: {st.session_state['score_m1']}%",
+                data=f"""CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 1: Equipo de Canastas Aptas\nPuntaje: {st.session_state['score_m1']}%""",
                 file_name=f"Certificado_Kikes_M1_{st.session_state['cedula']}.txt",
                 mime="text/plain",
                 key="dl_m1"
@@ -472,7 +471,7 @@ else:
             st.markdown(certificado_html, unsafe_allow_html=True)
             st.download_button(
                 label="📥 Guardar Registro de Certificado (TXT)",
-                data=f"CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 2: Equipo de Canastas No Aptas\nPuntaje: {st.session_state['score_m2']}%",
+                data=f"""CERTIFICADO HUEVOS KIKES\nID: {st.session_state['cedula']}\nCurso: Módulo 2: Equipo de Canastas No Aptas\nPuntaje: {st.session_state['score_m2']}%""",
                 file_name=f"Certificado_Kikes_M2_{st.session_state['cedula']}.txt",
                 mime="text/plain",
                 key="dl_m2"
@@ -542,5 +541,3 @@ else:
             )
         else:
             st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
-''')
-print("Saved successfully.")
