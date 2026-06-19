@@ -345,10 +345,10 @@ else:
             p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m1_p4")
             p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m1_p5")
             p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m1_p6")
-            p7 = st.radio("7. ¿Qué herramienta metálica se utiliza para el aseguramiento y arrastre seguro del equipo?", ["Gancho Metálico", "Cable tensor", "Barra de empuje"], key="m1_p7")
+            p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m1_p7")
             p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m1_p8")
-            p9 = st.radio("9. ¿Cuál es el límite técnico operativo de peso por canasta?", ["15.00 kg", "17.25 kg", "20.00 kg"], key="m1_p9")
-            p10 = st.radio("10. ¿Dónde se realiza principalmente el proceso de anidado de canastas vacías para el retorno?", ["En Planta de Incubación", "En CEDI y Centros de Entrega"], key="m1_p10")
+            p9 = st.radio("9. ¿Qué capacidad técnica de carga de canastas completas tiene un tractocamión estándar?", ["Entre 200 y 300", "Capacidad máxima según configuración técnica", "No está permitido"], key="m1_p9")
+            p10 = st.radio("10. ¿Cuál es la regla principal para el transporte de canastas vacías (sin producto)?", ["Se pueden tirar al piso", "Deben ir correctamente anidadas y consolidadas en arrumes", "No requieren ningún orden"], key="m1_p10")
             submit_eval = st.form_submit_button("Finalizar Evaluación")
 
         if submit_eval:
@@ -359,10 +359,10 @@ else:
             if p4 == "No": score += 10
             if p5 == "16": score += 10
             if p6 == "240 Huevos": score += 10
-            if p7 == "Gancho Metálico": score += 10
+            if p7 == "Siguiendo la guía de posición de la bandeja": score += 10
             if p8 == "No": score += 10
-            if p9 == "17.25 kg": score += 10
-            if p10 == "En CEDI y Centros de Entrega": score += 10
+            if p9 == "Capacidad máxima según configuración técnica": score += 10
+            if p10 == "Deben ir correctamente anidadas y consolidadas en arrumes": score += 10
             
             st.session_state['score_m1'] = score
             if score >= 80:
@@ -416,10 +416,10 @@ else:
             p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m2_p4")
             p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m2_p5")
             p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m2_p6")
-            p7 = st.radio("7. ¿Qué herramienta metálica se utiliza para el aseguramiento y arrastre seguro del equipo?", ["Gancho Metálico", "Cable tensor", "Barra de empuje"], key="m2_p7")
+            p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m2_p7")
             p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m2_p8")
-            p9 = st.radio("9. ¿Cuál es el límite técnico operativo de peso por canasta?", ["15.00 kg", "17.25 kg", "20.00 kg"], key="m2_p9")
-            p10 = st.radio("10. ¿Dónde se realiza principalmente el proceso de anidado de canastas vacías para el retorno?", ["En Planta de Incubación", "En CEDI y Centros de Entrega"], key="m2_p10")
+            p9 = st.radio("9. ¿Qué capacidad técnica de carga de canastas completas tiene un tractocamión estándar?", ["Entre 200 y 300", "Capacidad máxima según configuración técnica", "No está permitido"], key="m2_p9")
+            p10 = st.radio("10. ¿Cuál es la regla principal para el transporte de canastas vacías (sin producto)?", ["Se pueden tirar al piso", "Deben ir correctamente anidadas y consolidadas en arrumes", "No requieren ningún orden"], key="m2_p10")
             submit_eval = st.form_submit_button("Finalizar Evaluación")
 
         if submit_eval:
@@ -430,10 +430,10 @@ else:
             if p4 == "No": score += 10
             if p5 == "16": score += 10
             if p6 == "240 Huevos": score += 10
-            if p7 == "Gancho Metálico": score += 10
+            if p7 == "Siguiendo la guía de posición de la bandeja": score += 10
             if p8 == "No": score += 10
-            if p9 == "17.25 kg": score += 10
-            if p10 == "En CEDI y Centros de Entrega": score += 10
+            if p9 == "Capacidad máxima según configuración técnica": score += 10
+            if p10 == "Deben ir correctamente anidadas y consolidadas en arrumes": score += 10
             
             st.session_state['score_m2'] = score
             if score >= 80:
@@ -487,10 +487,10 @@ else:
             p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m3_p4")
             p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m3_p5")
             p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m3_p6")
-            p7 = st.radio("7. ¿Qué herramienta metálica se utiliza para el aseguramiento y arrastre seguro del equipo?", ["Gancho Metálico", "Cable tensor", "Barra de empuje"], key="m3_p7")
+            p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m3_p7")
             p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m3_p8")
-            p9 = st.radio("9. ¿Cuál es el límite técnico operativo de peso por canasta?", ["15.00 kg", "17.25 kg", "20.00 kg"], key="m3_p9")
-            p10 = st.radio("10. ¿Dónde se realiza principalmente el proceso de anidado de canastas vacías para el retorno?", ["En Planta de Incubación", "En CEDI y Centros de Entrega"], key="m3_p10")
+            p9 = st.radio("9. ¿Qué capacidad técnica de carga de canastas completas tiene un tractocamión estándar?", ["Entre 200 y 300", "Capacidad máxima según configuración técnica", "No está permitido"], key="m3_p9")
+            p10 = st.radio("10. ¿Cuál es la regla principal para el transporte de canastas vacías (sin producto)?", ["Se pueden tirar al piso", "Deben ir correctamente anidadas y consolidadas en arrumes", "No requieren ningún orden"], key="m3_p10")
             submit_eval = st.form_submit_button("Finalizar Evaluación")
 
         if submit_eval:
@@ -501,10 +501,10 @@ else:
             if p4 == "No": score += 10
             if p5 == "16": score += 10
             if p6 == "240 Huevos": score += 10
-            if p7 == "Gancho Metálico": score += 10
+            if p7 == "Siguiendo la guía de posición de la bandeja": score += 10
             if p8 == "No": score += 10
-            if p9 == "17.25 kg": score += 10
-            if p10 == "En CEDI y Centros de Entrega": score += 10
+            if p9 == "Capacidad máxima según configuración técnica": score += 10
+            if p10 == "Deben ir correctamente anidadas y consolidadas en arrumes": score += 10
             
             st.session_state['score_m3'] = score
             if score >= 80:
