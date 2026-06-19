@@ -127,26 +127,37 @@ else:
                 "Mapa de Ruta Nacional: Puntos de Distribución de Huevos Kikes"
             )
 
-        # Pestaña 2: Cronología (Slide 3 y 4 con integración de Video instructivo)
+        # Pestaña 2: Cronología (Lado a lado: Infografía a la izquierda, Presentador/Video a la derecha)
         with tabs[1]:
             st.subheader("Cronología de la Canasta Ovoid")
             
-            # Integración dinámica del video/audio instructivo del ponente
-            if os.path.exists("Video.mp4"):
-                st.markdown("<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>Presentación de la Cronología (Video Instructivo)</p>", unsafe_allow_html=True)
-                _, col_v, _ = st.columns([1, 4, 1])
-                with col_v:
+            # Diagramación side-by-side con columnas de Streamlit
+            col_izq, col_der = st.columns([2.2, 1])
+            
+            with col_izq:
+                # Infografía del timeline (Lado izquierdo)
+                imagen_cronologia_cargada = False
+                for nombre in ["Slide4.PNG", "Slide4.png", "cronologia.png"]:
+                    if os.path.exists(nombre):
+                        st.image(nombre, use_container_width=True)
+                        imagen_cronologia_cargada = True
+                        break
+                if not imagen_cronologia_cargada:
+                    st.info("💡 Diapositiva: Slide4.PNG (Línea de tiempo de la Cronología)")
+                    
+            with col_der:
+                # Presentador (Video interactivo si existe, o imagen estática en su defecto)
+                if os.path.exists("Video.mp4"):
                     st.video("Video.mp4")
-            else:
-                st_image_nitida_multiple(
-                    ["Slide3.PNG", "Slide3.png", "introduccion_cronologia.png"], 
-                    "Introducción de Línea de Abastecimiento (Carga de Video.mp4 alternativa)"
-                )
-                
-            st_image_nitida_multiple(
-                ["Slide4.PNG", "Slide4.png", "cronologia.png"], 
-                "Hitos de Evolución de la Canasta Ovoid (2019 - 2023)"
-            )
+                else:
+                    imagen_presentador_cargada = False
+                    for nombre in ["Slide3.PNG", "Slide3.png", "introduccion_cronologia.png"]:
+                        if os.path.exists(nombre):
+                            st.image(nombre, use_container_width=True)
+                            imagen_presentador_cargada = True
+                            break
+                    if not imagen_presentador_cargada:
+                        st.info("💡 Diapositiva: Slide3.PNG (Presentador de la Cronología)")
 
         # Pestaña 3: Partes (Slide 5)
         with tabs[2]:
@@ -156,7 +167,7 @@ else:
                 "Los 9 Componentes Estructurales de la Canasta"
             )
 
-        # Pestaña 4: Ficha Técnica (Slide 6 a 12 sincronizado con el contenido de GitHub)
+        # Pestaña 4: Ficha Técnica (Slide 6 a 12)
         with tabs[3]:
             st.subheader("Ficha Técnica: Componentes y Dimensiones")
             st_image_nitida_multiple(
