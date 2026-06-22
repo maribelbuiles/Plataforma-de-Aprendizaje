@@ -19,8 +19,9 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🎯 CSS OPTIMIZADO PARA EVITAR DISTORSIÓN Y GARANTIZAR CONTRASTE NÍTIDO SIN PIXELACIÓN */
+        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA Y ALINEACIÓN DE IMÁGENES */
         img {
+            image-rendering: -webkit-optimize-contrast !important;
             image-rendering: auto !important;
             display: block !important;
             margin-left: auto !important;
@@ -28,7 +29,7 @@ st.markdown("""
             border-radius: 8px;
         }
 
-        /* 🕶️ ESTILOS PARA EL MODAL LIGHTBOX (CLICK PARA AGRANDAR IMÁGENES) */
+        /* 🕶️ ESTILOS PARA EL MODAL LIGHTBOX (CLICK PARA AGRANDAR IMÁGENES SIN DISTORSIÓN) */
         .zoom-checkbox {
             display: none !important;
         }
@@ -71,16 +72,15 @@ st.markdown("""
             color: #ffffff;
         }
         .lightbox-img {
-            max-width: 90% !important;
-            max-height: 90% !important;
-            width: auto !important;
+            max-width: 1050px !important; /* Límite para que las imágenes horizontales no se pixelen */
+            width: 90% !important;
             height: auto !important;
+            max-height: 85% !important;
             object-fit: contain !important;
             z-index: 2;
             box-shadow: 0 0 25px rgba(0,0,0,0.7);
             border-radius: 6px;
             cursor: zoom-out;
-            image-rendering: auto !important;
         }
 
         /* 🔍 OPTIMIZACIÓN DE FUENTE EXCLUYENDO SELECTORES UNIVERSALES PARA NO ROMPER FUENTES DE ICONOS DE STREAMLIT */
@@ -128,6 +128,7 @@ st.markdown("""
             max-height: 100% !important;
             max-width: 100% !important;
             object-fit: contain !important;
+            image-rendering: -webkit-optimize-contrast !important;
             image-rendering: auto !important;
             border-radius: 8px;
             margin: 0 auto !important;
@@ -147,7 +148,7 @@ def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 
-# Función para renderizar diapositivas con alta nitidez, centradas y con funcionalidad Lightbox incorporada
+# Función para renderizar diapositivas con alta nitidez, centradas y con funcionalidad Lightbox incorporada (Ancho mediano unificado a 650px)
 def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
     for nombre in posibles_nombres:
         if os.path.exists(nombre):
@@ -161,8 +162,8 @@ def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
                 st.markdown(f"""
                     <div style="text-align: center; width: 100%; margin: 10px auto;">
                         <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                        <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block;">
-                            <img src="data:{mime_type};base64,{img_base64}" style="max-width: 400px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
+                        <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
+                            <img src="data:{mime_type};base64,{img_base64}" style="max-width: 650px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px;">
                         </label>
                         <div class="lightbox">
                             <label for="zoom-{img_id}" class="lightbox-close"></label>
@@ -172,7 +173,7 @@ def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
                     </div>
                 """, unsafe_allow_html=True)
             except:
-                _, col_img, _ = st.columns([2, 3, 2]) 
+                _, col_img, _ = st.columns([1, 4, 1]) 
                 with col_img: 
                     st.image(nombre, use_container_width=True)
             break
@@ -267,8 +268,8 @@ else:
                         st.markdown(f"""
                             <div style="text-align: center;">
                                 <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                                <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block;">
-                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 400px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
+                                <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
+                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 650px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px;">
                                 </label>
                                 <div class="lightbox">
                                     <label for="zoom-{img_id}" class="lightbox-close"></label>
@@ -289,8 +290,8 @@ else:
                             st.markdown(f"""
                                 <div style="text-align: center;">
                                     <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                                    <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block;">
-                                        <img src="data:image/png;base64,{img_base64}" style="max-width: 400px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
+                                    <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
+                                        <img src="data:image/png;base64,{img_base64}" style="max-width: 650px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px;">
                                     </label>
                                     <div class="lightbox">
                                         <label for="zoom-{img_id}" class="lightbox-close"></label>
@@ -332,7 +333,7 @@ else:
         with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
             
-            # Muestra primero la imagen de Apilado y Anidado.png con efecto zoom
+            # Muestra primero la imagen de Apilado y Anidado.png con efecto zoom mediano y nítido
             for nombre in ["Apilado y Anidado.png", "Apilado y Anidado.PNG"]:
                 if os.path.exists(nombre):
                     img_base64 = get_base64_image(nombre)
@@ -340,8 +341,8 @@ else:
                     st.markdown(f"""
                         <div style="text-align: center; margin-bottom: 15px;">
                             <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                            <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 400px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
+                            <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 650px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
                             </label>
                             <div class="lightbox">
                                 <label for="zoom-{img_id}" class="lightbox-close"></label>
@@ -359,8 +360,8 @@ else:
                     st.markdown(f"""
                         <div style="text-align: center; margin-bottom: 15px;">
                             <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                            <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 400px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
+                            <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 650px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
                             </label>
                             <div class="lightbox">
                                 <label for="zoom-{img_id}" class="lightbox-close"></label>
@@ -377,8 +378,8 @@ else:
                     st.markdown(f"""
                         <div style="text-align: center;">
                             <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                            <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 400px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
+                            <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 650px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
                             </label>
                             <div class="lightbox">
                                 <label for="zoom-{img_id}" class="lightbox-close"></label>
