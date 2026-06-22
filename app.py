@@ -19,7 +19,7 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA Y TAMAÑO MEDIANO CENTRADO */
+        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA Y ALINEACIÓN DE IMÁGENES */
         img {
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: crisp-edges !important;
@@ -68,7 +68,7 @@ st.markdown("""
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 250px;
+            height: 250px; /* Altura fija ideal para visualización limpia */
             width: 100%;
             background-color: transparent;
             overflow: hidden;
@@ -78,7 +78,7 @@ st.markdown("""
         .uniform-img {
             max-height: 100% !important;
             max-width: 100% !important;
-            object-fit: contain !important;
+            object-fit: contain !important; /* Protege la imagen contra cualquier tipo de estiramiento o distorsión */
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: high-quality !important; 
             -webkit-transform: translateZ(0); 
@@ -101,7 +101,7 @@ def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 
-# Función para renderizar diapositivas con alta nitidez, centradas y de tamaño mediano estable
+# Función para renderizar diapositivas con alta nitidez, centradas y de tamaño mediano-pequeño unificado (450px)
 def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
     for nombre in posibles_nombres:
         if os.path.exists(nombre):
@@ -113,7 +113,7 @@ def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
                 mime_type = "image/png" if ext == "png" else "image/jpeg"
                 st.markdown(f"""
                     <div style="text-align: center; width: 100%; margin: 10px auto;">
-                        <img src="data:{mime_type};base64,{img_base64}" style="max-width: 55%; height: auto; display: inline-block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;">
+                        <img src="data:{mime_type};base64,{img_base64}" style="max-width: 450px; width: 100%; height: auto; display: inline-block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;">
                     </div>
                 """, unsafe_allow_html=True)
             except:
@@ -210,7 +210,7 @@ else:
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
                             <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 90%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 450px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
@@ -223,7 +223,7 @@ else:
                             img_base64 = get_base64_image(nombre)
                             st.markdown(f"""
                                 <div style="text-align: center;">
-                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 90%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
+                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 450px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
                                 </div>
                             """, unsafe_allow_html=True)
                             break
