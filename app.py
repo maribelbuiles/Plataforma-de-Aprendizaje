@@ -333,6 +333,7 @@ else:
         with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
             
+            # --- CORRECCIÓN DEFINITIVA DE TAMAÑOS EN COLUMNAS USANDO RESPONSIVE FLEXBOX ALTURA FIJA EN IMAGEN ---
             col_sist1, col_sist2 = st.columns(2)
             
             with col_sist1:
@@ -343,10 +344,10 @@ else:
                         ext = nombre.split('.')[-1].lower()
                         mime_type = "image/png" if ext == "png" else "image/jpeg"
                         st.markdown(f"""
-                            <div style="text-align: center; margin-bottom: 15px; width: 100%;">
+                            <div style="text-align: center; margin-bottom: 15px; width: 100%; text-align: center;">
                                 <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                                <label for="zoom-{img_id}" style="cursor: pointer; display: flex; justify-content: center; align-items: center; width: 100%; height: 340px; overflow: hidden; background: transparent;">
-                                    <img src="data:{mime_type};base64,{img_base64}" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 8px;">
+                                <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%; text-align: center;">
+                                    <img src="data:{mime_type};base64,{img_base64}" style="height: 260px !important; width: auto !important; max-width: 100%; object-fit: contain; display: block; margin: 0 auto;">
                                 </label>
                                 <div class="lightbox">
                                     <label for="zoom-{img_id}" class="lightbox-close"></label>
@@ -365,10 +366,10 @@ else:
                         ext = nombre.split('.')[-1].lower()
                         mime_type = "image/png" if ext == "png" else "image/jpeg"
                         st.markdown(f"""
-                            <div style="text-align: center; margin-bottom: 15px; width: 100%;">
+                            <div style="text-align: center; margin-bottom: 15px; width: 100%; text-align: center;">
                                 <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                                <label for="zoom-{img_id}" style="cursor: pointer; display: flex; justify-content: center; align-items: center; width: 100%; height: 340px; overflow: hidden; background: transparent;">
-                                    <img src="data:{mime_type};base64,{img_base64}" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 8px;">
+                                <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%; text-align: center;">
+                                    <img src="data:{mime_type};base64,{img_base64}" style="height: 260px !important; width: auto !important; max-width: 100%; object-fit: contain; display: block; margin: 0 auto;">
                                 </label>
                                 <div class="lightbox">
                                     <label for="zoom-{img_id}" class="lightbox-close"></label>
@@ -380,7 +381,7 @@ else:
                         break
 
             # IMAGEN ESPECÍFICA: Identificador de posición
-            for nombre in ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png", "image_a9e5d0.jpg", "Sistemas Canasta Ovoid_2.png"]:
+            for nombre in ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png", "image_a9e5d0.jpg"]:
                 if os.path.exists(nombre):
                     img_base64 = get_base64_image(nombre)
                     img_id = "".join(c for c in nombre if c.isalnum()) + "_sist2"
@@ -493,7 +494,7 @@ else:
                 '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
                 f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m1"]}%</span></div>'
                 '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
-            )
+            ) 
             st.markdown(certificado_html, unsafe_allow_html=True)
             st.download_button(
                 label="📥 Guardar Registro de Certificado (TXT)",
@@ -566,7 +567,7 @@ else:
             p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m3_p5")
             p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m3_p6")
             p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m3_p7")
-            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m3_p8")
+            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No", "No"], key="m3_p8")
             p9 = st.radio("9. ¿Qué capacidad técnica de carga de canastas completas tiene un tractocamión estándar?", ["Entre 200 y 300", "Capacidad máxima según configuración técnica", "No está permitido"], key="m3_p9")
             p10 = st.radio("10. ¿Cuál es la regla principal para el transporte de canastas vacías (sin producto)?", ["Se pueden tirar al piso", "Deben ir correctamente anidadas y consolidadas en arrumes", "No requieren ningún orden"], key="m3_p10")
             submit_eval = st.form_submit_button("Finalizar Evaluación")
