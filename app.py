@@ -19,18 +19,13 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA Y ALINEACIÓN DE IMÁGENES */
+        /* 🎯 CSS OPTIMIZADO PARA EVITAR DISTORSIÓN Y GARANTIZAR CONTRASTE NÍTIDO */
         img {
             image-rendering: -webkit-optimize-contrast !important;
-            image-rendering: crisp-edges !important;
-            image-rendering: -moz-crisp-edges !important;
-            image-rendering: -o-crisp-edges !important;
-            image-rendering: high-quality !important;
-            -ms-interpolation-mode: nearest-neighbor !important;
+            image-rendering: auto !important;
             display: block !important;
             margin-left: auto !important;
             margin-right: auto !important;
-            max-width: 100% !important;
             border-radius: 8px;
         }
 
@@ -68,7 +63,7 @@ st.markdown("""
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 250px; /* Altura fija ideal para visualización limpia */
+            height: 250px;
             width: 100%;
             background-color: transparent;
             overflow: hidden;
@@ -78,11 +73,9 @@ st.markdown("""
         .uniform-img {
             max-height: 100% !important;
             max-width: 100% !important;
-            object-fit: contain !important; /* Protege la imagen contra cualquier tipo de estiramiento o distorsión */
+            object-fit: contain !important;
             image-rendering: -webkit-optimize-contrast !important;
-            image-rendering: high-quality !important; 
-            -webkit-transform: translateZ(0); 
-            transform: translateZ(0);
+            image-rendering: auto !important; 
             border-radius: 8px;
             margin: 0 auto !important;
         }
@@ -101,7 +94,7 @@ def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 
-# Función para renderizar diapositivas con alta nitidez, centradas y de tamaño mediano-pequeño unificado (450px)
+# Función para renderizar diapositivas con alta nitidez, centradas y de tamaño mediano-pequeño estable (380px)
 def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
     for nombre in posibles_nombres:
         if os.path.exists(nombre):
@@ -113,11 +106,11 @@ def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
                 mime_type = "image/png" if ext == "png" else "image/jpeg"
                 st.markdown(f"""
                     <div style="text-align: center; width: 100%; margin: 10px auto;">
-                        <img src="data:{mime_type};base64,{img_base64}" style="max-width: 450px; width: 100%; height: auto; display: inline-block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;">
+                        <img src="data:{mime_type};base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; display: inline-block; image-rendering: -webkit-optimize-contrast; border-radius: 8px;">
                     </div>
                 """, unsafe_allow_html=True)
             except:
-                _, col_img, _ = st.columns([1.5, 3, 1.5]) 
+                _, col_img, _ = st.columns([2, 3, 2]) 
                 with col_img: 
                     st.image(nombre, use_container_width=True)
             break
@@ -210,7 +203,7 @@ else:
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
                             <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 450px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
@@ -223,7 +216,7 @@ else:
                             img_base64 = get_base64_image(nombre)
                             st.markdown(f"""
                                 <div style="text-align: center;">
-                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 450px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
+                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
                                 </div>
                             """, unsafe_allow_html=True)
                             break
@@ -262,7 +255,7 @@ else:
                     img_base64 = get_base64_image(nombre)
                     st.markdown(f"""
                         <div style="text-align: center; margin-bottom: 15px;">
-                            <img src="data:image/png;base64,{img_base64}" style="max-width: 60%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
                         </div>
                     """, unsafe_allow_html=True)
                     break
@@ -271,7 +264,7 @@ else:
                     img_base64 = get_base64_image(nombre)
                     st.markdown(f"""
                         <div style="text-align: center;">
-                            <img src="data:image/png;base64,{img_base64}" style="max-width: 60%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
                         </div>
                     """, unsafe_allow_html=True)
                     break
@@ -341,7 +334,7 @@ else:
             if p6 == "240 Huevos": score += 10
             if p7 == "Siguiendo la guía de posición de la bandeja": score += 10
             if p8 == "No": score += 10
-            if p9 == "Capacidad máxima según configuración técnica": score += 10
+            if p9 == "Capacidad máxima según configuration técnica": score += 10
             if p10 == "Deben ir correctamente anidadas y consolidadas en arrumes": score += 10
             
             st.session_state['score_m1'] = score
