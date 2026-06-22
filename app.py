@@ -305,7 +305,6 @@ else:
         # Pestaña 2: Partes
         with tabs[1]:
             st.subheader("Partes de la Canasta Ovoid")
-            st.markdown("---")
             st_image_nitida_multiple(["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"])
             if os.path.exists("Partes2.png"):
                 st_image_nitida_multiple(["Partes2.png"])
@@ -338,7 +337,7 @@ else:
             col_sist1, col_sist2 = st.columns(2)
             
             with col_sist1:
-                for nombre in ["Apilado y Anidado.jpg", "Apilado y Anidado.png", "Apilado y Anidado.PNG", "image_a8f60e.jpg"]:
+                for nombre in ["Apilado y Anidado.jpg", "Apilado y Anidado.png", "Apilado y Anidado.PNG", "image_a8f60e.jpg", "image_aacf44.jpg"]:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
                         img_id = "".join(c for c in nombre if c.isalnum()) + "_sist0"
@@ -348,7 +347,7 @@ else:
                             <div style="text-align: center; margin-bottom: 15px;">
                                 <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
                                 <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
-                                    <img src="data:{mime_type};base64,{img_base64}" style="max-width: 460px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
+                                    <img src="data:{mime_type};base64,{img_base64}" style="max-width: 460px; width: 100%; height: 340px; object-fit: contain; image-rendering: auto; border-radius: 8px;">
                                 </label>
                                 <div class="lightbox">
                                     <label for="zoom-{img_id}" class="lightbox-close"></label>
@@ -370,7 +369,7 @@ else:
                             <div style="text-align: center; margin-bottom: 15px;">
                                 <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
                                 <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
-                                    <img src="data:{mime_type};base64,{img_base64}" style="max-width: 460px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
+                                    <img src="data:{mime_type};base64,{img_base64}" style="max-width: 460px; width: 100%; height: 340px; object-fit: contain; image-rendering: auto; border-radius: 8px;">
                                 </label>
                                 <div class="lightbox">
                                     <label for="zoom-{img_id}" class="lightbox-close"></label>
@@ -382,7 +381,7 @@ else:
                         break
 
             # IMAGEN ESPECÍFICA: Identificador de posición
-            for nombre in ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png", "image_a9e5d0.jpg"]:
+            for nombre in ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png", "image_a9e5d0.jpg", "Sistemas Canasta Ovoid_2.png"]:
                 if os.path.exists(nombre):
                     img_base64 = get_base64_image(nombre)
                     img_id = "".join(c for c in nombre if c.isalnum()) + "_sist2"
