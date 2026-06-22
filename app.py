@@ -19,7 +19,7 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🎯 CSS OPTIMIZADO PARA EVITAR DISTORSIÓN Y GARANTIZAR CONTRASTE NÍTIDO */
+        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA Y ALINEACIÓN DE IMÁGENES */
         img {
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: auto !important;
@@ -54,6 +54,22 @@ st.markdown("""
             height: 100%;
             cursor: zoom-out;
             z-index: 1;
+        }
+        .lightbox-btn-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 50px;
+            font-weight: 300;
+            cursor: pointer;
+            z-index: 9999999 !important;
+            transition: color 0.2s;
+            user-select: none;
+            line-height: 1;
+        }
+        .lightbox-btn-close:hover {
+            color: #ffffff;
         }
         .lightbox-img {
             max-width: 90% !important;
@@ -151,6 +167,7 @@ def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
                         </label>
                         <div class="lightbox">
                             <label for="zoom-{img_id}" class="lightbox-close"></label>
+                            <label for="zoom-{img_id}" class="lightbox-btn-close">&times;</label>
                             <img src="data:{mime_type};base64,{img_base64}" class="lightbox-img">
                         </div>
                     </div>
@@ -256,6 +273,7 @@ else:
                                 </label>
                                 <div class="lightbox">
                                     <label for="zoom-{img_id}" class="lightbox-close"></label>
+                                    <label for="zoom-{img_id}" class="lightbox-btn-close">&times;</label>
                                     <img src="data:image/png;base64,{img_base64}" class="lightbox-img">
                                 </div>
                             </div>
@@ -277,6 +295,7 @@ else:
                                     </label>
                                     <div class="lightbox">
                                         <label for="zoom-{img_id}" class="lightbox-close"></label>
+                                        <label for="zoom-{img_id}" class="lightbox-btn-close">&times;</label>
                                         <img src="data:image/png;base64,{img_base64}" class="lightbox-img">
                                     </div>
                                 </div>
@@ -325,6 +344,7 @@ else:
                             </label>
                             <div class="lightbox">
                                 <label for="zoom-{img_id}" class="lightbox-close"></label>
+                                <label for="zoom-{img_id}" class="lightbox-btn-close">&times;</label>
                                 <img src="data:image/png;base64,{img_base64}" class="lightbox-img">
                             </div>
                         </div>
@@ -342,6 +362,7 @@ else:
                             </label>
                             <div class="lightbox">
                                 <label for="zoom-{img_id}" class="lightbox-close"></label>
+                                <label for="zoom-{img_id}" class="lightbox-btn-close">&times;</label>
                                 <img src="data:image/png;base64,{img_base64}" class="lightbox-img">
                             </div>
                         </div>
@@ -397,7 +418,7 @@ else:
             p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m1_p4")
             p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m1_p5")
             p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m1_p6")
-            p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m1_p7")
+            p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m7_p7")
             p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m1_p8")
             p9 = st.radio("9. ¿Qué capacidad técnica de carga de canastas completas tiene un tractocamión estándar?", ["Entre 200 y 300", "Capacidad máxima según configuración técnica", "No está permitido"], key="m1_p9")
             p10 = st.radio("10. ¿Cuál es la regla principal para el transporte de canastas vacías (sin producto)?", ["Se pueden tirar al piso", "Deben ir correctamente anidadas y consolidadas en arrumes", "No requieren ningún orden"], key="m1_p10")
