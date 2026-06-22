@@ -203,7 +203,7 @@ else:
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
                             <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 500px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
@@ -216,7 +216,7 @@ else:
                             img_base64 = get_base64_image(nombre)
                             st.markdown(f"""
                                 <div style="text-align: center;">
-                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 500px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
                                 </div>
                             """, unsafe_allow_html=True)
                             break
