@@ -233,7 +233,7 @@ else:
             if os.path.exists("Partes2.png"):
                 st_image_nitida_multiple(["Partes2.png"])
 
-        # Pestaña 3: Ficha Técnica
+        # Pestaña 3: Ficha Técnica (Dimensiones)
         with tabs[2]:
             st.subheader("Ficha Técnica: Componentes y Dimensiones")
             
@@ -244,8 +244,8 @@ else:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <div style="text-align: center; width: 100%;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
@@ -254,14 +254,14 @@ else:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <div style="text-align: center; width: 100%;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
             st.markdown("---")
             
-            # Se anexa la estiba completa en tamaño mediano centrado
+            # Muestra de forma única, centrada y de tamaño mediano la Estiba Ovoid después de la canasta
             st_image_nitida_multiple(["Estiba Ovoid.jpg", "Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"])
 
             # --- ESTIBA ---
@@ -271,8 +271,8 @@ else:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <div style="text-align: center; width: 100%;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
@@ -281,8 +281,8 @@ else:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <div style="text-align: center; width: 100%;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
@@ -295,8 +295,8 @@ else:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <div style="text-align: center; width: 100%;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
@@ -305,8 +305,8 @@ else:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <div style="text-align: center; width: 100%;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
@@ -319,8 +319,8 @@ else:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <div style="text-align: center; width: 100%;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
@@ -329,8 +329,8 @@ else:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <div style="text-align: center; width: 100%;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
