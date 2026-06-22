@@ -68,7 +68,7 @@ st.markdown("""
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 250px; /* Altura fija ideal para visualización limpia */
+            height: 250px;
             width: 100%;
             background-color: transparent;
             overflow: hidden;
@@ -78,7 +78,7 @@ st.markdown("""
         .uniform-img {
             max-height: 100% !important;
             max-width: 100% !important;
-            object-fit: contain !important; /* Protege la imagen contra cualquier tipo de estiramiento o distorsión */
+            object-fit: contain !important;
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: high-quality !important; 
             -webkit-transform: translateZ(0); 
@@ -109,9 +109,11 @@ def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
                 st.markdown(f"<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>{subtitulo_opcional}</p>", unsafe_allow_html=True)
             try:
                 img_base64 = get_base64_image(nombre)
+                ext = nombre.split('.')[-1].lower()
+                mime_type = "image/png" if ext == "png" else "image/jpeg"
                 st.markdown(f"""
                     <div style="text-align: center; width: 100%; margin: 10px auto;">
-                        <img src="data:image/jpeg;base64,{img_base64}" style="max-width: 55%; height: auto; display: inline-block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;">
+                        <img src="data:{mime_type};base64,{img_base64}" style="max-width: 55%; height: auto; display: inline-block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;">
                     </div>
                 """, unsafe_allow_html=True)
             except:
@@ -233,107 +235,24 @@ else:
             if os.path.exists("Partes2.png"):
                 st_image_nitida_multiple(["Partes2.png"])
 
-        # Pestaña 3: Ficha Técnica
+        # Pestaña 3: Ficha Técnica (Dimensiones)
         with tabs[2]:
             st.subheader("Ficha Técnica: Componentes y Dimensiones")
             
-            # --- CANASTA ---
-            col_comp, col_dim = st.columns(2)
-            with col_comp:
-                for nombre in ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"]:
-                    if os.path.exists(nombre):
-                        img_base64 = get_base64_image(nombre)
-                        st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
-                            </div>
-                        """, unsafe_allow_html=True)
-                        break
-            with col_dim:
-                for nombre in ["Dimensiones Canasta Kikes.png", "Dimensiones Canasta.png", "Dimensiones Canasta Ovoid.png", "Slide11.PNG", "Slide11.png", "dimensiones_canasta.png"]:
-                    if os.path.exists(nombre):
-                        img_base64 = get_base64_image(nombre)
-                        st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
-                            </div>
-                        """, unsafe_allow_html=True)
-                        break
+            # 1. CANASTA KIKES
+            st_image_nitida_multiple(["Canasta Kikes.png", "Canasta Kikes.jpg", "Slide6.PNG", "Slide6.png"])
             st.markdown("---")
             
-            # Se anexa la estiba completa en tamaño mediano centrado
-            st_image_nitida_multiple(["Estiba Ovoid.jpg", "Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"])
+            # 2. ESTIBA OVOID
+            st_image_nitida_multiple(["Estiba Ovoid.png", "Estiba Ovoid.jpg", "Slide7.PNG", "Slide7.png"])
+            st.markdown("---")
 
-            # --- ESTIBA ---
-            col_comp, col_dim = st.columns(2)
-            with col_comp:
-                for nombre in ["Estiba Ovoid.jpg", "Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"]:
-                    if os.path.exists(nombre):
-                        img_base64 = get_base64_image(nombre)
-                        st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
-                            </div>
-                        """, unsafe_allow_html=True)
-                        break
-            with col_dim:
-                for nombre in ["Dimensiones Estiba Ovoid.png", "Slide10.PNG", "Slide10.png", "dimensiones_estiba.png"]:
-                    if os.path.exists(nombre):
-                        img_base64 = get_base64_image(nombre)
-                        st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
-                            </div>
-                        """, unsafe_allow_html=True)
-                        break
+            # 3. SEPARADOR
+            st_image_nitida_multiple(["Separador.png", "Separador Ovoid.png", "Slide9.PNG", "Slide9.png"])
             st.markdown("---")
             
-            # --- GANCHO METÁLICO ---
-            col_comp, col_dim = st.columns(2)
-            with col_comp:
-                for nombre in ["Gancho Metálico.png", "Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"]:
-                    if os.path.exists(nombre):
-                        img_base64 = get_base64_image(nombre)
-                        st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
-                            </div>
-                        """, unsafe_allow_html=True)
-                        break
-            with col_dim:
-                for nombre in ["Dimensiones Gancho Metálico.png"]:
-                    if os.path.exists(nombre):
-                        img_base64 = get_base64_image(nombre)
-                        st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
-                            </div>
-                        """, unsafe_allow_html=True)
-                        break
-            st.markdown("---")
-            
-            # --- SEPARADOR OVOID ---
-            col_comp, col_dim = st.columns(2)
-            with col_comp:
-                for nombre in ["Separador Ovoid.png", "Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"]:
-                    if os.path.exists(nombre):
-                        img_base64 = get_base64_image(nombre)
-                        st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
-                            </div>
-                        """, unsafe_allow_html=True)
-                        break
-            with col_dim:
-                for nombre in ["Dimensiones Separador Ovoid.png", "Slide12.PNG", "Slide12.png", "dimensiones_separador.png"]:
-                    if os.path.exists(nombre):
-                        img_base64 = get_base64_image(nombre)
-                        st.markdown(f"""
-                            <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
-                            </div>
-                        """, unsafe_allow_html=True)
-                        break
+            # 4. GANCHO METÁLICO
+            st_image_nitida_multiple(["Gancho Metálico.png", "Slide8.PNG", "Slide8.png"])
 
         # Pestaña 4: Sistemas
         with tabs[3]:
