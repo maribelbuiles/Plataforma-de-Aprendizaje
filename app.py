@@ -19,7 +19,7 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA Y ALINEACIÓN DE IMÁGENES */
+        /* 🎯 CSS OPTIMIZADO PARA EVITAR DISTORSIÓN Y GARANTIZAR CONTRASTE NÍTIDO */
         img {
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: auto !important;
@@ -94,7 +94,7 @@ def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 
-# Función para renderizar diapositivas con alta nitidez, centradas y de tamaño mediano-pequeño unificado (450px)
+# Función para renderizar diapositivas con alta nitidez, centradas y de tamaño mediano-pequeño estable (380px)
 def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
     for nombre in posibles_nombres:
         if os.path.exists(nombre):
@@ -106,11 +106,11 @@ def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
                 mime_type = "image/png" if ext == "png" else "image/jpeg"
                 st.markdown(f"""
                     <div style="text-align: center; width: 100%; margin: 10px auto;">
-                        <img src="data:{mime_type};base64,{img_base64}" style="max-width: 450px; width: 100%; height: auto; display: inline-block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;">
+                        <img src="data:{mime_type};base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; display: inline-block; image-rendering: -webkit-optimize-contrast; border-radius: 8px;">
                     </div>
                 """, unsafe_allow_html=True)
             except:
-                _, col_img, _ = st.columns([1.5, 3, 1.5]) 
+                _, col_img, _ = st.columns([2, 3, 2]) 
                 with col_img: 
                     st.image(nombre, use_container_width=True)
             break
@@ -203,7 +203,7 @@ else:
                         img_base64 = get_base64_image(nombre)
                         st.markdown(f"""
                             <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 450px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
                             </div>
                         """, unsafe_allow_html=True)
                         break
@@ -216,7 +216,7 @@ else:
                             img_base64 = get_base64_image(nombre)
                             st.markdown(f"""
                                 <div style="text-align: center;">
-                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 450px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
+                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
                                 </div>
                             """, unsafe_allow_html=True)
                             break
@@ -230,7 +230,7 @@ else:
 
         # Pestaña 3: Ficha Técnica (Dimensiones)
         with tabs[2]:
-            st.subheader("Ficha Técnica: Componentes y Dimensiones")
+            st.subheader("Componentes y Dimensiones")
             
             # --- 1. CANASTA KIKES Y 2. ESTIBA OVOID LADO A LADO ---
             col_canasta, col_estiba = st.columns(2)
@@ -256,7 +256,7 @@ else:
                     img_base64 = get_base64_image(nombre)
                     st.markdown(f"""
                         <div style="text-align: center; margin-bottom: 15px;">
-                            <img src="data:image/png;base64,{img_base64}" style="max-width: 60%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
                         </div>
                     """, unsafe_allow_html=True)
                     break
@@ -265,7 +265,7 @@ else:
                     img_base64 = get_base64_image(nombre)
                     st.markdown(f"""
                         <div style="text-align: center;">
-                            <img src="data:image/png;base64,{img_base64}" style="max-width: 60%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
                         </div>
                     """, unsafe_allow_html=True)
                     break
