@@ -19,7 +19,7 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA EN DISPOSITIVOS Y PANTALLAS */
+        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA Y TAMAÑO MEDIANO CENTRADO */
         img {
             image-rendering: -webkit-optimize-contrast !important;
             image-rendering: crisp-edges !important;
@@ -27,9 +27,10 @@ st.markdown("""
             image-rendering: -o-crisp-edges !important;
             image-rendering: high-quality !important;
             -ms-interpolation-mode: nearest-neighbor !important;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+            display: block !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            max-width: 100% !important;
             border-radius: 8px;
         }
 
@@ -83,6 +84,7 @@ st.markdown("""
             -webkit-transform: translateZ(0); 
             transform: translateZ(0);
             border-radius: 8px;
+            margin: 0 auto !important;
         }
 
         .stButton>button {
@@ -99,13 +101,14 @@ def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 
-# Función para renderizar diapositivas con alta nitidez y soporte de fallback inteligente
+# Función para renderizar diapositivas con alta nitidez, centradas y de tamaño mediano estable
 def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
     for nombre in posibles_nombres:
         if os.path.exists(nombre):
             if subtitulo_opcional:
                 st.markdown(f"<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>{subtitulo_opcional}</p>", unsafe_allow_html=True)
-            _, col_img, _ = st.columns([1, 4, 1]) 
+            # Formato de columnas equilibrado [1.5, 3, 1.5] para forzar tamaño mediano centrado del 50% de ancho
+            _, col_img, _ = st.columns([1.5, 3, 1.5]) 
             with col_img: 
                 st.image(nombre, use_container_width=True)
             break
@@ -196,7 +199,7 @@ else:
                 for nombre in ["Slide4.PNG", "Slide4.png", "cronologia.png"]:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
-                        st.markdown(f'<img src="data:image/png;base64,{img_base64}" style="width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; -webkit-transform: translateZ(0); transform: translateZ(0); border-radius: 8px;">', unsafe_allow_html=True)
+                        st.markdown(f'<img src="data:image/png;base64,{img_base64}" style="width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; -webkit-transform: translateZ(0); transform: translateZ(0); border-radius: 8px; margin: 0 auto; display: block;">', unsafe_allow_html=True)
                         break
             with col_der:
                 if os.path.exists("Video.mp4"):
@@ -205,7 +208,7 @@ else:
                     for nombre in ["Slide3.PNG", "Slide3.png", "introduccion_cronologia.png"]:
                         if os.path.exists(nombre):
                             img_base64 = get_base64_image(nombre)
-                            st.markdown(f'<img src="data:image/png;base64,{img_base64}" style="width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;">', unsafe_allow_html=True)
+                            st.markdown(f'<img src="data:image/png;base64,{img_base64}" style="width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; margin: 0 auto; display: block;">', unsafe_allow_html=True)
                             break
 
         # Pestaña 2: Partes
