@@ -19,7 +19,22 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* 🔍 OPTIMIZACIÓN DE FUENTE GENERAL PARA LETRA ULTRA NÍTIDA */
+        /* 🎯 CSS PARA FORZAR NITIDEZ EXTREMA Y TAMAÑO MEDIANO CENTRADO */
+        img {
+            image-rendering: -webkit-optimize-contrast !important;
+            image-rendering: crisp-edges !important;
+            image-rendering: -moz-crisp-edges !important;
+            image-rendering: -o-crisp-edges !important;
+            image-rendering: high-quality !important;
+            -ms-interpolation-mode: nearest-neighbor !important;
+            display: block !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            max-width: 100% !important;
+            border-radius: 8px;
+        }
+
+        /* 🔍 OPTIMIZACIÓN DE FUENTE EXCLUYENDO SELECTORES UNIVERSALES PARA NO ROMPER FUENTES DE ICONOS DE STREAMLIT */
         html, body, p, h1, h2, h3, h4, h5, h6, label, input, button, select, textarea {
             font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
             -webkit-font-smoothing: antialiased !important;
@@ -27,7 +42,7 @@ st.markdown("""
             text-rendering: optimizeLegibility !important;
         }
 
-        /* 📉 OPTIMIZACIÓN DE ESPACIADO EN EL SIDEBAR */
+        /* 📉 REDUCIR EL TAMAÑO Y ESPACIADO DE LAS OPCIONES ANIDADAS EN EL SIDEBAR */
         div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(2),
         div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(3),
         div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > div:nth-child(5),
@@ -48,6 +63,30 @@ st.markdown("""
             color: #444444 !important;
         }
 
+        /* 📐 CONTENEDOR AJUSTADO PARA EVITAR CUALQUIER DISTORSIÓN Y MANTENER PROPORCIÓN DE LETRAS */
+        .uniform-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 250px; /* Altura fija ideal para visualización limpia */
+            width: 100%;
+            background-color: transparent;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .uniform-img {
+            max-height: 100% !important;
+            max-width: 100% !important;
+            object-fit: contain !important; /* Protege la imagen contra cualquier tipo de estiramiento o distorsión */
+            image-rendering: -webkit-optimize-contrast !important;
+            image-rendering: high-quality !important; 
+            -webkit-transform: translateZ(0); 
+            transform: translateZ(0);
+            border-radius: 8px;
+            margin: 0 auto !important;
+        }
+
         .stButton>button {
             border-radius: 30px;
             background-color: #008a3e;
@@ -57,12 +96,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Función para convertir imagen local a Base64 (necesario para forzar el renderizado HTML controlado)
+# Función para convertir imagen local a Base64 (necesario para el certificado HTML)
 def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 
-# Función optimizada: Renderiza imágenes de tamaño MEDIANO (55% de ancho), CENTRADAS y con NITIDEZ forzada por HTML puro
+# Función para renderizar diapositivas con alta nitidez, centradas y de tamaño mediano estable
 def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
     for nombre in posibles_nombres:
         if os.path.exists(nombre):
@@ -70,16 +109,14 @@ def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
                 st.markdown(f"<p style='text-align: center; color: #1b5e20; font-weight: bold; font-size: 15px; margin-top: 10px;'>{subtitulo_opcional}</p>", unsafe_allow_html=True)
             try:
                 img_base64 = get_base64_image(nombre)
-                # Forzamos max-width: 55% para que sea de tamaño mediano y margin: 0 auto para centrado absoluto
                 st.markdown(f"""
                     <div style="text-align: center; width: 100%; margin: 10px auto;">
                         <img src="data:image/jpeg;base64,{img_base64}" style="max-width: 55%; height: auto; display: inline-block; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px;">
                     </div>
                 """, unsafe_allow_html=True)
             except:
-                # Fallback tradicional si falla la codificación
-                _, col_img, _ = st.columns([1.5, 3, 1.5])
-                with col_img:
+                _, col_img, _ = st.columns([1.5, 3, 1.5]) 
+                with col_img: 
                     st.image(nombre, use_container_width=True)
             break
 
@@ -115,7 +152,7 @@ if st.session_state['cedula'] is None:
                 else: 
                     st.error("Por favor, ingrese un número de cédula válido (mínimo 5 dígitos).")
 else:
-    # Opciones del menú
+    # Definición de opciones de menú exactamente idénticas en aspecto usando caracteres invisibles únicos
     opt_m1 = "Módulo 1: Equipo de Canastas Aptas"
     opt_e1 = "    📝 Evaluación"
     opt_c1 = "    🎓 Certificado"
@@ -169,7 +206,11 @@ else:
                 for nombre in ["Slide4.PNG", "Slide4.png", "cronologia.png"]:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
-                        st.markdown(f'<div style="text-align: center;"><img src="data:image/png;base64,{img_base64}" style="max-width: 90%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;"></div>', unsafe_allow_html=True)
+                        st.markdown(f"""
+                            <div style="text-align: center;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 90%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
+                            </div>
+                        """, unsafe_allow_html=True)
                         break
             with col_der:
                 if os.path.exists("Video.mp4"):
@@ -178,7 +219,11 @@ else:
                     for nombre in ["Slide3.PNG", "Slide3.png", "introduccion_cronologia.png"]:
                         if os.path.exists(nombre):
                             img_base64 = get_base64_image(nombre)
-                            st.markdown(f'<div style="text-align: center;"><img src="data:image/png;base64,{img_base64}" style="max-width: 90%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;"></div>', unsafe_allow_html=True)
+                            st.markdown(f"""
+                                <div style="text-align: center;">
+                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 90%; height: auto; image-rendering: -webkit-optimize-contrast; image-rendering: high-quality; border-radius: 8px; display: inline-block;">
+                                </div>
+                            """, unsafe_allow_html=True)
                             break
 
         # Pestaña 2: Partes
@@ -188,7 +233,7 @@ else:
             if os.path.exists("Partes2.png"):
                 st_image_nitida_multiple(["Partes2.png"])
 
-        # Pestaña 3: Ficha Técnica (Dimensiones)
+        # Pestaña 3: Ficha Técnica
         with tabs[2]:
             st.subheader("Ficha Técnica: Componentes y Dimensiones")
             
@@ -198,10 +243,362 @@ else:
                 for nombre in ["Canasta Kikes.png", "Slide6.PNG", "Slide6.png", "canasta_kikes_ficha.png"]:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
-                        st.markdown(f'<div style="text-align: center;"><img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;"></div>', unsafe_allow_html=True)
+                        st.markdown(f"""
+                            <div style="text-align: center;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            </div>
+                        """, unsafe_allow_html=True)
                         break
             with col_dim:
                 for nombre in ["Dimensiones Canasta Kikes.png", "Dimensiones Canasta.png", "Dimensiones Canasta Ovoid.png", "Slide11.PNG", "Slide11.png", "dimensiones_canasta.png"]:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
-                        st.markdown(f'<div style="text-align: center;"><img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;"></div>',
+                        st.markdown(f"""
+                            <div style="text-align: center;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            </div>
+                        """, unsafe_allow_html=True)
+                        break
+            st.markdown("---")
+            
+            # Se anexa la estiba completa en tamaño mediano centrado
+            st_image_nitida_multiple(["Estiba Ovoid.jpg", "Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"])
+
+            # --- ESTIBA ---
+            col_comp, col_dim = st.columns(2)
+            with col_comp:
+                for nombre in ["Estiba Ovoid.jpg", "Estiba Ovoid.png", "Slide7.PNG", "Slide7.png", "estiba_ovoid_ficha.png"]:
+                    if os.path.exists(nombre):
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f"""
+                            <div style="text-align: center;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            </div>
+                        """, unsafe_allow_html=True)
+                        break
+            with col_dim:
+                for nombre in ["Dimensiones Estiba Ovoid.png", "Slide10.PNG", "Slide10.png", "dimensiones_estiba.png"]:
+                    if os.path.exists(nombre):
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f"""
+                            <div style="text-align: center;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            </div>
+                        """, unsafe_allow_html=True)
+                        break
+            st.markdown("---")
+            
+            # --- GANCHO METÁLICO ---
+            col_comp, col_dim = st.columns(2)
+            with col_comp:
+                for nombre in ["Gancho Metálico.png", "Slide8.PNG", "Slide8.png", "gancho_metalico_ficha.png"]:
+                    if os.path.exists(nombre):
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f"""
+                            <div style="text-align: center;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            </div>
+                        """, unsafe_allow_html=True)
+                        break
+            with col_dim:
+                for nombre in ["Dimensiones Gancho Metálico.png"]:
+                    if os.path.exists(nombre):
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f"""
+                            <div style="text-align: center;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            </div>
+                        """, unsafe_allow_html=True)
+                        break
+            st.markdown("---")
+            
+            # --- SEPARADOR OVOID ---
+            col_comp, col_dim = st.columns(2)
+            with col_comp:
+                for nombre in ["Separador Ovoid.png", "Slide9.PNG", "Slide9.png", "separador_ovoid_ficha.png"]:
+                    if os.path.exists(nombre):
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f"""
+                            <div style="text-align: center;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            </div>
+                        """, unsafe_allow_html=True)
+                        break
+            with col_dim:
+                for nombre in ["Dimensiones Separador Ovoid.png", "Slide12.PNG", "Slide12.png", "dimensiones_separador.png"]:
+                    if os.path.exists(nombre):
+                        img_base64 = get_base64_image(nombre)
+                        st.markdown(f"""
+                            <div style="text-align: center;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 85%; max-height: 240px; object-fit: contain; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            </div>
+                        """, unsafe_allow_html=True)
+                        break
+
+        # Pestaña 4: Sistemas
+        with tabs[3]:
+            st.subheader("Sistemas de la Canasta Ovoid")
+            for nombre in ["Sistemas Canasta Ovoid.png", "Slide13.PNG", "Slide13.png", "sistemas_canasta.png"]:
+                if os.path.exists(nombre):
+                    img_base64 = get_base64_image(nombre)
+                    st.markdown(f"""
+                        <div style="text-align: center; margin-bottom: 15px;">
+                            <img src="data:image/png;base64,{img_base64}" style="max-width: 60%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                        </div>
+                    """, unsafe_allow_html=True)
+                    break
+            for nombre in ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png"]:
+                if os.path.exists(nombre):
+                    img_base64 = get_base64_image(nombre)
+                    st.markdown(f"""
+                        <div style="text-align: center;">
+                            <img src="data:image/png;base64,{img_base64}" style="max-width: 60%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                        </div>
+                    """, unsafe_allow_html=True)
+                    break
+
+        # Pestaña 5: Usos Indebidos
+        with tabs[4]:
+            st.subheader("Usos Indebidos del Equipo")
+            st_image_nitida_multiple(["Slide15.PNG", "Slide15.png", "usos_prohibidos.png"], "🚫 Prohibiciones: Cuidado Físico y Ergonomía del Activo")
+            st_image_nitida_multiple(["Slide16.PNG", "Slide16.png", "uso_con_sin_producto.png"], "Guía de Uso del Equipo Ovoid Con y Sin Producto")
+
+        # Pestaña 6: Carga y Huevos
+        with tabs[5]:
+            st.subheader("Carga Máxima, Tipos de Huevo y Capacidades")
+            st_image_nitida_multiple(["Slide17.PNG", "Slide17.png", "carga_maxima_canasta.png"], "Límites de Peso Máximo Operativo (17.25 kg)")
+            st_image_nitida_multiple(["Slide18.PNG", "Slide18.png", "cantidad_maxima_huevos.png"], "Cantidad Máxima por Canasta (240 Huevos)")
+            st_image_nitida_multiple(["Slide19.PNG", "Slide19.png", "tabla_numeros_huevos.png"], "Tabla de Unidades por Canasta Según Tipo de Huevo")
+            st_image_nitida_multiple(["Slide20.PNG", "Slide20.png", "estibas_niveles.png"], "Niveles de Remontado en Distribución")
+            st_image_nitida_multiple(["Slide21.PNG", "Slide21.png", "cargue_autoventa.png"], "Configuración de Cargue para Autoventa")
+            st_image_nitida_multiple(["Slide22.PNG", "Slide22.png", "cargue_plantas.png"], "Líneas de Production y Carga en Plantas")
+            st_image_nitida_multiple(["Slide23.PNG", "Slide23.png", "numeros_huevos_planta.png"], "Consumo e Inventario de Huevos por Tipo")
+            st_image_nitida_multiple(["Slide24.PNG", "Slide24.png", "armado_estibas_planta.png"], "Estándar de Armado de Estibas en Clasificadoras")
+            st_image_nitida_multiple(["Slide25.PNG", "Slide25.png", "cargue_primera_milla.png"], "Parámetros de Carga en Vehículos de Primera Milla")
+            st_image_nitida_multiple(["Slide26.PNG", "Slide26.png", "cargue_tractocamion.png"], "Capacidad Técnica de Carga en Tractocamiones")
+            st_image_nitida_multiple(["Slide27.PNG", "Slide27.png", "uso_sin_producto_generalidades.png"], "Reglas Logísticas para Canastas Vacías")
+
+        # Pestaña 7: Estibado y Armado
+        with tabs[6]:
+            st.subheader("Procedimiento Correcto de Armado y Apilado")
+            st_image_nitida_multiple(["Slide28.PNG", "Slide28.png", "apilado_pasos.png"], "Paso a Paso del Apilado de la Canasta Ovoid")
+            st_image_nitida_multiple(["Slide29.PNG", "Slide29.png", "cedi_ce_generalidades.png"], "Operación en CEDI y Centros de Entrega")
+            st_image_nitida_multiple(["Slide30.PNG", "Slide30.png", "dale_sentido_bande_video1.png"], "Identificación y Orientación Correcta de la Bandeja")
+            st_image_nitida_multiple(["Slide31.PNG", "Slide31.png", "tabla_unidades_cedi.png"], "Capacidades de Distribución en CEDI")
+            st_image_nitida_multiple(["Slide32.PNG", "Slide32.png", "llegada_canastas_producto.png"], "Cómo Recibir y Registrar las Canastas con Producto")
+            st_image_nitida_multiple(["Slide33.PNG", "Slide33.png", "formas_cargue_autoventa.png"], "Nuevas Formas y Patrones de Cargue de Autoventa")
+            st_image_nitida_multiple(["Slide34.PNG", "Slide34.png", "dale_sentido_bande_video2.png"], "Aseguramiento de Canastas en Plantas")
+            st_image_nitida_multiple(["Slide35.PNG", "Slide35.png", "tabla_unidades_plantas.png"], "Armado de Estibas y Carga de Primera Milla en Plantas")
+
+        # Pestaña 8: Almacenamiento
+        with tabs[7]:
+            st.subheader("Estándares de Almacenamiento y Retorno")
+            st_image_nitida_multiple(["Slide36.PNG", "Slide36.png", "anidado_pasos.png"], "Paso a Paso del Anidado de Canastas Vacías")
+            st_image_nitida_multiple(["Slide37.PNG", "Slide37.png", "cedi_generalidades_vacias.png"], "Normas de Retorno y Consolidación de Vacíos")
+            st_image_nitida_multiple(["Slide38.PNG", "Slide38.png", "almacenamiento_transporte_ficha.png"], "Límites: Niveles de Canastas, Estibas, Separadores y Ganchos")
+
+    elif modulo == opt_e1:
+        st.subheader("Evaluación de Conocimientos Técnicos - Módulo 1")
+        with st.form("quiz_m1"):
+            p1 = st.radio("1. ¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m1_p1")
+            p2 = st.radio("2. ¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m1_p2")
+            p3 = st.radio("3. ¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m1_p3")
+            p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m1_p4")
+            p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m1_p5")
+            p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m1_p6")
+            p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m1_p7")
+            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m1_p8")
+            p9 = st.radio("9. ¿Qué capacidad técnica de carga de canastas completas tiene un tractocamión estándar?", ["Entre 200 y 300", "Capacidad máxima según configuración técnica", "No está permitido"], key="m1_p9")
+            p10 = st.radio("10. ¿Cuál es la regla principal para el transporte de canastas vacías (sin producto)?", ["Se pueden tirar al piso", "Deben ir correctamente anidadas y consolidadas en arrumes", "No requieren ningún orden"], key="m1_p10")
+            submit_eval = st.form_submit_button("Finalizar Evaluación")
+
+        if submit_eval:
+            score = 0
+            if p1 == "Mismo costado": score += 10
+            if p2 == "17.25 kg": score += 10
+            if p3 == "75": score += 10
+            if p4 == "No": score += 10
+            if p5 == "16": score += 10
+            if p6 == "240 Huevos": score += 10
+            if p7 == "Siguiendo la guía de posición de la bandeja": score += 10
+            if p8 == "No": score += 10
+            if p9 == "Capacidad máxima según configuración técnica": score += 10
+            if p10 == "Deben ir correctamente anidadas y consolidadas en arrumes": score += 10
+            
+            st.session_state['score_m1'] = score
+            if score >= 80:
+                st.session_state['aprobado_m1'] = True
+                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
+                st.balloons()
+            else:
+                st.session_state['aprobado_m1'] = False
+                st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar. Repasa el material.")
+
+    elif modulo == opt_c1:
+        st.subheader("Certificado Oficial Módulo 1")
+        if st.session_state['aprobado_m1']:
+            logo_base64 = get_base64_image(logo_path) if logo_path else ""
+            certificado_html = (
+                '<div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">'
+                f'<img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">'
+                '<h1 style="color: #008a3e; font-family: \'Georgia\', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>'
+                '<p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>'
+                f'<h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state["cedula"]}</h2>'
+                '<p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>'
+                '<h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 1: Equipo de Canastas Aptas</h3>'
+                '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
+                f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m1"]}%</span></div>'
+                '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
+            )
+            st.markdown(certificado_html, unsafe_allow_html=True)
+            st.download_button(
+                label="📥 Guardar Registro de Certificado (TXT)",
+                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 1: Equipo de Canastas Aptas\nPuntaje: " + str(st.session_state['score_m1']) + "%",
+                file_name=f"Certificado_Kikes_M1_{st.session_state['cedula']}.txt",
+                mime="text/plain",
+                key="dl_m1"
+            )
+        else:
+            st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
+
+    # --- CONTENIDO MÓDULO 2 ---
+    elif modulo == opt_m2:
+        st.markdown("<h2 style='color: #008a3e;'>📦 Módulo 2: Equipo de Canastas No Aptas</h2>", unsafe_allow_html=True)
+        tabs = st.tabs(["📖 Contenido Informativo"])
+        with tabs[0]:
+            st.write("Módulo informativo.")
+        
+    elif modulo == opt_e2:
+        st.subheader("Evaluación de Conocimientos Técnicos - Módulo 2")
+        with st.form("quiz_m2"):
+            p1 = st.radio("1. ¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m2_p1")
+            p2 = st.radio("2. ¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m2_p2")
+            p3 = st.radio("3. ¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m2_p3")
+            p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m2_p4")
+            p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m2_p5")
+            p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m2_p6")
+            p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m2_p7")
+            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m2_p8")
+            p9 = st.radio("9. ¿Qué capacidad técnica de carga de canastas completas tiene un tractocamión estándar?", ["Entre 200 y 300", "Capacidad máxima según configuración técnica", "No está permitido"], key="m2_p9")
+            p10 = st.radio("10. ¿Cuál es la regla principal para el transporte de canastas vacías (sin producto)?", ["Se pueden tirar al piso", "Deben ir correctamente anidadas y consolidadas en arrumes", "No requieren ningún orden"], key="m2_p10")
+            submit_eval = st.form_submit_button("Finalizar Evaluación")
+
+        if submit_eval:
+            score = 0
+            if p1 == "Mismo costado": score += 10
+            if p2 == "17.25 kg": score += 10
+            if p3 == "75": score += 10
+            if p4 == "No": score += 10
+            if p5 == "16": score += 10
+            if p6 == "240 Huevos": score += 10
+            if p7 == "Siguiendo la guía de posición de la bandeja": score += 10
+            if p8 == "No": score += 10
+            if p9 == "Capacidad máxima según configuración técnica": score += 10
+            if p10 == "Deben ir correctamente anidadas y consolidadas en arrumes": score += 10
+            
+            st.session_state['score_m2'] = score
+            if score >= 80:
+                st.session_state['aprobado_m2'] = True
+                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
+                st.balloons()
+            else:
+                st.session_state['aprobado_m2'] = False
+                st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
+
+    elif modulo == opt_c2:
+        st.subheader("Certificado Oficial Módulo 2")
+        if st.session_state['aprobado_m2']:
+            logo_base64 = get_base64_image(logo_path) if logo_path else ""
+            certificado_html = (
+                '<div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">'
+                f'<img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">'
+                '<h1 style="color: #008a3e; font-family: \'Georgia\', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>'
+                '<p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>'
+                f'<h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state["cedula"]}</h2>'
+                '<p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>'
+                '<h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 2: Equipo de Canastas No Aptas</h3>'
+                '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
+                f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m2"]}%</span></div>'
+                '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
+            )
+            st.markdown(certificado_html, unsafe_allow_html=True)
+            st.download_button(
+                label="📥 Guardar Registro de Certificado (TXT)",
+                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 2: Equipo de Canastas No Aptas\nPuntaje: " + str(st.session_state['score_m2']) + "%",
+                file_name=f"Certificado_Kikes_M2_{st.session_state['cedula']}.txt",
+                mime="text/plain",
+                key="dl_m2"
+            )
+        else:
+            st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
+
+    # --- CONTENIDO MÓDULO 3 ---
+    elif modulo == opt_m3:
+        st.markdown("<h2 style='color: #008a3e;'>🧼 Módulo 3: Lavado y Desinfección</h2>", unsafe_allow_html=True)
+        tabs = st.tabs(["📖 Contenido Informativo"])
+        with tabs[0]:
+            st.write("Módulo informativo.")
+        
+    elif modulo == opt_e3:
+        st.subheader("Evaluación de Conocimientos Técnicos - Módulo 3")
+        with st.form("quiz_m3"):
+            p1 = st.radio("1. ¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m3_p1")
+            p2 = st.radio("2. ¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m3_p2")
+            p3 = st.radio("3. ¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m3_p3")
+            p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m3_p4")
+            p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m3_p5")
+            p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m3_p6")
+            p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m3_p7")
+            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m3_p8")
+            p9 = st.radio("9. ¿Qué capacidad técnica de carga de canastas completas tiene un tractocamión estándar?", ["Entre 200 y 300", "Capacidad máxima según configuración técnica", "No está permitido"], key="m3_p9")
+            p10 = st.radio("10. ¿Cuál es la regla principal para el transporte de canastas vacías (sin producto)?", ["Se pueden tirar al piso", "Deben ir correctamente anidadas y consolidadas en arrumes", "No requieren ningún orden"], key="m3_p10")
+            submit_eval = st.form_submit_button("Finalizar Evaluación")
+
+        if submit_eval:
+            score = 0
+            if p1 == "Mismo costado": score += 10
+            if p2 == "17.25 kg": score += 10
+            if p3 == "75": score += 10
+            if p4 == "No": score += 10
+            if p5 == "16": score += 10
+            if p6 == "240 Huevos": score += 10
+            if p7 == "Siguiendo la guía de posición de la bandeja": score += 10
+            if p8 == "No": score += 10
+            if p9 == "Capacidad máxima según configuración técnica": score += 10
+            if p10 == "Deben ir correctamente anidadas y consolidadas en arrumes": score += 10
+            
+            st.session_state['score_m3'] = score
+            if score >= 80:
+                st.session_state['aprobado_m3'] = True
+                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
+                st.balloons()
+            else:
+                st.session_state['aprobado_m3'] = False
+                st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
+
+    elif modulo == opt_c3:
+        st.subheader("Certificado Oficial Módulo 3")
+        if st.session_state['aprobado_m3']:
+            logo_base64 = get_base64_image(logo_path) if logo_path else ""
+            certificado_html = (
+                '<div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">'
+                f'<img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">'
+                '<h1 style="color: #008a3e; font-family: \'Georgia\', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>'
+                '<p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>'
+                f'<h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state["cedula"]}</h2>'
+                '<p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>'
+                '<h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 3: Lavado y Desinfección</h3>'
+                '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
+                f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m3"]}%</span></div>'
+                '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
+            )
+            st.markdown(certificado_html, unsafe_allow_html=True)
+            st.download_button(
+                label="📥 Guardar Registro de Certificado (TXT)",
+                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 3: Lavado y Desinfección\nPuntaje: " + str(st.session_state['score_m3']) + "%",
+                file_name=f"Certificado_Kikes_M3_{st.session_state['cedula']}.txt",
+                mime="text/plain",
+                key="dl_m3"
+            )
+        else:
+            st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
