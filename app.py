@@ -143,7 +143,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Función para mantener compatibilidad en pestañas generales de carga múltiple
+# Función para convertir imagen local a Base64 (necesario para el certificado HTML)
 def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
@@ -333,11 +333,11 @@ else:
         with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
             
-            # --- PROPORCIÓN DE COLUMNAS AJUSTADA CON EQUILIBRIO DE ESCALA OPERATIVA ---
-            col_sist1, col_sist2 = st.columns([1.6, 1])
+            # --- CORRECCIÓN DEFINITIVA DE TAMAÑOS EN COLUMNAS USANDO RESPONSIVE FLEXBOX ALTURA FIJA EN IMAGEN ---
+            col_sist1, col_sist2 = st.columns(2)
             
             with col_sist1:
-                for nombre in ["Apilado y Anidado.jpg", "Apilado y Anidado.png", "Apilado y Anidado.PNG", "image_a8f60e.jpg", "image_aacf44.jpg", "image_ab3885.jpg", "image_abb0a4.jpg", "image_ac11dd.jpg"]:
+                for nombre in ["Apilado y Anidado.jpg", "Apilado y Anidado.png", "Apilado y Anidado.PNG", "image_a8f60e.jpg", "image_aacf44.jpg"]:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
                         img_id = "".join(c for c in nombre if c.isalnum()) + "_sist0"
@@ -347,7 +347,7 @@ else:
                             <div style="text-align: center; margin-bottom: 15px; width: 100%; text-align: center;">
                                 <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
                                 <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%; text-align: center;">
-                                    <img src="data:{mime_type};base64,{img_base64}" style="height: 300px !important; width: auto !important; max-width: 100%; object-fit: contain; display: block; margin: 0 auto;">
+                                    <img src="data:{mime_type};base64,{img_base64}" style="height: 260px !important; width: auto !important; max-width: 100%; object-fit: contain; display: block; margin: 0 auto;">
                                 </label>
                                 <div class="lightbox">
                                     <label for="zoom-{img_id}" class="lightbox-close"></label>
@@ -369,7 +369,7 @@ else:
                             <div style="text-align: center; margin-bottom: 15px; width: 100%; text-align: center;">
                                 <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
                                 <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%; text-align: center;">
-                                    <img src="data:{mime_type};base64,{img_base64}" style="height: 300px !important; width: auto !important; max-width: 100%; object-fit: contain; display: block; margin: 0 auto;">
+                                    <img src="data:{mime_type};base64,{img_base64}" style="height: 260px !important; width: auto !important; max-width: 100%; object-fit: contain; display: block; margin: 0 auto;">
                                 </label>
                                 <div class="lightbox">
                                     <label for="zoom-{img_id}" class="lightbox-close"></label>
@@ -550,33 +550,6 @@ else:
                 st.session_state['aprobado_m2'] = False
                 st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
 
-    elif modulo == opt_c2:
-        st.subheader("Certificado Oficial Módulo 2")
-        if st.session_state['aprobado_m2']:
-            logo_base64 = get_base64_image(logo_path) if logo_path else ""
-            certificado_html = (
-                '<div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">'
-                f'<img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">'
-                '<h1 style="color: #008a3e; font-family: \'Georgia\', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>'
-                '<p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>'
-                f'<h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state["cedula"]}</h2>'
-                '<p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>'
-                '<h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 2: Equipo de Canastas No Aptas</h3>'
-                '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
-                f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m2"]}%</span></div>'
-                '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
-            )
-            st.markdown(certificado_html, unsafe_allow_html=True)
-            st.download_button(
-                label="📥 Guardar Registro de Certificado (TXT)",
-                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 2: Equipo de Canastas No Aptas\nPuntaje: " + str(st.session_state['score_m2']) + "%",
-                file_name=f"Certificado_Kikes_M2_{st.session_state['cedula']}.txt",
-                mime="text/plain",
-                key="dl_m2"
-            )
-        else:
-            st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
-
     # --- CONTENIDO MÓDULO 3 ---
     elif modulo == opt_m3:
         st.markdown("<h2>📦 Módulo 3: Lavado y Desinfección</h2>", unsafe_allow_html=True)
@@ -594,7 +567,7 @@ else:
             p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m3_p5")
             p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m3_p6")
             p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m3_p7")
-            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No Rhine", "No"], key="m3_p8")
+            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No", "No"], key="m3_p8")
             p9 = st.radio("9. ¿Qué capacidad técnica de carga de canastas completas tiene un tractocamión estándar?", ["Entre 200 y 300", "Capacidad máxima según configuración técnica", "No está permitido"], key="m3_p9")
             p10 = st.radio("10. ¿Cuál es la regla principal para el transporte de canastas vacías (sin producto)?", ["Se pueden tirar al piso", "Deben ir correctamente anidadas y consolidadas en arrumes", "No requieren ningún orden"], key="m3_p10")
             submit_eval = st.form_submit_button("Finalizar Evaluación")
