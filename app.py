@@ -329,11 +329,10 @@ else:
             with col_gancho:
                 st_image_nitida_multiple(["Gancho Metálico.png", "Slide8.PNG", "Slide8.png"])
 
-        # Pestaña 4: Systems
+        # Pestaña 4: Sistemas
         with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
             
-            # --- DISEÑO COLUMNAS LADO A LADO CON ALTURA CONTROLADA ESTRICTA PARA EQUIPARAR TAMAÑOS ---
             col_sist1, col_sist2 = st.columns(2)
             
             with col_sist1:
@@ -346,7 +345,7 @@ else:
                         st.markdown(f"""
                             <div style="text-align: center; margin-bottom: 15px; width: 100%;">
                                 <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                                <label for="zoom-{img_id}" style="cursor: pointer; display: flex; justify-content: center; align-items: center; width: 100%; height: 320px; overflow: hidden; background: transparent;">
+                                <label for="zoom-{img_id}" style="cursor: pointer; display: flex; justify-content: center; align-items: center; width: 100%; height: 340px; overflow: hidden; background: transparent;">
                                     <img src="data:{mime_type};base64,{img_base64}" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 8px;">
                                 </label>
                                 <div class="lightbox">
@@ -368,7 +367,7 @@ else:
                         st.markdown(f"""
                             <div style="text-align: center; margin-bottom: 15px; width: 100%;">
                                 <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                                <label for="zoom-{img_id}" style="cursor: pointer; display: flex; justify-content: center; align-items: center; width: 100%; height: 320px; overflow: hidden; background: transparent;">
+                                <label for="zoom-{img_id}" style="cursor: pointer; display: flex; justify-content: center; align-items: center; width: 100%; height: 340px; overflow: hidden; background: transparent;">
                                     <img src="data:{mime_type};base64,{img_base64}" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 8px;">
                                 </label>
                                 <div class="lightbox">
@@ -426,7 +425,7 @@ else:
         # Pestaña 7: Estibado y Armado
         with tabs[6]:
             st.subheader("Procedimiento Correcto de Armado y Apilado")
-            st_image_nitida_multiple(["Slide28.PNG", "Slide28.png", "apilado_pasos.png"], "Pao a Paso del Apilado de la Canasta Ovoid")
+            st_image_nitida_multiple(["Slide28.PNG", "Slide28.png", "apilado_pasos.png"], "Paso a Paso del Apilado de la Canasta Ovoid")
             st_image_nitida_multiple(["Slide29.PNG", "Slide29.png", "cedi_ce_generalidades.png"], "Operación en CEDI y Centros de Entrega")
             st_image_nitida_multiple(["Slide30.PNG", "Slide30.png", "dale_sentido_bande_video1.png"], "Identificación y Orientación Correcta de la Bandeja")
             st_image_nitida_multiple(["Slide31.PNG", "Slide31.png", "tabla_unidades_cedi.png"], "Capacidades de Distribución en CEDI")
@@ -494,11 +493,11 @@ else:
                 '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
                 f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m1"]}%</span></div>'
                 '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
-            ) 
+            )
             st.markdown(certificado_html, unsafe_allow_html=True)
             st.download_button(
                 label="📥 Guardar Registro de Certificado (TXT)",
-                data="CERTIFICADO HUEVOS KIKES\\nID: " + str(st.session_state['cedula']) + "\\nCurso: Módulo 1: Equipo de Canastas Aptas\\nPuntaje: " + str(st.session_state['score_m1']) + "%",
+                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 1: Equipo de Canastas Aptas\nPuntaje: " + str(st.session_state['score_m1']) + "%",
                 file_name=f"Certificado_Kikes_M1_{st.session_state['cedula']}.txt",
                 mime="text/plain",
                 key="dl_m1"
@@ -549,33 +548,6 @@ else:
             else:
                 st.session_state['aprobado_m2'] = False
                 st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
-
-    elif modulo == opt_c2:
-        st.subheader("Certificado Oficial Módulo 2")
-        if st.session_state['aprobado_m2']:
-            logo_base64 = get_base64_image(logo_path) if logo_path else ""
-            certificado_html = (
-                '<div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">'
-                f'<img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">'
-                '<h1 style="color: #008a3e; font-family: \'Georgia\', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>'
-                '<p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>'
-                f'<h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state["cedula"]}</h2>'
-                '<p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>'
-                '<h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 2: Equipo de Canastas No Aptas</h3>'
-                '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
-                f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m2"]}%</span></div>'
-                '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
-            )
-            st.markdown(certificado_html, unsafe_allow_html=True)
-            st.download_button(
-                label="📥 Guardar Registro de Certificado (TXT)",
-                data="CERTIFICADO HUEVOS KIKES\\nID: " + str(st.session_state['cedula']) + "\\nCurso: Módulo 2: Equipo de Canastas No Aptas\\nPuntaje: " + str(st.session_state['score_m2']) + "%",
-                file_name=f"Certificado_Kikes_M2_{st.session_state['cedula']}.txt",
-                mime="text/plain",
-                key="dl_m2"
-            )
-        else:
-            st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
 
     # --- CONTENIDO MÓDULO 3 ---
     elif modulo == opt_m3:
@@ -640,12 +612,10 @@ else:
             st.markdown(certificado_html, unsafe_allow_html=True)
             st.download_button(
                 label="📥 Guardar Registro de Certificado (TXT)",
-                data="CERTIFICADO HUEVOS KIKES\\nID: " + str(st.session_state['cedula']) + "\\nCurso: Módulo 3: Lavado y Desinfección\\nPuntaje: " + str(st.session_state['score_m3']) + "%",
+                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 3: Lavado y Desinfección\nPuntaje: " + str(st.session_state['score_m3']) + "%",
                 file_name=f"Certificado_Kikes_M3_{st.session_state['cedula']}.txt",
                 mime="text/plain",
                 key="dl_m3"
             )
         else:
             st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
-''')
-}
