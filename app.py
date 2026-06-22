@@ -411,4 +411,133 @@ else:
         st.subheader("Evaluación de Conocimientos Técnicos - Módulo 2")
         with st.form("quiz_m2"):
             p1 = st.radio("1. ¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m2_p1")
-            p2 = st.radio("2. ¿Peso máximo permitido por canasta cargada?",
+            p2 = st.radio("2. ¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m2_p2")
+            p3 = st.radio("3. ¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m2_p3")
+            p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m2_p4")
+            p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m2_p5")
+            p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m2_p6")
+            p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m2_p7")
+            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m2_p8")
+            p9 = st.radio("9. ¿Qué capacidad técnica de carga de canastas completas tiene un tractocamión estándar?", ["Entre 200 y 300", "Capacidad máxima según configuración técnica", "No está permitido"], key="m2_p9")
+            p10 = st.radio("10. ¿Cuál es la regla principal para el transporte de canastas vacías (sin producto)?", ["Se pueden tirar al piso", "Deben ir correctamente anidadas y consolidadas en arrumes", "No requieren ningún orden"], key="m2_p10")
+            submit_eval = st.form_submit_button("Finalizar Evaluación")
+
+        if submit_eval:
+            score = 0
+            if p1 == "Mismo costado": score += 10
+            if p2 == "17.25 kg": score += 10
+            if p3 == "75": score += 10
+            if p4 == "No": score += 10
+            if p5 == "16": score += 10
+            if p6 == "240 Huevos": score += 10
+            if p7 == "Siguiendo la guía de posición de la bandeja": score += 10
+            if p8 == "No": score += 10
+            if p9 == "Capacidad máxima según configuración técnica": score += 10
+            if p10 == "Deben ir correctamente anidadas y consolidadas en arrumes": score += 10
+            
+            st.session_state['score_m2'] = score
+            if score >= 80:
+                st.session_state['aprobado_m2'] = True
+                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
+                st.balloons()
+            else:
+                st.session_state['aprobado_m2'] = False
+                st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
+
+    elif modulo == opt_c2:
+        st.subheader("Certificado Oficial Módulo 2")
+        if st.session_state['aprobado_m2']:
+            logo_base64 = get_base64_image(logo_path) if logo_path else ""
+            certificado_html = (
+                '<div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">'
+                f'<img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">'
+                '<h1 style="color: #008a3e; font-family: \'Georgia\', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>'
+                '<p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>'
+                f'<h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state["cedula"]}</h2>'
+                '<p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>'
+                '<h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 2: Equipo de Canastas No Aptas</h3>'
+                '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
+                f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m2"]}%</span></div>'
+                '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
+            )
+            st.markdown(certificado_html, unsafe_allow_html=True)
+            st.download_button(
+                label="📥 Guardar Registro de Certificado (TXT)",
+                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 2: Equipo de Canastas No Aptas\nPuntaje: " + str(st.session_state['score_m2']) + "%",
+                file_name=f"Certificado_Kikes_M2_{st.session_state['cedula']}.txt",
+                mime="text/plain",
+                key="dl_m2"
+            )
+        else:
+            st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
+
+    # --- CONTENIDO MÓDULO 3 ---
+    elif modulo == opt_m3:
+        st.markdown("<h2 style='color: #008a3e;'>🧼 Módulo 3: Lavado y Desinfección</h2>", unsafe_allow_html=True)
+        tabs = st.tabs(["📖 Contenido Informativo"])
+        with tabs[0]:
+            st.write("Módulo informativo.")
+        
+    elif modulo == opt_e3:
+        st.subheader("Evaluación de Conocimientos Técnicos - Módulo 3")
+        with st.form("quiz_m3"):
+            p1 = st.radio("1. ¿Sentido del identificador al anidar canastas VACÍAS?", ["Costado opuesto", "Mismo costado"], key="m3_p1")
+            p2 = st.radio("2. ¿Peso máximo permitido por canasta cargada?", ["15.5 kg", "17.25 kg", "20 kg"], key="m3_p2")
+            p3 = st.radio("3. ¿Cuántas canastas carga un Minitruck TM?", ["75", "100", "48"], key="m3_p3")
+            p4 = st.radio("4. ¿Se permite usar la canasta como escalera?", ["Sí", "No"], key="m3_p4")
+            p5 = st.radio("5. ¿Cuántas canastas vacías se anidan en un arrume por estiba Ovoid?", ["11", "16", "24"], key="m3_p5")
+            p6 = st.radio("6. ¿Cuál es la cantidad máxima de huevos por canasta Ovoid?", ["180 Huevos", "240 Huevos", "300 Huevos"], key="m3_p6")
+            p7 = st.radio("7. ¿Cómo se debe orientar la bandeja al armar la estiba según el estándar?", ["Cualquier sentido", "Siguiendo la guía de posición de la bandeja", "De forma cruzada"], key="m3_p7")
+            p8 = st.radio("8. ¿Se permite el apilamiento de canastas con producto sin el uso de separadores Ovoid?", ["Sí", "No"], key="m3_p8")
+            p9 = st.radio("9. ¿Qué capacidad técnica de carga de canastas completas tiene un tractocamión estándar?", ["Entre 200 y 300", "Capacidad máxima según configuración técnica", "No está permitido"], key="m3_p9")
+            p10 = st.radio("10. ¿Cuál es la regla principal para el transporte de canastas vacías (sin producto)?", ["Se pueden tirar al piso", "Deben ir correctamente anidadas y consolidadas en arrumes", "No requieren ningún orden"], key="m3_p10")
+            submit_eval = st.form_submit_button("Finalizar Evaluación")
+
+        if submit_eval:
+            score = 0
+            if p1 == "Mismo costado": score += 10
+            if p2 == "17.25 kg": score += 10
+            if p3 == "75": score += 10
+            if p4 == "No": score += 10
+            if p5 == "16": score += 10
+            if p6 == "240 Huevos": score += 10
+            if p7 == "Siguiendo la guía de posición de la bandeja": score += 10
+            if p8 == "No": score += 10
+            if p9 == "Capacidad máxima según configuración técnica": score += 10
+            if p10 == "Deben ir correctamente anidadas y consolidadas en arrumes": score += 10
+            
+            st.session_state['score_m3'] = score
+            if score >= 80:
+                st.session_state['aprobado_m3'] = True
+                st.success(f"¡APROBADO CON {score}%! Ya puedes descargar tu certificado en la sección correspondiente del menú izquierdo.")
+                st.balloons()
+            else:
+                st.session_state['aprobado_m3'] = False
+                st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
+
+    elif modulo == opt_c3:
+        st.subheader("Certificado Oficial Módulo 3")
+        if st.session_state['aprobado_m3']:
+            logo_base64 = get_base64_image(logo_path) if logo_path else ""
+            certificado_html = (
+                '<div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">'
+                f'<img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">'
+                '<h1 style="color: #008a3e; font-family: \'Georgia\', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>'
+                '<p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>'
+                f'<h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state["cedula"]}</h2>'
+                '<p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>'
+                '<h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 3: Lavado y Desinfección</h3>'
+                '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
+                f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m3"]}%</span></div>'
+                '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
+            )
+            st.markdown(certificado_html, unsafe_allow_html=True)
+            st.download_button(
+                label="📥 Guardar Registro de Certificado (TXT)",
+                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 3: Lavado y Desinfección\nPuntaje: " + str(st.session_state['score_m3']) + "%",
+                file_name=f"Certificado_Kikes_M3_{st.session_state['cedula']}.txt",
+                mime="text/plain",
+                key="dl_m3"
+            )
+        else:
+            st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
