@@ -29,6 +29,44 @@ st.markdown("""
             border-radius: 8px;
         }
 
+        /* 🕶️ ESTILOS PARA EL MODAL LIGHTBOX (CLICK PARA AGRANDAR IMÁGENES) */
+        .zoom-checkbox {
+            display: none !important;
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 999999 !important;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            align-items: center;
+            justify-content: center;
+        }
+        .zoom-checkbox:checked ~ .lightbox {
+            display: flex !important;
+        }
+        .lightbox-close {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            cursor: zoom-out;
+            z-index: 1;
+        }
+        .lightbox-img {
+            max-width: 90% !important;
+            max-height: 90% !important;
+            width: auto !important;
+            height: auto !important;
+            object-fit: contain !important;
+            z-index: 2;
+            box-shadow: 0 0 25px rgba(0,0,0,0.7);
+            border-radius: 6px;
+            cursor: zoom-out;
+        }
+
         /* 🔍 OPTIMIZACIÓN DE FUENTE EXCLUYENDO SELECTORES UNIVERSALES PARA NO ROMPER FUENTES DE ICONOS DE STREAMLIT */
         html, body, p, h1, h2, h3, h4, h5, h6, label, input, button, select, textarea {
             font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
@@ -94,7 +132,7 @@ def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 
-# Función para renderizar diapositivas con alta nitidez, centradas y de tamaño mediano-pequeño estable (380px)
+# Función para renderizar diapositivas con alta nitidez, centradas y con funcionalidad Lightbox incorporada
 def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
     for nombre in posibles_nombres:
         if os.path.exists(nombre):
@@ -104,9 +142,17 @@ def st_image_nitida_multiple(posibles_nombres, subtitulo_opcional=""):
                 img_base64 = get_base64_image(nombre)
                 ext = nombre.split('.')[-1].lower()
                 mime_type = "image/png" if ext == "png" else "image/jpeg"
+                img_id = "".join(c for c in nombre if c.isalnum())
                 st.markdown(f"""
                     <div style="text-align: center; width: 100%; margin: 10px auto;">
-                        <img src="data:{mime_type};base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; display: inline-block; image-rendering: -webkit-optimize-contrast; border-radius: 8px;">
+                        <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
+                        <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block;">
+                            <img src="data:{mime_type};base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px;">
+                        </label>
+                        <div class="lightbox">
+                            <label for="zoom-{img_id}" class="lightbox-close"></label>
+                            <img src="data:{mime_type};base64,{img_base64}" class="lightbox-img">
+                        </div>
                     </div>
                 """, unsafe_allow_html=True)
             except:
@@ -201,9 +247,17 @@ else:
                 for nombre in ["Slide4.PNG", "Slide4.png", "cronologia.png"]:
                     if os.path.exists(nombre):
                         img_base64 = get_base64_image(nombre)
+                        img_id = "".join(c for c in nombre if c.isalnum()) + "_cronolo1"
                         st.markdown(f"""
                             <div style="text-align: center;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 500px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                                <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
+                                <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block;">
+                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 500px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px;">
+                                </label>
+                                <div class="lightbox">
+                                    <label for="zoom-{img_id}" class="lightbox-close"></label>
+                                    <img src="data:image/png;base64,{img_base64}" class="lightbox-img">
+                                </div>
                             </div>
                         """, unsafe_allow_html=True)
                         break
@@ -214,9 +268,17 @@ else:
                     for nombre in ["Slide3.PNG", "Slide3.png", "introduccion_cronologia.png"]:
                         if os.path.exists(nombre):
                             img_base64 = get_base64_image(nombre)
+                            img_id = "".join(c for c in nombre if c.isalnum()) + "_cronolo2"
                             st.markdown(f"""
                                 <div style="text-align: center;">
-                                    <img src="data:image/png;base64,{img_base64}" style="max-width: 500px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                                    <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
+                                    <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block;">
+                                        <img src="data:image/png;base64,{img_base64}" style="max-width: 500px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px;">
+                                    </label>
+                                    <div class="lightbox">
+                                        <label for="zoom-{img_id}" class="lightbox-close"></label>
+                                        <img src="data:image/png;base64,{img_base64}" class="lightbox-img">
+                                    </div>
                                 </div>
                             """, unsafe_allow_html=True)
                             break
@@ -254,18 +316,34 @@ else:
             for nombre in ["Sistemas Canasta Ovoid.png", "Slide13.PNG", "Slide13.png", "sistemas_canasta.png"]:
                 if os.path.exists(nombre):
                     img_base64 = get_base64_image(nombre)
+                    img_id = "".join(c for c in nombre if c.isalnum()) + "_sist1"
                     st.markdown(f"""
                         <div style="text-align: center; margin-bottom: 15px;">
-                            <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
+                            <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px;">
+                            </label>
+                            <div class="lightbox">
+                                <label for="zoom-{img_id}" class="lightbox-close"></label>
+                                <img src="data:image/png;base64,{img_base64}" class="lightbox-img">
+                            </div>
                         </div>
                     """, unsafe_allow_html=True)
                     break
             for nombre in ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png"]:
                 if os.path.exists(nombre):
                     img_base64 = get_base64_image(nombre)
+                    img_id = "".join(c for c in nombre if c.isalnum()) + "_sist2"
                     st.markdown(f"""
                         <div style="text-align: center;">
-                            <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px; display: inline-block;">
+                            <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
+                            <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block;">
+                                <img src="data:image/png;base64,{img_base64}" style="max-width: 380px; width: 100%; height: auto; image-rendering: -webkit-optimize-contrast; border-radius: 8px;">
+                            </label>
+                            <div class="lightbox">
+                                <label for="zoom-{img_id}" class="lightbox-close"></label>
+                                <img src="data:image/png;base64,{img_base64}" class="lightbox-img">
+                            </div>
                         </div>
                     """, unsafe_allow_html=True)
                     break
@@ -417,33 +495,6 @@ else:
             else:
                 st.session_state['aprobado_m2'] = False
                 st.error(f"Puntaje insuficiente: {score}%. Necesitas 80% para aprobar.")
-
-    elif modulo == opt_c2:
-        st.subheader("Certificado Oficial Módulo 2")
-        if st.session_state['aprobado_m2']:
-            logo_base64 = get_base64_image(logo_path) if logo_path else ""
-            certificado_html = (
-                '<div style="border: 15px solid #008a3e; padding: 40px; text-align: center; background-color: white; border-style: double; margin: 20px 0;">'
-                f'<img src="data:image/png;base64,{logo_base64}" width="150" style="margin-bottom: 20px;">'
-                '<h1 style="color: #008a3e; font-family: \'Georgia\', serif; font-size: 45px; margin: 10px 0;">Certificado de Aprobación</h1>'
-                '<p style="font-size: 20px; color: #333;">La Plataforma de Cadena de Abastecimiento otorga este reconocimiento a:</p>'
-                f'<h2 style="font-size: 35px; color: #000; text-decoration: underline; margin: 20px 0;">ID DE EMPLEADO: {st.session_state["cedula"]}</h2>'
-                '<p style="font-size: 20px; color: #333;">Por completar con éxito y demostrar conocimientos técnicos en:</p>'
-                '<h3 style="font-size: 28px; color: #2bb673; margin: 15px 0;">Módulo 2: Equipo de Canastas No Aptas</h3>'
-                '<div style="margin-top: 30px; padding: 15px; background-color: #f0f7f0; display: inline-block; border-radius: 10px;">'
-                f'<span style="font-size: 22px; font-weight: bold; color: #008a3e;">Calificación Final: {st.session_state["score_m2"]}%</span></div>'
-                '<p style="margin-top: 40px; font-style: italic; color: #777;">Emitido por el Sistema de Capacitación Técnica de Huevos Kikes</p></div>'
-            )
-            st.markdown(certificado_html, unsafe_allow_html=True)
-            st.download_button(
-                label="📥 Guardar Registro de Certificado (TXT)",
-                data="CERTIFICADO HUEVOS KIKES\nID: " + str(st.session_state['cedula']) + "\nCurso: Módulo 2: Equipo de Canastas No Aptas\nPuntaje: " + str(st.session_state['score_m2']) + "%",
-                file_name=f"Certificado_Kikes_M2_{st.session_state['cedula']}.txt",
-                mime="text/plain",
-                key="dl_m2"
-            )
-        else:
-            st.warning("🔒 El certificado no está disponible. Debes realizar la evaluación y aprobar con un porcentaje mayor o igual al 80%.")
 
     # --- CONTENIDO MÓDULO 3 ---
     elif modulo == opt_m3:
