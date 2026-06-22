@@ -235,6 +235,9 @@ else:
                         break
             st.markdown("---")
             
+            # Se anexa la estiba completa en tamaño proporcional
+            st_image_nitida_multiple(["Estiba Ovoid.png"])
+
             # --- ESTIBA ---
             col_comp, col_dim = st.columns(2)
             with col_comp:
