@@ -305,6 +305,7 @@ else:
         # Pestaña 2: Partes
         with tabs[1]:
             st.subheader("Partes de la Canasta Ovoid")
+            st.markdown("---")
             st_image_nitida_multiple(["Partes.png", "Slide5.PNG", "Slide5.png", "partes.png", "image_3a2949.jpg"])
             if os.path.exists("Partes2.png"):
                 st_image_nitida_multiple(["Partes2.png"])
@@ -333,60 +334,70 @@ else:
         with tabs[3]:
             st.subheader("Sistemas de la Canasta Ovoid")
             
-            # Muestra primero la imagen de Apilado y Anidado.png con efecto zoom controlado a 460px
-            for nombre in ["Apilado y Anidado.png", "Apilado y Anidado.PNG", "image_a8f60e.jpg"]:
-                if os.path.exists(nombre):
-                    img_base64 = get_base64_image(nombre)
-                    img_id = "".join(c for c in nombre if c.isalnum()) + "_sist0"
-                    st.markdown(f"""
-                        <div style="text-align: center; margin-bottom: 15px;">
-                            <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                            <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 460px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
-                            </label>
-                            <div class="lightbox">
-                                <label for="zoom-{img_id}" class="lightbox-close"></label>
-                                <label for="zoom-{img_id}" class="lightbox-btn-close">&times;</label>
-                                <img src="data:image/png;base64,{img_base64}" class="lightbox-img">
+            # --- DISEÑO COLUMNAS LADO A LADO PARA LAS DOS PRIMERAS IMÁGENES ---
+            col_sist1, col_sist2 = st.columns(2)
+            
+            with col_sist1:
+                for nombre in ["Apilado y Anidado.jpg", "Apilado y Anidado.png", "Apilado y Anidado.PNG", "image_a8f60e.jpg"]:
+                    if os.path.exists(nombre):
+                        img_base64 = get_base64_image(nombre)
+                        img_id = "".join(c for c in nombre if c.isalnum()) + "_sist0"
+                        ext = nombre.split('.')[-1].lower()
+                        mime_type = "image/png" if ext == "png" else "image/jpeg"
+                        st.markdown(f"""
+                            <div style="text-align: center; margin-bottom: 15px;">
+                                <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
+                                <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
+                                    <img src="data:{mime_type};base64,{img_base64}" style="max-width: 460px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
+                                </label>
+                                <div class="lightbox">
+                                    <label for="zoom-{img_id}" class="lightbox-close"></label>
+                                    <label for="zoom-{img_id}" class="lightbox-btn-close">&times;</label>
+                                    <img src="data:{mime_type};base64,{img_base64}" class="lightbox-img">
+                                </div>
                             </div>
-                        </div>
-                    """, unsafe_allow_html=True)
-                    break
+                        """, unsafe_allow_html=True)
+                        break
 
-            for nombre in ["Sistemas Canasta Ovoid.png", "Slide13.PNG", "Slide13.png", "sistemas_canasta.png"]:
-                if os.path.exists(nombre):
-                    img_base64 = get_base64_image(nombre)
-                    img_id = "".join(c for c in nombre if c.isalnum()) + "_sist1"
-                    st.markdown(f"""
-                        <div style="text-align: center; margin-bottom: 15px;">
-                            <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
-                            <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 460px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
-                            </label>
-                            <div class="lightbox">
-                                <label for="zoom-{img_id}" class="lightbox-close"></label>
-                                <label for="zoom-{img_id}" class="lightbox-btn-close">&times;</label>
-                                <img src="data:image/png;base64,{img_base64}" class="lightbox-img">
+            with col_sist2:
+                for nombre in ["Sistemas Canasta Ovoid.png", "Slide13.PNG", "Slide13.png", "sistemas_canasta.png"]:
+                    if os.path.exists(nombre):
+                        img_base64 = get_base64_image(nombre)
+                        img_id = "".join(c for c in nombre if c.isalnum()) + "_sist1"
+                        ext = nombre.split('.')[-1].lower()
+                        mime_type = "image/png" if ext == "png" else "image/jpeg"
+                        st.markdown(f"""
+                            <div style="text-align: center; margin-bottom: 15px;">
+                                <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
+                                <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
+                                    <img src="data:{mime_type};base64,{img_base64}" style="max-width: 460px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
+                                </label>
+                                <div class="lightbox">
+                                    <label for="zoom-{img_id}" class="lightbox-close"></label>
+                                    <label for="zoom-{img_id}" class="lightbox-btn-close">&times;</label>
+                                    <img src="data:{mime_type};base64,{img_base64}" class="lightbox-img">
+                                </div>
                             </div>
-                        </div>
-                    """, unsafe_allow_html=True)
-                    break
+                        """, unsafe_allow_html=True)
+                        break
 
             # IMAGEN ESPECÍFICA: Identificador de posición
             for nombre in ["Slide14.PNG", "Slide14.png", "identificador_posicion_guia.png", "image_a9e5d0.jpg"]:
                 if os.path.exists(nombre):
                     img_base64 = get_base64_image(nombre)
                     img_id = "".join(c for c in nombre if c.isalnum()) + "_sist2"
+                    ext = nombre.split('.')[-1].lower()
+                    mime_type = "image/png" if ext == "png" else "image/jpeg"
                     st.markdown(f"""
                         <div style="text-align: center;">
                             <input type="checkbox" id="zoom-{img_id}" class="zoom-checkbox">
                             <label for="zoom-{img_id}" style="cursor: pointer; display: inline-block; width: 100%;">
-                                <img src="data:image/png;base64,{img_base64}" style="max-width: 400px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
+                                <img src="data:{mime_type};base64,{img_base64}" style="max-width: 400px; width: 100%; height: auto; image-rendering: auto; border-radius: 8px;">
                             </label>
                             <div class="lightbox">
                                 <label for="zoom-{img_id}" class="lightbox-close"></label>
                                 <label for="zoom-{img_id}" class="lightbox-btn-close">&times;</label>
-                                <img src="data:image/png;base64,{img_base64}" class="lightbox-img">
+                                <img src="data:{mime_type};base64,{img_base64}" class="lightbox-img">
                             </div>
                         </div>
                     """, unsafe_allow_html=True)
